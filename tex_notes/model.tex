@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{siunitx}
+
+\title{Mathematical Model Report: Spiral Vector Field Fitting}
+\author{Rishabh Kumar}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report details the statistical formulation for fitting a parametric spiral vector field to noisy angular data. We derive the vector field from a scalar potential function, analyze the heteroskedastic noise structure induced by the Cartesian-to-Polar transformation, and formulate a Weighted Least Squares (WLS) objective function to estimate the model parameters.
+\end{abstract}
+
+\section{Introduction}
+The objective of this model is to recover the parameters of a spiral vector field given a set of spatial observations. Unlike standard regression problems where errors are often assumed to be homoskedastic and Euclidean, this problem involves directional data where the noise variance depends on the magnitude of the underlying field.
+
+\section{Data and Preprocessing}
+The dataset consists of spatial coordinates $Z_i = (x_i, y_i)$ and observed vectors $W_i \in \mathbb{R}^2$. Preprocessing involves converting Cartesian vector observations into angular measurements $\hat{\alpha}_i$ and calculating the radial distances $r_i = \|Z_i\|$ for each observation point.
+
+\section{Model Specification}
+
+\subsection{Parametric Spiral Vector Field}
+We define the vector field $F_\theta$ as the gradient of a scalar potential function $V_\theta(r, \phi)$, defined in polar coordinates $(r, \phi)$. The potential is given by:
+\begin{equation}
+V_\theta(r,\phi) = A\,g_p(r) - b\,\phi,
+\end{equation}
+where $A, b \in \mathbb{R}$ are coefficients, and the radial function $g_p(r)$ is defined as:
+\begin{equation}
+g_p(r) =
+\begin{cases}
+\ln r, & p = 0, \\[6pt]
+\dfrac{r^p}{p}, & p \neq 0.
+\end{cases}
+\end{equation}
+The parameter set is $\theta = \{A, b, p\}$. The induced vector field is the gradient of the potential. In polar coordinates, the gradient operator is $\nabla = \mathbf{e}_r \frac{\partial}{\partial r} + \mathbf{e}_\phi \frac{1}{r} \frac{\partial}{\partial \phi}$. Thus:
+\begin{align}
+F_\theta(r,\phi) &= \nabla V_\theta(r,\phi) \nonumber \\
+&= \left( \frac{\partial}{\partial r} \left( A g_p(r) - b\phi \right) \right) \mathbf{e}_r + \left( \frac{1}{r} \frac{\partial}{\partial \phi} \left( A g_p(r) - b\phi \right) \right) \mathbf{e}_\phi \nonumber \\
+&= A g_p'(r) \mathbf{e}_r - \frac{b}{r} \mathbf{e}_\phi.
+\end{align}
+Note that for all $p$, $g_p'(r) = r^{p-1}$. The magnitude of the field, denoted $\rho(r)$, is:
+\begin{equation}
+\rho(r) = \| F_\theta(r,\phi) \| = \sqrt{ A^2 \big(r^{p-1}\big)^2 + \frac{b^2}{r^2} }.
+\end{equation}
+
+\subsection{Observation Model and Noise Structure}
+We observe the vector field at discrete spatial points $Z_i$ for $i=1, \dots, n$. The observed vector $W_i$ is the true field perturbed by isotropic Gaussian noise:
+\begin{align}
+W_i &= F_{\theta_0}(Z_i) + \varepsilon_i, \\
+\varepsilon_i &\sim \mathcal{N}(0, \sigma^2 I_2),
+\end{align}
+where $I_2$ is the $2 \times 2$ identity matrix.
+
+Our primary quantity of interest is the direction of the field. The observed angle $\hat{\alpha}_i$ is:
+\begin{equation}
+\hat{\alpha}_i = \operatorname{atan2}(W_{i,2},\; W_{i,1}).
+\end{equation}
+By linearizing the transformation from Cartesian vectors to polar angles, we find that the angular noise is heteroskedastic. Specifically, the relationship between the observed angle and the true angle $\alpha_{\theta_0}(Z_i)$ is:
+\begin{equation}
+\hat{\alpha}_i \approx \alpha_{\theta_0}(Z_i) + \eta_i,
+\end{equation}
+where the variance of the angular error $\eta_i$ is inversely proportional to the squared magnitude of the field at that point:
+\begin{equation}
+\operatorname{Var}(\eta_i) \approx \frac{\sigma^2}{\rho(Z_i)^2}.
+\end{equation}
+This implies that angular observations are less reliable in regions where the vector field magnitude $\rho(r)$ is small.
+
+\section{Estimation and Inference}
+
+\subsection{Weighted Least Squares Objective}
+To estimate $\theta$, we minimize the discrepancy between the observed angles and the model-predicted angles. A standard least squares approach is insufficient due to the heteroskedasticity described above. We instead employ a Weighted Least Squares (WLS) approach.
+
+The negative log-likelihood (ignoring constant terms) suggests minimizing the variance-weighted squared error. Since angular data lies on a circle (manifold $S^1$), we use a wrapped loss function based on the sine of the angular difference.
+
+The objective function $L(\theta)$ is:
+\begin{equation} \label{radial-objective}
+L(\theta) = \sum_{i=1}^n \rho(Z_i)^2 \sin^2 \big( \hat{\alpha}_i - \alpha_\theta(Z_i) \big).
+\end{equation}
+Here, the weight $\rho(Z_i)^2$ naturally down-weights observations where the field magnitude is small (and thus angular uncertainty is high).
+
+\subsection{Optimization}
+The estimator $\hat{\theta}$ is obtained by:
+\begin{equation}
+\hat{\theta} = \arg\min_\theta L(\theta).
+\end{equation}
+Since $L(\theta)$ is non-linear with respect to parameters $p$ and the geometry of the angle $\alpha_\theta$, we utilize numerical optimization (e.g., L-BFGS-B or Newton-Raphson) to solve for $\hat{\theta}$.
+
+\subsection{Objective correction}
+As seen
+\section{Results}
+[Insert parameter estimates for A, b, p here]
+
+\section{Discussion}
+The weighted loss function effectively handles the noise structure inherent in angular measurements of vector fields. [Discuss fit quality here].
+
+\section{Conclusion}
+We have successfully formulated a statistical model for spiral vector fields that accounts for the geometric properties of angular noise.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
