@@ -6,6 +6,8 @@
 \usepackage{hyperref}
 \usepackage{siunitx}
 
+\newtheorem{theorem}{Theorem}
+
 \title{Mathematical Model Report: Spiral Vector Field Fitting}
 \author{Rishabh Kumar}
 \date{\today}
@@ -65,10 +67,160 @@ By linearizing the transformation from Cartesian vectors to polar angles, we fin
 \begin{equation}
 \hat{\alpha}_i \approx \alpha_{\theta_0}(Z_i) + \eta_i,
 \end{equation}
+
 where the variance of the angular error $\eta_i$ is inversely proportional to the squared magnitude of the field at that point:
 \begin{equation}
 \operatorname{Var}(\eta_i) \approx \frac{\sigma^2}{\rho(Z_i)^2}.
 \end{equation}
+
+% \begin{theorem}[Delta Method for Angular Noise]
+% Let $W \sim \mathcal{N}(\mu, \sigma^2 I_2)$ be a 2D Gaussian random vector with mean $\mu \in \mathbb{R}^2$ and covariance $\sigma^2 I_2$.
+% Define the angle function $g: \mathbb{R}^2 \to S^1$ by $g(W) = \operatorname{atan2}(W_2, W_1)$. Then, for $\mu \neq 0$, the distribution of $g(W)$ is approximately normal with mean $g(\mu)$ and variance:
+% \begin{equation}
+% \alpha = g(W) \sim \mathcal{N}\left( g(\mu), \frac{\sigma^2}{\|\mu\|^2} \right).
+% \end{equation}
+    
+% \end{theorem}
+
+% \begin{proof}
+%     Define $g(W) = \operatorname{atan2}(W_2, W_1)$. The gradient of $g$ at $\mu$ is:
+%     \begin{equation}
+%     \nabla g(\mu) = \left( \frac{\partial g}{\partial W_1}, \frac{\partial g}{\partial W_2} \right) = \left( -\frac{\mu_2}{\|\mu\|^2}, \frac{\mu_1}{\|\mu\|^2} \right).
+%     \end{equation}
+%     The covariance of $W$ is $\Sigma = \sigma^2 I_2$. By the Delta Method (see \cite{vanDerVaart2000}), the variance of $g(W)$ is:
+%     \begin{equation}
+%     \operatorname{Var}(g(W)) \approx \nabla g(\mu)^\top \Sigma \nabla g(\mu) = \sigma^2 \nabla g(\mu)^\top \nabla g(\mu).
+%     \end{equation}
+%     Calculating $\nabla g(\mu)^\top \nabla g(\mu)$:
+%     \begin{align}
+%     \nabla g(\mu)^\top \nabla g(\mu) &=  \left( -\frac{\mu_2}{\|\mu\|^2}, \frac{\mu_1}{\|\mu\|^2} \right) \cdot \left( -\frac{\mu_2}{\|\mu\|^2}, \frac{\mu_1}{\|\mu\|^2} \right) \\
+%     &= \frac{\mu_2^2 + \mu_1^2}{\|\mu\|^4} = \frac{\|\mu\|^2}{\|\mu\|^4} = \frac{1}{\|\mu\|^2}.
+%     \end{align}
+%     Therefore,
+%     \begin{equation}
+%     \operatorname{Var}(g(W)) \approx \sigma^2 \cdot \frac{1}{\|\mu\|^2} = \frac{\sigma^2}{\|\mu\|^2}.
+%     \end{equation}
+
+% \end{proof}
+
+\begin{theorem}[Density of the angle $\Theta=\operatorname{atan2}(W_2,W_1)$ for an isotropic Gaussian]
+\label{thm:projected-normal-angle}
+Let $W=(W_1,W_2)^\top \sim \mathcal N_2(\mu,\sigma^2 I_2)$ with $\sigma>0$ and $\mu\in\mathbb R^2$.
+Define
+\[
+\Theta := \operatorname{atan2}(W_2,W_1)\in(-\pi,\pi].
+\]
+Write $m:=\|\mu\|$ and $\phi_0:=\operatorname{atan2}(\mu_2,\mu_1)$, so that
+$\mu = m(\cos\phi_0,\sin\phi_0)^\top$.
+Then $\Theta$ has a density on $(-\pi,\pi]$ given by
+\begin{align}
+f_\Theta(\theta)
+&=
+\frac{1}{2\pi}\exp\!\left(-\frac{m^2}{2\sigma^2}\right)
++
+\frac{m\cos(\theta-\phi_0)}{\sqrt{2\pi}\,\sigma}\,
+\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)\,
+\Phi\!\left(\frac{m\cos(\theta-\phi_0)}{\sigma}\right),
+\\ & \theta\in(-\pi,\pi],  
+\end{align}
+
+where $\Phi$ denotes the standard normal cumulative distribution function.
+\end{theorem}
+
+\begin{proof}
+Let $w=(w_1,w_2)^\top\in\mathbb R^2$. The density of $W$ is
+\[
+f_W(w)=\frac{1}{2\pi\sigma^2}\exp\!\left(-\frac{\|w-\mu\|^2}{2\sigma^2}\right).
+\]
+Introduce polar coordinates $w=(r\cos\theta,r\sin\theta)^\top$ with $r\ge 0$ and
+$\theta\in(-\pi,\pi]$, so that $\Theta=\theta$ and the Jacobian determinant is $r$.
+Hence the joint density of $(R,\Theta)$ is
+\[
+f_{R,\Theta}(r,\theta)
+=
+f_W(r\cos\theta,r\sin\theta)\,r
+=
+\frac{1}{2\pi\sigma^2}\exp\!\left(-\frac{\|(r\cos\theta,r\sin\theta)-\mu\|^2}{2\sigma^2}\right)r.
+\]
+Write $\mu=m(\cos\phi_0,\sin\phi_0)^\top$. Then
+\begin{align*}
+\|(r\cos\theta,r\sin\theta)-\mu\|^2
+&= r^2+m^2-2rm(\cos\theta\cos\phi_0+\sin\theta\sin\phi_0)\\
+&= r^2+m^2-2rm\cos(\theta-\phi_0).
+\end{align*}
+Set $c(\theta):=\cos(\theta-\phi_0)$ and rewrite
+\[
+r^2+m^2-2rmc(\theta)
+=
+(r-mc(\theta))^2+m^2(1-c(\theta)^2)
+=
+(r-mc(\theta))^2+m^2\sin^2(\theta-\phi_0).
+\]
+Therefore,
+\[
+f_\Theta(\theta)
+=
+\int_0^\infty f_{R,\Theta}(r,\theta)\,dr
+=
+\frac{1}{2\pi\sigma^2}\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)
+\int_0^\infty r\exp\!\left(-\frac{(r-mc(\theta))^2}{2\sigma^2}\right)\,dr.
+\]
+Let $a:=mc(\theta)$ and substitute $u=(r-a)/\sigma$ (so $r=\sigma u+a$, $dr=\sigma du$), giving
+\begin{align*}
+\int_0^\infty r\exp\!\left(-\frac{(r-a)^2}{2\sigma^2}\right)\,dr
+&=
+\int_{-a/\sigma}^{\infty} (\sigma u+a)e^{-u^2/2}\,\sigma du \\
+&=
+\sigma^2\int_{-a/\sigma}^{\infty} u e^{-u^2/2}\,du
+\;+\;
+a\sigma\int_{-a/\sigma}^{\infty} e^{-u^2/2}\,du.
+\end{align*}
+The first integral evaluates to $e^{-a^2/(2\sigma^2)}$ since
+$\int u e^{-u^2/2}du=-e^{-u^2/2}$, hence
+\[
+\int_{-a/\sigma}^{\infty} u e^{-u^2/2}\,du
+=
+\left[-e^{-u^2/2}\right]_{-a/\sigma}^{\infty}
+=
+e^{-a^2/(2\sigma^2)}.
+\]
+For the second integral,
+\[
+\int_{-a/\sigma}^{\infty} e^{-u^2/2}\,du
+=
+\sqrt{2\pi}\,\Phi\!\left(\frac{a}{\sigma}\right),
+\]
+by the definition of $\Phi$ and symmetry of the standard normal density. Combining,
+\[
+\int_0^\infty r\exp\!\left(-\frac{(r-a)^2}{2\sigma^2}\right)\,dr
+=
+\sigma^2 e^{-a^2/(2\sigma^2)}
++
+a\sigma\sqrt{2\pi}\,\Phi\!\left(\frac{a}{\sigma}\right).
+\]
+Substituting back into $f_\Theta(\theta)$ with $a=mc(\theta)$ yields
+\begin{align*}
+f_\Theta(\theta)
+&=
+\frac{1}{2\pi\sigma^2}\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)
+\left[
+\sigma^2 e^{-\frac{m^2c(\theta)^2}{2\sigma^2}}
++
+(mc(\theta))\sigma\sqrt{2\pi}\,\Phi\!\left(\frac{mc(\theta)}{\sigma}\right)
+\right]\\
+&=
+\frac{1}{2\pi}\exp\!\left(-\frac{m^2}{2\sigma^2}\right)
++
+\frac{mc(\theta)}{\sqrt{2\pi}\,\sigma}
+\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)
+\Phi\!\left(\frac{mc(\theta)}{\sigma}\right),
+\end{align*}
+and recalling $c(\theta)=\cos(\theta-\phi_0)$ gives the stated formula.
+\end{proof}
+
+Maximizing the likelihood from Theorem~\ref{thm:projected-normal-angle} is complex due to the non-linear form of the density. However, for practical purposes, we focus on the variance structure derived from the linear approximation. Also, changing the distance structure (e.g., using sine-wrapped loss) leads to similar conclusions regarding the weighting of observations.
+
+
 This implies that angular observations are less reliable in regions where the vector field magnitude $\rho(r)$ is small.
 
 \section{Estimation and Inference}
@@ -92,7 +244,56 @@ The estimator $\hat{\theta}$ is obtained by:
 Since $L(\theta)$ is non-linear with respect to parameters $p$ and the geometry of the angle $\alpha_\theta$, we utilize numerical optimization (e.g., L-BFGS-B or Newton-Raphson) to solve for $\hat{\theta}$.
 
 \subsection{Objective correction}
-As seen
+As seen in Equation \eqref{radial-objective}, the weights $\rho(Z_i)^2$ provide a natural correction for the heteroskedasticity in angular observations. But this is not enough. To see that, we have to look at the log-likelihood function more closely. 
+Depending on the distance function used to measure the angular error, we can derive different forms of the log-likelihood function. First, let's consider the squared error distance function.
+
+\paragraph{Squared-error angular likelihood}
+The log-likelihood under the linearized Gaussian angle model is
+\begin{equation}
+\ell_{\text{SE}}(\theta| \alpha_1, \ldots, \alpha_n)
+= -\frac{1}{2}\sum_{i=1}^n
+\left[
+\log\!\left( 2\pi\,\frac{\sigma^2}{\rho_\theta(Z_i)^2} \right)
++ \frac{\big(\Delta\alpha_i(\theta)\big)^2}{\sigma^2/\rho_\theta(Z_i)^2}
+\right],
+\end{equation}
+where $\Delta\alpha_i(\theta) = \operatorname{wrap}\big(\hat{\alpha}_i - \alpha_\theta(Z_i)\big)$ and $\rho_\theta(Z_i)$ is the field magnitude at $Z_i$.
+Dropping the constant $\log(2\pi\sigma^2)$ and multiplying through gives the equivalent minimization:
+\begin{equation}
+\hat{\theta}
+= \arg\min_\theta\;
+\sum_{i=1}^n
+\left[
+\rho_\theta(Z_i)^2\,\big(\Delta\alpha_i(\theta)\big)^2
+- \log \rho_\theta(Z_i)^2
+\right].
+\end{equation}
+Compared to Equation~\eqref{radial-objective}, this adds a correction term $-\sum_i \log \rho_\theta(Z_i)^2$ arising from the normalization of the heteroskedastic Gaussian.
+
+\paragraph{Sine-wrapped loss and small-angle approximation}
+Using the circle-aware loss $\sin^2\Delta\alpha_i(\theta)$, the same normalization leads to
+\begin{equation}
+\hat{\theta}
+= \arg\min_\theta\;
+\sum_{i=1}^n
+\left[
+\rho_\theta(Z_i)^2\,\sin^2\!\big(\Delta\alpha_i(\theta)\big)
+- \log \rho_\theta(Z_i)^2
+\right],
+\end{equation}
+which coincides with the squared-error form for small angles since $\sin^2 x \approx x^2$.
+
+\paragraph{Von Mises alternative}
+A circular likelihood with concentration $\kappa_i \propto \rho_\theta(Z_i)^2/\sigma^2$ gives
+\begin{equation}
+\ell_{\text{VM}}(\theta)
+= \sum_{i=1}^n \left[ \kappa_i(\theta)\,\cos\big(\Delta\alpha_i(\theta)\big) - \log I_0\big(\kappa_i(\theta)\big) \right],
+\quad
+\kappa_i(\theta) = c\,\frac{\rho_\theta(Z_i)^2}{\sigma^2},
+\end{equation}
+where $I_0$ is the modified Bessel function and $c>0$ is a scale constant.
+Maximizing $\ell_{\text{VM}}$ yields a similar trade-off: a data-fit term and a normalization term $\log I_0(\kappa_i)$ that depends on $\rho_\theta(Z_i)^2$.
+
 \section{Results}
 [Insert parameter estimates for A, b, p here]
 
