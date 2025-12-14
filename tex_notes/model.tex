@@ -246,54 +246,6 @@ Since $L(\theta)$ is non-linear with respect to parameters $p$ and the geometry 
 \subsection{Objective correction}
 As seen in Equation \eqref{radial-objective}, the weights $\rho(Z_i)^2$ provide a natural correction for the heteroskedasticity in angular observations. But this is not enough. To see that, we have to look at the log-likelihood function more closely. 
 Depending on the distance function used to measure the angular error, we can derive different forms of the log-likelihood function. First, let's consider the squared error distance function.
-
-\paragraph{Squared-error angular likelihood}
-The log-likelihood under the linearized Gaussian angle model is
-\begin{equation}
-\ell_{\text{SE}}(\theta| \alpha_1, \ldots, \alpha_n)
-= -\frac{1}{2}\sum_{i=1}^n
-\left[
-\log\!\left( 2\pi\,\frac{\sigma^2}{\rho_\theta(Z_i)^2} \right)
-+ \frac{\big(\Delta\alpha_i(\theta)\big)^2}{\sigma^2/\rho_\theta(Z_i)^2}
-\right],
-\end{equation}
-where $\Delta\alpha_i(\theta) = \operatorname{wrap}\big(\hat{\alpha}_i - \alpha_\theta(Z_i)\big)$ and $\rho_\theta(Z_i)$ is the field magnitude at $Z_i$.
-Dropping the constant $\log(2\pi\sigma^2)$ and multiplying through gives the equivalent minimization:
-\begin{equation}
-\hat{\theta}
-= \arg\min_\theta\;
-\sum_{i=1}^n
-\left[
-\rho_\theta(Z_i)^2\,\big(\Delta\alpha_i(\theta)\big)^2
-- \log \rho_\theta(Z_i)^2
-\right].
-\end{equation}
-Compared to Equation~\eqref{radial-objective}, this adds a correction term $-\sum_i \log \rho_\theta(Z_i)^2$ arising from the normalization of the heteroskedastic Gaussian.
-
-\paragraph{Sine-wrapped loss and small-angle approximation}
-Using the circle-aware loss $\sin^2\Delta\alpha_i(\theta)$, the same normalization leads to
-\begin{equation}
-\hat{\theta}
-= \arg\min_\theta\;
-\sum_{i=1}^n
-\left[
-\rho_\theta(Z_i)^2\,\sin^2\!\big(\Delta\alpha_i(\theta)\big)
-- \log \rho_\theta(Z_i)^2
-\right],
-\end{equation}
-which coincides with the squared-error form for small angles since $\sin^2 x \approx x^2$.
-
-\paragraph{Von Mises alternative}
-A circular likelihood with concentration $\kappa_i \propto \rho_\theta(Z_i)^2/\sigma^2$ gives
-\begin{equation}
-\ell_{\text{VM}}(\theta)
-= \sum_{i=1}^n \left[ \kappa_i(\theta)\,\cos\big(\Delta\alpha_i(\theta)\big) - \log I_0\big(\kappa_i(\theta)\big) \right],
-\quad
-\kappa_i(\theta) = c\,\frac{\rho_\theta(Z_i)^2}{\sigma^2},
-\end{equation}
-where $I_0$ is the modified Bessel function and $c>0$ is a scale constant.
-Maximizing $\ell_{\text{VM}}$ yields a similar trade-off: a data-fit term and a normalization term $\log I_0(\kappa_i)$ that depends on $\rho_\theta(Z_i)^2$.
-
 \section{Results}
 [Insert parameter estimates for A, b, p here]
 
