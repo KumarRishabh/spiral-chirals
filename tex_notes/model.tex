@@ -33,7 +33,8 @@ We define the vector field $F_\theta$ as the gradient of a scalar potential func
 V_\theta(r,\phi) = A\,g_p(r) - b\,\phi,
 \end{equation}
 where $A, b \in \mathbb{R}$ are coefficients, and the radial function $g_p(r)$ is defined as:
-\begin{equation}
+\begin{equation} 
+    % Use monotonically increasing condition on g_p (through kernels maybe?)
 g_p(r) =
 \begin{cases}
 \ln r, & p = 0, \\[6pt]
@@ -113,7 +114,7 @@ Define
 Write $m:=\|\mu\|$ and $\phi_0:=\operatorname{atan2}(\mu_2,\mu_1)$, so that
 $\mu = m(\cos\phi_0,\sin\phi_0)^\top$.
 Then $\Theta$ has a density on $(-\pi,\pi]$ given by
-\begin{align} \label{Angular Gaussian pdf}
+\begin{align}
 f_\Theta(\theta)
 &=
 \frac{1}{2\pi}\exp\!\left(-\frac{m^2}{2\sigma^2}\right)
@@ -150,11 +151,11 @@ Write $\mu=m(\cos\phi_0,\sin\phi_0)^\top$. Then
 \end{align*}
 Set $c(\theta):=\cos(\theta-\phi_0)$ and rewrite
 \[
-r^2+m^2-2rmc(\theta)
+r^2+m^2-2rm \cos(\theta - \phi_0)
 =
-(r-mc(\theta))^2+m^2(1-c(\theta)^2)
+(r-m \cos(\theta - \phi_0))^2+m^2(1-c(\theta)^2)
 =
-(r-mc(\theta))^2+m^2\sin^2(\theta-\phi_0).
+(r-m \cos(\theta - \phi_0))^2+m^2\sin^2(\theta-\phi_0).
 \]
 Therefore,
 \[
@@ -163,9 +164,9 @@ f_\Theta(\theta)
 \int_0^\infty f_{R,\Theta}(r,\theta)\,dr
 =
 \frac{1}{2\pi\sigma^2}\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)
-\int_0^\infty r\exp\!\left(-\frac{(r-mc(\theta))^2}{2\sigma^2}\right)\,dr.
+\int_0^\infty r\exp\!\left(-\frac{(r-m \cos(\theta - \phi_0))^2}{2\sigma^2}\right)\,dr.
 \]
-Let $a:=mc(\theta)$ and substitute $u=(r-a)/\sigma$ (so $r=\sigma u+a$, $dr=\sigma du$), giving
+Let $a:=m \cos(\theta - \phi_0)$ and substitute $u=(r-a)/\sigma$ (so $r=\sigma u+a$, $dr=\sigma du$), giving
 \begin{align*}
 \int_0^\infty r\exp\!\left(-\frac{(r-a)^2}{2\sigma^2}\right)\,dr
 &=
@@ -198,22 +199,22 @@ by the definition of $\Phi$ and symmetry of the standard normal density. Combini
 +
 a\sigma\sqrt{2\pi}\,\Phi\!\left(\frac{a}{\sigma}\right).
 \]
-Substituting back into $f_\Theta(\theta)$ with $a=mc(\theta)$ yields
+Substituting back into $f_\Theta(\theta)$ with $a= m \cos(\theta - \phi_0)$ yields,
 \begin{align*}
 f_\Theta(\theta)
 &=
 \frac{1}{2\pi\sigma^2}\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)
 \left[
-\sigma^2 e^{-\frac{m^2c(\theta)^2}{2\sigma^2}}
+\sigma^2 e^{-\frac{m^2 \cos(\theta - \phi_0)^2}{2\sigma^2}}
 +
-(mc(\theta))\sigma\sqrt{2\pi}\,\Phi\!\left(\frac{mc(\theta)}{\sigma}\right)
+(m \cos(\theta - \phi_0))\sigma\sqrt{2\pi}\,\Phi\!\left(\frac{m \cos(\theta - \phi_0)}{\sigma}\right)
 \right]\\
 &=
 \frac{1}{2\pi}\exp\!\left(-\frac{m^2}{2\sigma^2}\right)
 +
-\frac{mc(\theta)}{\sqrt{2\pi}\,\sigma}
+\frac{m \cos(\theta - \phi_0)}{\sqrt{2\pi}\,\sigma}
 \exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)
-\Phi\!\left(\frac{mc(\theta)}{\sigma}\right),
+\Phi\!\left(\frac{m \cos(\theta - \phi_0)}{\sigma}\right),
 \end{align*}
 and recalling $c(\theta)=\cos(\theta-\phi_0)$ gives the stated formula.
 \end{proof}
@@ -222,6 +223,28 @@ Maximizing the likelihood from Theorem~\ref{thm:projected-normal-angle} is compl
 
 
 This implies that angular observations are less reliable in regions where the vector field magnitude $\rho(r)$ is small.
+
+Most directional statistics regression assume the angular noise as homoskedastic (e.g., Von Mises distribution with constant concentration parameter). However, in our case, the noise variance depends on the field magnitude, necessitating a heteroskedastic treatment.
+
+\subsection{Traditional Approaches and Limitations}
+Standard regression techniques for directional data, such as those based on the Von Mises distribution, typically assume constant noise variance. Applying such methods directly to our data would ignore the critical dependence of angular uncertainty on the field magnitude, leading to biased parameter estimates.
+
+Consider angular data, $\hat{\alpha}_1, \ldots, \hat{\alpha}_n$ observed at locations $Z_1, \ldots, Z_n$. The regression model is given by:
+\begin{equation}
+\hat{\alpha}_i = \alpha_\theta(Z_i) + \eta_i,
+\end{equation}
+where $\eta_i$ are independent errors. Traditional methods assume $\eta_i \sim \text{VM}(0, \kappa)$ with constant concentration $\kappa$. 
+We can write the joint likelihood as:
+\begin{equation}
+\ell(\theta | \hat{\alpha}_1, \ldots, \hat{\alpha}_n) = \sum_{i=1}^n \left[ \kappa \cos(\hat{\alpha}_i - \alpha_\theta(Z_i)) - \log I_0(\kappa) \right],
+\end{equation}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{tex_images/isotropy-anisotropy.png}
+    \caption{Von Mises as an approximation to the projected normal. The approximation is accurate in the isotropic regime but deteriorates under anisotropy and fails entirely when the projected normal becomes skewed or bimodal.}
+    \label{fig:heteroskedasticity}
+\end{figure}
 
 \section{Estimation and Inference}
 
@@ -245,7 +268,64 @@ Since $L(\theta)$ is non-linear with respect to parameters $p$ and the geometry 
 
 \subsection{Objective correction}
 As seen in Equation \eqref{radial-objective}, the weights $\rho(Z_i)^2$ provide a natural correction for the heteroskedasticity in angular observations. But this is not enough. To see that, we have to look at the log-likelihood function more closely. 
-Depending on the distance function used to measure the angular error, we can derive different forms of the log-likelihood function. First, let's consider the squared error distance function.
+Depending on the distance function used to measure the angular error, we can derive different forms of the log-likelihood function. Consider we observe the angles $\alpha_1, \ldots, \alpha_n$ at locations $Z_1, \ldots, Z_n$. Then the log-likelihood function can be derived as follows:
+\begin{align}
+\ell(\theta\,|\, \alpha_1, \ldots, \alpha_n)
+&= -\frac{1}{2}\sum_{i=1}^n
+\left[
+\log\!\left( 2\pi\,\frac{\sigma^2}{\rho_\theta(Z_i)^2}  \right)
++ \frac{d(\hat{\alpha}_i, \alpha_\theta(Z_i))^2 \rho_\theta(Z_i)^2}{\sigma^2}
+\right]
+\end{align}
+
+
+% \paragraph{Squared-error angular likelihood}
+% The log-likelihood under the linearized Gaussian angle model is
+% \begin{equation}
+% \ell_{\text{SE}}(\theta| \alpha_1, \ldots, \alpha_n)
+% = -\frac{1}{2}\sum_{i=1}^n
+% \left[
+% \log\!\left( 2\pi\,\frac{\sigma^2}{\rho_\theta(Z_i)^2} \right)
+% + \frac{\big(\Delta\alpha_i(\theta)\big)^2}{\sigma^2/\rho_\theta(Z_i)^2}
+% \right],
+% \end{equation}
+% where $\Delta\alpha_i(\theta) = \operatorname{wrap}\big(\hat{\alpha}_i - \alpha_\theta(Z_i)\big)$ and $\rho_\theta(Z_i)$ is the field magnitude at $Z_i$.
+% Dropping the constant $\log(2\pi\sigma^2)$ and multiplying through gives the equivalent minimization:
+% \begin{equation}
+% \hat{\theta}
+% = \arg\min_\theta\;
+% \sum_{i=1}^n
+% \left[
+% \rho_\theta(Z_i)^2\,\big(\Delta\alpha_i(\theta)\big)^2
+% - \log \rho_\theta(Z_i)^2
+% \right].
+% \end{equation}
+% Compared to Equation~\eqref{radial-objective}, this adds a correction term $-\sum_i \log \rho_\theta(Z_i)^2$ arising from the normalization of the heteroskedastic Gaussian.
+
+% \paragraph{Sine-wrapped loss and small-angle approximation}
+% Using the circle-aware loss $\sin^2\Delta\alpha_i(\theta)$, the same normalization leads to
+% \begin{equation}
+% \hat{\theta}
+% = \arg\min_\theta\;
+% \sum_{i=1}^n
+% \left[
+% \rho_\theta(Z_i)^2\,\sin^2\!\big(\Delta\alpha_i(\theta)\big)
+% - \log \rho_\theta(Z_i)^2
+% \right],
+% \end{equation}
+% which coincides with the squared-error form for small angles since $\sin^2 x \approx x^2$.
+
+% \paragraph{Von Mises alternative}
+% A circular likelihood with concentration $\kappa_i \propto \rho_\theta(Z_i)^2/\sigma^2$ gives
+% \begin{equation}
+% \ell_{\text{VM}}(\theta)
+% = \sum_{i=1}^n \left[ \kappa_i(\theta)\,\cos\big(\Delta\alpha_i(\theta)\big) - \log I_0\big(\kappa_i(\theta)\big) \right],
+% \quad
+% \kappa_i(\theta) = c\,\frac{\rho_\theta(Z_i)^2}{\sigma^2},
+% \end{equation}
+% where $I_0$ is the modified Bessel function and $c>0$ is a scale constant.
+% Maximizing $\ell_{\text{VM}}$ yields a similar trade-off: a data-fit term and a normalization term $\log I_0(\kappa_i)$ that depends on $\rho_\theta(Z_i)^2$.
+
 \section{Results}
 [Insert parameter estimates for A, b, p here]
 
