@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.12)  15 JAN 2026 13:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.12)  19 JAN 2026 15:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -419,6 +419,21 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [1
 
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 93--93
+[]$\OT1/cmr/m/n/10.95 = [] [] []\OML/cmm/m/it/10.95 d[]\OT1/cmr/m/n/10.95 ([]\OML/cmm/m/it/10.95 ; []\OT1/cmr/m/n/10.95 ) =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--93
+[]|$\OML/cmm/m/it/10.95 L[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^R\OT1/cmr/m/n/10.95 ) =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--93
+[]|$\OML/cmm/m/it/10.95 L[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^R\OT1/cmr/m/n/10.95 ) =
+ []
+
+
 
 [2]
 Overfull \hbox (10.49008pt too wide) detected at line 201
@@ -438,7 +453,7 @@ Overfull \hbox (29.39552pt too wide) detected at line 260
 
 
 [3]
-<tex_images/isotropy-anisotropy.png, id=103, 1293.633pt x 354.123pt>
+<tex_images/isotropy-anisotropy.png, id=111, 1293.633pt x 354.123pt>
 File: tex_images/isotropy-anisotropy.png Graphic file (type png)
 <use tex_images/isotropy-anisotropy.png>
 Package pdftex.def Info: tex_images/isotropy-anisotropy.png  used on input line 286.
@@ -471,21 +486,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `model.out' has not changed.
-(rerunfilecheck)             Checksum: 7D5D3EC06E8E4DC9627C1562DF5751B1;2069.
+(rerunfilecheck)             Checksum: CDC7267FDC5AB16BA68A0A238A7691CF;2382.
  ) 
 Here is how much of TeX's memory you used:
- 14391 strings out of 473190
- 281476 string characters out of 5715799
- 663297 words of memory out of 5000000
- 37450 multiletter control sequences out of 15000+600000
+ 14395 strings out of 473190
+ 281516 string characters out of 5715799
+ 662297 words of memory out of 5000000
+ 37452 multiletter control sequences out of 15000+600000
  569665 words of font info for 75 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,17n,79p,587b,1163s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on model.pdf (7 pages, 328601 bytes).
+Output written on model.pdf (7 pages, 329723 bytes).
 PDF statistics:
- 230 PDF objects out of 1000 (max. 8388607)
- 177 compressed objects within 2 object streams
- 43 named destinations out of 1000 (max. 500000)
- 110 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 238 PDF objects out of 1000 (max. 8388607)
+ 185 compressed objects within 2 object streams
+ 45 named destinations out of 1000 (max. 500000)
+ 126 words of extra memory for PDF output out of 10000 (max. 10000000)
 

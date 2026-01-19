@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex model"] 1768453871.09554 "model.aux" "model.bbl" "model" 1768453915.78691 0
+["bibtex model"] 1768808138.84403 "model.aux" "model.bbl" "model" 1768808139.96365 0
   "./references.bib" 1765604914.84153 286 e55c4bb1eb9b81c0e368ada911910d36 ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "model.aux" 1768453915.49952 3032 5e2ee177aa15c456ce0a6e8b8f2f5ccf "pdflatex"
+  "model.aux" 1768808139.70319 3268 42a49a8831c8ec31944168adde61f887 "pdflatex"
   (generated)
   "model.bbl"
   "model.blg"
   (rewritten before read)
-["pdflatex"] 1768453913.87012 "/Users/rishabhkumar/spiral-chirals/tex_notes/model.tex" "model.pdf" "model" 1768453915.7871 0
-  "/Users/rishabhkumar/spiral-chirals/tex_notes/model.tex" 1768453913.66513 23336 b0ce6b7ec9a3c6b809088f2a7e91800e ""
+["pdflatex"] 1768808138.96613 "/Users/rishabhkumar/spiral-chirals/tex_notes/model.tex" "model.pdf" "model" 1768808139.96377 0
+  "/Users/rishabhkumar/spiral-chirals/tex_notes/model.tex" 1768808138.08312 23401 011949689c9cc910204beb8ef78bd029 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1246382020 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy8.tfm" 1246382020 1120 200be8b775682cdf80acad4be5ef57e4 ""
@@ -124,10 +124,10 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1765544129 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1765544102 3345748 56465ddc27530ac12ee9a8583bfcf14f ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "model.aux" 1768453915.49952 3032 5e2ee177aa15c456ce0a6e8b8f2f5ccf "pdflatex"
-  "model.bbl" 1768453871.20058 49 0eba253fc001332e731e8aba3f23127b "bibtex model"
-  "model.out" 1768453915.5001 2069 7d5d3ec06e8e4dc9627c1562df5751b1 "pdflatex"
-  "model.tex" 1768453913.66513 23336 b0ce6b7ec9a3c6b809088f2a7e91800e ""
+  "model.aux" 1768808139.70319 3268 42a49a8831c8ec31944168adde61f887 "pdflatex"
+  "model.bbl" 1768808138.96388 49 0eba253fc001332e731e8aba3f23127b "bibtex model"
+  "model.out" 1768808139.70363 2382 cdc7267fdc5ab16ba68a0a238a7691cf "pdflatex"
+  "model.tex" 1768808138.08312 23401 011949689c9cc910204beb8ef78bd029 ""
   "tex_images/isotropy-anisotropy.png" 1767843638.31373 84973 714b36534db5794a1814b126c1737385 ""
   (generated)
   "model.aux"
