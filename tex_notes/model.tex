@@ -5,7 +5,7 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{siunitx}
-
+\usepackage{graphicx}
 \newtheorem{theorem}{Theorem}
 % \newtheorem{thm}{Theorem}
 
@@ -283,7 +283,7 @@ We can write the joint likelihood as:
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{tex_images/isotropy-anisotropy.png}
+    \includegraphics[width=\textwidth]{tex_images/smoothed_line_field_streamlines_RBF_kernel.svg}
     \caption{Von Mises as an approximation to the projected normal. The approximation is accurate in the isotropic regime but deteriorates under anisotropy and fails entirely when the projected normal becomes skewed or bimodal.}
     \label{fig:heteroskedasticity}
 \end{figure}
@@ -449,7 +449,12 @@ closed form.
 \end{proof}
 
 \section{Kernel Regression - TODO}
-
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{/Users/rishabhkumar/spiral-chirals/images/smoothed_line_field_streamlines_RBF_kernel.png}
+    \caption{Kernel regression for angular data with heteroskedastic noise. The weights adapt to the local field magnitude, improving estimation accuracy in regions of low signal strength.}
+    \label{fig:kernel-regression}
+\end{figure}
 \section{Tables and Figures}
 \section{Estimation and Inference}
 
