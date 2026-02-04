@@ -108,6 +108,39 @@ You can override column names in load_angle_coordinate_csv and build_spiral_data
 - The parametric fits implement the same objective forms used in the notebooks.
 - Bayesian comparison uses a BIC approximation for parametric models and an RBF GP marginal likelihood for the non-parametric baseline.
 
+## Research workflow & TODOs
+
+Use this checklist to keep the prediction pipeline reproducible and accurate.
+
+### Data & QC
+- [ ] Add a data inventory table (file name, sample count, missing rows).
+- [ ] Standardize coordinate parsing errors into a report.
+- [ ] Validate angle range and wrap to $(-\pi/2, \pi/2]$ for line-field use.
+
+### Baselines
+- [ ] Reproduce parametric fits (log, Archimedean, Fermat) on all datasets.
+- [ ] Save residual histograms and Q-Q plots for each model.
+- [ ] Track best model via BIC and Bayes factors.
+
+### Non‑parametric models
+- [ ] Cross‑validate kernel bandwidths for line‑field smoothing.
+- [ ] Compare Gaussian vs Epanechnikov kernels.
+- [ ] Add uncertainty bands to $\hat{\psi}(r)$ using bootstrap resampling.
+
+### Vector field reconstruction
+- [ ] Compare headless quiver vs streamline rendering for stability.
+- [ ] Add a grid‑based interpolation strategy (linear vs RBF).
+- [ ] Quantify vector field error using angular residual metrics.
+
+### Evaluation
+- [ ] Define a standard metric suite (MAE in degrees, circular RMSE, BIC, LML).
+- [ ] Add a single evaluation script that outputs a CSV summary.
+
+### Packaging
+- [ ] Add pyproject.toml with versioning and dependencies.
+- [ ] Add a minimal CLI for loading data and running a selected model.
+- [ ] Add tests for `parse_coord`, wrapping, and kernel smoothing.
+
 ## License
 
 Internal research code. Add a license if you plan to share publicly.
