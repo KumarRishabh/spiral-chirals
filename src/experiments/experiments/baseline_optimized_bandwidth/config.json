@@ -1,0 +1,14 @@
+{
+  "name": "baseline_optimized_bandwidth",
+  "csv_file": "experiments/cleaned_front_ee_1_1_3000x_rings_coords.csv",
+  "angle_col": "Angle (\u03b1\u2032)",
+  "coord_col": "Coordinate",
+  "data_transforms": [],
+  "kernel_config": {
+    "bandwidth": 0.1,
+    "kernel": "gaussian"
+  },
+  "parametric_config": null,
+  "run_bayes": true,
+  "notes": "Optimized: bandwidth=0.1 selected by BIC"
+}

@@ -1,0 +1,57 @@
+{
+  "config": {
+    "name": "baseline_optimized_bandwidth",
+    "csv_file": "experiments/cleaned_front_ee_1_1_3000x_rings_coords.csv",
+    "angle_col": "Angle (\u03b1\u2032)",
+    "coord_col": "Coordinate",
+    "data_transforms": [],
+    "kernel_config": {
+      "bandwidth": 0.1,
+      "kernel": "gaussian"
+    },
+    "parametric_config": null,
+    "run_bayes": true,
+    "notes": "Optimized: bandwidth=0.1 selected by BIC"
+  },
+  "timestamp": "2026-02-04T16:25:58.643487",
+  "n_samples": 137,
+  "kernel_results": {
+    "bandwidth": 0.1,
+    "mae_deg": 28.87557675851825,
+    "rmse_deg": 35.36111801769013,
+    "mean_residual_deg": -3.0683026359172105,
+    "std_residual_deg": 35.22774739314782
+  },
+  "bayes_results": [
+    {
+      "Model": "Logarithmic",
+      "p": 0,
+      "A": 72.01663517440215,
+      "b": 16.358685750125655,
+      "RSS": 81.95808730164671,
+      "BIC": -319.46985673935336,
+      "Delta_BIC": 0.0,
+      "BayesFactor": 1.0
+    },
+    {
+      "Model": "Archimedean",
+      "p": 1,
+      "A": 2583.908698426842,
+      "b": 16.358685750125655,
+      "RSS": 115.04176260587175,
+      "BIC": -226.55995588133175,
+      "Delta_BIC": 92.90990085802162,
+      "BayesFactor": 6.681459982111936e-21
+    },
+    {
+      "Model": "Fermat",
+      "p": 2,
+      "A": 79386.63713430213,
+      "b": 16.358685750125655,
+      "RSS": 125.611743345992,
+      "BIC": -202.47521008389967,
+      "Delta_BIC": 116.99464665545369,
+      "BayesFactor": 3.9349142503940366e-26
+    }
+  ]
+}

@@ -43,6 +43,7 @@ from .visualization import (
     plot_structure_function,
     plot_residual_hist,
 )
+from .experiments import ExperimentConfig, ExperimentRunner, KernelFitConfig, ParametricFitConfig
 
 __all__ = [
     "SpiralDataset",
