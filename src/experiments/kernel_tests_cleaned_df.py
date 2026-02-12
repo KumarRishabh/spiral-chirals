@@ -190,6 +190,11 @@ plt.savefig(plot_path, dpi=150)
 print(f"✓ Streamlines plot saved to {plot_path}")
 plt.show()
 
+### Print RSS of the kernel fit with best bandwidth ###
+rss_best = results_df.loc[results_df['bandwidth'] == best_bw, 'rss'].values[0]
+print(f"\n✓ RSS of kernel fit with best bandwidth ({best_bw}): {rss_best:.4f}")
+
+
 
 ### Model selection using Train/Test Split ###
 
@@ -224,12 +229,21 @@ for train_idx, test_idx in kf.split(data.x):
         cv_data[bw]['test_mae'].append(test_mae)
 
 # Plot train vs test
+# ...existing code...
+
+# Plot train vs test
 train_means = [np.mean(cv_data[bw]['train_mae']) for bw in bandwidths]
 test_means = [np.mean(cv_data[bw]['test_mae']) for bw in bandwidths]
+
+# --- NEW: pick bandwidth that minimizes mean test MAE ---
+min_test_idx = int(np.argmin(test_means))
+min_test_mae_bw = float(bandwidths[min_test_idx])
+print(f"\n✓ Best bandwidth by CV Test MAE: {min_test_mae_bw} (mean test MAE = {test_means[min_test_idx]:.4f}°)")
 
 plt.figure(figsize=(10, 6))
 plt.plot(bandwidths, train_means, 'o-', label='Train MAE', linewidth=2)
 plt.plot(bandwidths, test_means, 's-', label='Test MAE', linewidth=2)
+plt.axvline(min_test_mae_bw, color='black', linestyle='--', alpha=0.7, label=f'Best Test MAE: {min_test_mae_bw}')
 plt.fill_between(bandwidths, train_means, test_means, alpha=0.2, color='red')
 plt.xlabel('Bandwidth')
 plt.ylabel('MAE (degrees)')
@@ -237,3 +251,60 @@ plt.title('Overfitting Detection: Train vs Test Error')
 plt.legend()
 plt.grid(alpha=0.3)
 plt.show()
+
+# --- NEW: visualize streamlines using min_test_mae_bw (instead of best_bw) ---
+df = load_angle_coordinate_csv(csv_file)
+data = build_spiral_dataset(df)
+
+psi_fitted = smooth_line_field(
+    target_r=data.r,
+    sample_r=data.r,
+    sample_theta=data.phi_rad,
+    sample_phi_spatial=data.theta,
+    bandwidth=min_test_mae_bw,
+)
+theta_fitted = data.theta + psi_fitted
+phi_fitted = theta_fitted
+
+U_fit = np.cos(phi_fitted)
+V_fit = np.sin(phi_fitted)
+
+xi_smooth = np.linspace(data.x.min(), data.x.max(), 100)
+yi_smooth = np.linspace(data.y.min(), data.y.max(), 100)
+Xi_smooth, Yi_smooth = np.meshgrid(xi_smooth, yi_smooth)
+
+Ui_smooth = griddata((data.x, data.y), U_fit, (Xi_smooth, Yi_smooth), method='linear')
+Vi_smooth = griddata((data.x, data.y), V_fit, (Xi_smooth, Yi_smooth), method='linear')
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+ax1.quiver(
+    data.x, data.y, U_fit, V_fit,
+    pivot='mid', headwidth=0, headlength=0, headaxislength=0,
+    scale=25, width=0.004, color='purple', alpha=0.7
+)
+ax1.scatter(data.x, data.y, s=8, c='k', alpha=0.3)
+ax1.set_aspect('equal')
+ax1.set_xlabel('X')
+ax1.set_ylabel('Y')
+ax1.set_title(f'Fitted Line Field (Bandwidth={min_test_mae_bw})')
+ax1.grid(alpha=0.3)
+
+ax2.streamplot(Xi_smooth, Yi_smooth, Ui_smooth, Vi_smooth, density=2.0, color='teal', linewidth=1)
+ax2.scatter(data.x, data.y, s=5, c='red', alpha=0.2)
+ax2.set_aspect('equal')
+ax2.set_xlabel('X')
+ax2.set_ylabel('Y')
+ax2.set_title('Streamlines from Smoothed Field')
+ax2.grid(alpha=0.3)
+
+plt.tight_layout()
+
+# If you want it in the same experiment folder, keep using runner/config from above.
+# Otherwise, save locally:
+plot_path = Path("experiments") / f"streamlines_min_test_mae_bw_{min_test_mae_bw}.png"
+plt.savefig(plot_path, dpi=150)
+print(f"✓ Streamlines plot saved to {plot_path}")
+plt.show()
+
+### END OF FILE ###
