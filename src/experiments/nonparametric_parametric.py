@@ -509,7 +509,7 @@ def plot_kernel_cv_results(results: list[KernelCVResult]) -> None:
     # 1D plots: gaussian + uniform
     for res in results:
         if res.name in ("gaussian", "uniform"):
-            best_bw = res.best_params["bandwidth"]
+            best_bw = res.best_params_mae["bandwidth"]
             plt.figure(figsize=(10, 6))
             plt.plot(res.x1, res.train_means, "-", label="Train MAE", linewidth=2)
             plt.plot(res.x1, res.test_means, "-", label="Test MAE", linewidth=2)
@@ -620,6 +620,172 @@ def compare_linefield_models_rss(
 
     return rss
 
+def plot_kernel_cv_results(results: list[KernelCVResult]) -> None:
+    # 1D plots: gaussian + uniform (MAE)
+    for res in results:
+        if res.name in ("gaussian", "uniform"):
+            best_bw = res.best_params_mae["bandwidth"]
+            plt.figure(figsize=(10, 6))
+            plt.plot(res.x1, res.train_mae, "-", label="Train MAE", linewidth=2)
+            plt.plot(res.x1, res.test_mae, "-", label="Test MAE", linewidth=2)
+            plt.axvline(best_bw, color="black", linestyle="--", label=f"best={best_bw:g}")
+            plt.xlabel("Bandwidth")
+            plt.ylabel("MAE (degrees)")
+            plt.title(f"Line-field CV: {res.name} kernel (MAE)")
+            plt.legend()
+            plt.grid(alpha=0.3)
+            plt.tight_layout()
+            plt.show()
+
+    # 2D plot: multiplicative (MAE heatmap over sigma x kappa)
+    for res in results:
+        if res.name == "multiplicative":
+            sigma_grid = res.x1
+            kappa_grid = res.x2
+            assert kappa_grid is not None
+            test_mae = res.test_mae  # (n_sigma, n_kappa)
+
+            plt.figure(figsize=(9, 6))
+            plt.imshow(
+                test_mae,
+                origin="lower",
+                aspect="auto",
+                extent=[
+                    float(kappa_grid.min()),
+                    float(kappa_grid.max()),
+                    float(sigma_grid.min()),
+                    float(sigma_grid.max()),
+                ],
+            )
+            plt.colorbar(label="Mean Test MAE (deg)")
+            plt.xlabel("kappa")
+            plt.ylabel("sigma (bandwidth)")
+            bp = res.best_params_mae
+            plt.scatter([bp["kappa"]], [bp["sigma"]], c="red")
+            plt.title(f"Multiplicative kernel CV (MAE best sigma={bp['sigma']:.3g}, kappa={bp['kappa']:.3g})")
+            plt.tight_layout()
+            plt.show()
+
+
+def _fit_predict_parametric_pitch(
+    model: str,
+    psi_train: np.ndarray,
+    r_train: np.ndarray,
+    theta_train: np.ndarray,
+    phi_train: np.ndarray,
+    psi_test: np.ndarray,
+    r_test: np.ndarray,
+    theta_test: np.ndarray,
+    phi_test: np.ndarray,
+    *,
+    scaling: bool,
+    use_sin: bool,
+) -> tuple[float, float, float, float]:
+    """
+    Returns (train_mae_deg, test_mae_deg, train_rss, test_rss) for one parametric family.
+    """
+    if model == "archimedean":
+        fit = fit_archimedean_spiral(psi_train, r_train, scaling=scaling, use_sin=use_sin)
+        pitch_tr = archimedean_pitch(r_train, b=fit.value)
+        pitch_te = archimedean_pitch(r_test, b=fit.value)
+    elif model == "fermat":
+        fit = fit_fermat_spiral(psi_train, r_train, scaling=scaling, use_sin=use_sin)
+        pitch_tr = fermat_pitch(r_train, a=fit.value)
+        pitch_te = fermat_pitch(r_test, a=fit.value)
+    elif model == "log":
+        fit = fit_log_spiral_pitch(psi_train, r_train, use_sin=use_sin)  # no 'scaling' in this implementation
+        pitch_tr = log_spiral_pitch(r_train, k=fit.value)
+        pitch_te = log_spiral_pitch(r_test, k=fit.value)
+    else:
+        raise ValueError(model)
+
+    pred_tr = predict_phi(theta=theta_train, pitch_rad=pitch_tr)
+    pred_te = predict_phi(theta=theta_test, pitch_rad=pitch_te)
+
+    tr_mae = _mae_deg_linefield(phi_train, pred_tr)
+    te_mae = _mae_deg_linefield(phi_test, pred_te)
+    tr_rss = _rss_linefield(phi_train, pred_tr)
+    te_rss = _rss_linefield(phi_test, pred_te)
+    return tr_mae, te_mae, tr_rss, te_rss
+
+
+def run_linefield_cv_parametric(
+    csv_file: str,
+    *,
+    n_splits: int = 20,
+    seed: int = 42,
+    scaling: bool = True,
+    use_sin: bool = False,
+) -> dict[str, dict[str, float]]:
+    """
+    CV (train/test) for parametric pitch families from parametric.py.
+    Returns dict:
+      model -> {train_mae, test_mae, train_rss, test_rss}
+    """
+    df = load_angle_coordinate_csv(csv_file)
+    data = build_spiral_dataset(df)
+
+    kf = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
+
+    models = ["archimedean", "fermat", "log"]
+    acc = {
+        m: {"train_mae": 0.0, "test_mae": 0.0, "train_rss": 0.0, "test_rss": 0.0}
+        for m in models
+    }
+    folds = 0
+
+    for train_idx, test_idx in kf.split(data.x):
+        r_tr = data.r[train_idx]
+        r_te = data.r[test_idx]
+        theta_tr = data.theta[train_idx]
+        theta_te = data.theta[test_idx]
+        phi_tr = data.phi_rad[train_idx]
+        phi_te = data.phi_rad[test_idx]
+
+        psi_tr = relative_pitch(sample_theta=phi_tr, sample_phi_spatial=theta_tr)
+        psi_te = relative_pitch(sample_theta=phi_te, sample_phi_spatial=theta_te)
+
+        for m in models:
+            tr_mae, te_mae, tr_rss, te_rss = _fit_predict_parametric_pitch(
+                m,
+                psi_train=psi_tr,
+                r_train=r_tr,
+                theta_train=theta_tr,
+                phi_train=phi_tr,
+                psi_test=psi_te,
+                r_test=r_te,
+                theta_test=theta_te,
+                phi_test=phi_te,
+                scaling=scaling,
+                use_sin=use_sin,
+            )
+            acc[m]["train_mae"] += tr_mae
+            acc[m]["test_mae"] += te_mae
+            acc[m]["train_rss"] += tr_rss
+            acc[m]["test_rss"] += te_rss
+
+        folds += 1
+
+    denom = max(folds, 1)
+    for m in models:
+        for k in acc[m]:
+            acc[m][k] /= denom
+
+    print("\nParametric CV summary (mean over folds; lower is better):")
+    for m in sorted(models, key=lambda mm: acc[mm]["test_rss"]):
+        print(f"  {m:11s} test_RSS={acc[m]['test_rss']:.6g}  test_MAE={acc[m]['test_mae']:.4f}°")
+
+    # Plot test RSS bars
+    plt.figure(figsize=(8, 4))
+    names = models
+    vals = [acc[m]["test_rss"] for m in names]
+    plt.bar(names, vals)
+    plt.ylabel("Mean Test RSS (rad²)")
+    plt.title("Parametric families (CV): Test RSS")
+    plt.tight_layout()
+    plt.show()
+
+    return acc
 
 def plot_streamplot_overlay_from_bw(
     csv_file: str,
@@ -692,7 +858,7 @@ def plot_streamplot_overlay_from_bw(
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["synthetic", "linefield"], default="synthetic")
-    ap.add_argument("--csv", type=str, default="/Users/rishabhkumar/spiral-chirals/vf_exports/Front_EE-1_1_3000x_rings_coords.csv")
+    ap.add_argument("--csv", type=str, default="/Users/rishabhkumar/spiral-chirals/src/experiments/experiments/cleaned_front_ee_1_1_3000x_rings_coords.csv")
 
     ap.add_argument("--bw-min", type=float, default=0.1)
     ap.add_argument("--bw-max", type=float, default=100.0)
@@ -726,11 +892,19 @@ def main() -> None:
         )
 
         for r in results:
-            print(f"✓ Best {r.name}: {r.best_params}")
+            print(f"✓ {r.name} best_by_MAE: {r.best_params_mae} | best_by_RSS: {r.best_params_rss}")
 
         plot_kernel_cv_results(results)
         print_kernel_rss_leaderboard(results)
         plot_kernel_cv_results_rss(results)
+
+        run_linefield_cv_parametric(
+            args.csv,
+            n_splits=args.cv_splits,
+            seed=42,
+            scaling=True,
+            use_sin=False,
+        )
         # If you want overlay of the best model: use gaussian best by default
         if args.plot_overlay:
             # pick best overall (by min mean test MAE)
@@ -767,6 +941,30 @@ def main() -> None:
                 grid_n=args.grid_n,
                 title="Most-generalized vector field (min test MAE bw): df bg + fitted overlay",
             )
+
+    best_kernel_name = None
+    best_kernel_rss = float("inf")
+    best_kernel_bw = None
+    for r in results:
+        if r.name in ("gaussian", "uniform"):
+            i = int(np.argmin(r.test_rss))
+            val = float(r.test_rss[i])
+            if val < best_kernel_rss:
+                best_kernel_rss = val
+                best_kernel_name = r.name
+                best_kernel_bw = float(r.x1[i])
+        else:
+            flat = int(np.argmin(r.test_rss))
+            bi, bj = np.unravel_index(flat, r.test_rss.shape)
+            val = float(r.test_rss[bi, bj])
+            if val < best_kernel_rss:
+                best_kernel_rss = val
+                best_kernel_name = r.name
+                best_kernel_bw = float(r.x1[bi])  # sigma acts like bandwidth here
+
+    print(f"\n✓ Best kernel by mean test RSS: {best_kernel_name} bw/sigma={best_kernel_bw:g}  (RSS={best_kernel_rss:.6g})")
+    compare_linefield_models_rss(args.csv, kernel_bw=float(best_kernel_bw))
+
             
 if __name__ == "__main__":
     main()
