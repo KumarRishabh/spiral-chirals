@@ -511,8 +511,8 @@ def plot_kernel_cv_results(results: list[KernelCVResult]) -> None:
         if res.name in ("gaussian", "uniform"):
             best_bw = res.best_params_mae["bandwidth"]
             plt.figure(figsize=(10, 6))
-            plt.plot(res.x1, res.train_means, "-", label="Train MAE", linewidth=2)
-            plt.plot(res.x1, res.test_means, "-", label="Test MAE", linewidth=2)
+            plt.plot(res.x1, res.train_mae, "-", label="Train MAE", linewidth=2)
+            plt.plot(res.x1, res.test_mae, "-", label="Test MAE", linewidth=2)
             plt.axvline(best_bw, color="black", linestyle="--", label=f"best={best_bw:g}")
             plt.xlabel("Bandwidth")
             plt.ylabel("MAE (degrees)")
@@ -528,7 +528,7 @@ def plot_kernel_cv_results(results: list[KernelCVResult]) -> None:
             sigma_grid = res.x1
             kappa_grid = res.x2
             assert kappa_grid is not None
-            test_mae = res.test_means  # shape (n_sigma, n_kappa)
+            test_mae = res.test_mae  # shape (n_sigma, n_kappa)
 
             plt.figure(figsize=(9, 6))
             # imshow expects [rows, cols] => sigma as rows, kappa as cols
@@ -541,11 +541,57 @@ def plot_kernel_cv_results(results: list[KernelCVResult]) -> None:
             plt.colorbar(label="Mean Test MAE (deg)")
             plt.xlabel("kappa")
             plt.ylabel("sigma (bandwidth)")
-            bp = res.best_params
+            bp = res.best_params_mae
             plt.scatter([bp["kappa"]], [bp["sigma"]], c="red")
             plt.title(f"Multiplicative kernel CV (best sigma={bp['sigma']:.3g}, kappa={bp['kappa']:.3g})")
             plt.tight_layout()
             plt.show()
+
+
+def _best_nonparametric_from_cv(
+    results: list[KernelCVResult],
+    *,
+    best_by: str,
+) -> tuple[str, dict, float]:
+    """Pick best nonparametric estimator across kernels.
+
+    Args:
+        best_by: "mae" or "rss" (based on mean test metric across folds).
+
+    Returns:
+        (kernel_name, params_dict, best_score)
+    """
+    if best_by not in {"mae", "rss"}:
+        raise ValueError("best_by must be one of: 'mae', 'rss'")
+
+    best_name: str | None = None
+    best_params: dict | None = None
+    best_score = float("inf")
+
+    for r in results:
+        if best_by == "mae":
+            arr = r.test_mae
+        else:
+            arr = r.test_rss
+
+        if r.name in ("gaussian", "uniform"):
+            idx = int(np.argmin(arr))
+            score = float(arr[idx])
+            params = {"bandwidth": float(r.x1[idx])}
+        else:
+            flat = int(np.argmin(arr))
+            bi, bj = np.unravel_index(flat, arr.shape)
+            assert r.x2 is not None
+            score = float(arr[bi, bj])
+            params = {"sigma": float(r.x1[bi]), "kappa": float(r.x2[bj])}
+
+        if score < best_score:
+            best_score = score
+            best_name = r.name
+            best_params = params
+
+    assert best_name is not None and best_params is not None
+    return best_name, best_params, best_score
 
 
 def compare_linefield_models_rss(
@@ -791,37 +837,51 @@ def plot_streamplot_overlay_from_bw(
     csv_file: str,
     bandwidth: float,
     *,
+    kernel: str = "gaussian",
+    angular_kappa: float | None = None,
     grid_n: int = 140,
     density_bg: float = 1.6,
     density_fit: float = 2.2,
     title: str | None = None,
 ) -> None:
-    """Streamplot overlay: df/original field (background) + fitted field (overlay)."""
+    """Streamplot overlay: df/original field (background) + fitted field (overlay).
+
+    Notes:
+      - For kernel="multiplicative", pass angular_kappa.
+      - The fitted field is computed directly on the grid (no interpolation of fitted samples).
+    """
     df = load_angle_coordinate_csv(csv_file)
     data = build_spiral_dataset(df)
-
-    # Fit most-generalized field using the chosen bandwidth
-    psi_fitted = smooth_line_field(
-        target_r=data.r,
-        sample_r=data.r,
-        sample_theta=data.phi_rad,
-        sample_phi_spatial=data.theta,
-        bandwidth=float(bandwidth),
-    )
-    phi_fitted = data.theta + psi_fitted
-    u_fit = np.cos(phi_fitted)
-    v_fit = np.sin(phi_fitted)
 
     # Grid for streamplot
     xi = np.linspace(float(data.x.min()), float(data.x.max()), grid_n)
     yi = np.linspace(float(data.y.min()), float(data.y.max()), grid_n)
     Xi, Yi = np.meshgrid(xi, yi)
 
-    # Interpolate BOTH fields onto the grid
+    # Background: interpolate observed field onto the grid
     u_bg = griddata((data.x, data.y), data.u, (Xi, Yi), method="linear")
     v_bg = griddata((data.x, data.y), data.v, (Xi, Yi), method="linear")
-    u_fg = griddata((data.x, data.y), u_fit, (Xi, Yi), method="linear")
-    v_fg = griddata((data.x, data.y), v_fit, (Xi, Yi), method="linear")
+
+    # Fitted field: predict on grid points directly
+    r_grid = np.sqrt(Xi**2 + Yi**2).ravel()
+    theta_grid = np.arctan2(Yi, Xi).ravel()
+
+    if kernel == "multiplicative" and angular_kappa is None:
+        raise ValueError("angular_kappa must be provided for kernel='multiplicative'")
+
+    psi_grid = smooth_line_field(
+        target_r=r_grid,
+        sample_r=data.r,
+        sample_theta=data.phi_rad,
+        sample_phi_spatial=data.theta,
+        bandwidth=float(bandwidth),
+        kernel=kernel,
+        target_theta=theta_grid if kernel == "multiplicative" else None,
+        angular_kappa=float(angular_kappa) if angular_kappa is not None else None,
+    )
+    phi_grid = theta_grid + psi_grid
+    u_fg = np.cos(phi_grid).reshape(Xi.shape)
+    v_fg = np.sin(phi_grid).reshape(Xi.shape)
 
     fig, ax = plt.subplots(1, 1, figsize=(7.5, 7))
 
@@ -849,7 +909,10 @@ def plot_streamplot_overlay_from_bw(
     ax.set_aspect("equal")
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
-    ax.set_title(title or f"Streamplot overlay (df bg + fitted overlay), bw={bandwidth:g}")
+    kern_txt = kernel
+    if kernel == "multiplicative":
+        kern_txt = f"{kernel} (kappa={float(angular_kappa):g})"
+    ax.set_title(title or f"Streamplot overlay (df bg + fitted overlay), {kern_txt}, bw={bandwidth:g}")
     ax.grid(alpha=0.25)
     plt.tight_layout()
     plt.show()
@@ -871,6 +934,7 @@ def main() -> None:
 
     ap.add_argument("--plot-overlay", action="store_true")
     ap.add_argument("--grid-n", type=int, default=140)
+    ap.add_argument("--best-by", choices=["mae", "rss"], default="mae", help="Select best nonparametric estimator by mean test MAE or RSS.")
 
     args = ap.parse_args()
 
@@ -905,31 +969,21 @@ def main() -> None:
             scaling=True,
             use_sin=False,
         )
-        # If you want overlay of the best model: use gaussian best by default
+
         if args.plot_overlay:
-            # pick best overall (by min mean test MAE)
-            best_name = None
-            best_score = float("inf")
-            best_params: dict | None = None
-            for r in results:
-                if r.name in ("gaussian", "uniform"):
-                    score = float(np.min(r.test_means))
-                    if score < best_score:
-                        best_score, best_name, best_params = score, r.name, r.best_params
-                elif r.name == "multiplicative":
-                    score = float(np.min(r.test_means))
-                    if score < best_score:
-                        best_score, best_name, best_params = score, r.name, r.best_params
+            best_name, best_params, best_score = _best_nonparametric_from_cv(results, best_by=args.best_by)
+            score_label = "MAE" if args.best_by == "mae" else "RSS"
+            suffix = "°" if args.best_by == "mae" else " rad²"
+            print(f"✓ Best nonparametric by mean test {score_label}: {best_name} params={best_params} ({score_label}={best_score:.6g}{suffix})")
 
-            print(f"✓ Best overall by mean test MAE: {best_name} params={best_params} (MAE={best_score:.4f}°)")
-
-            # For overlay: currently uses gaussian kernel internally.
-            # If you want overlay to respect kernel type, tell me and I’ll extend plot_streamplot_overlay_from_bw()
+            bw = float(best_params.get("bandwidth", best_params.get("sigma")))
             plot_streamplot_overlay_from_bw(
                 csv_file=args.csv,
-                bandwidth=float(best_params.get("bandwidth", best_params.get("sigma"))),
+                bandwidth=bw,
+                kernel=best_name,
+                angular_kappa=float(best_params["kappa"]) if best_name == "multiplicative" else None,
                 grid_n=args.grid_n,
-                title=f"Best overall (by test MAE): {best_name} {best_params}",
+                title=f"Best nonparametric (by test {score_label}): {best_name} {best_params}",
             )
     else:
         # fallback to your previous gaussian-only CV
@@ -942,28 +996,10 @@ def main() -> None:
                 title="Most-generalized vector field (min test MAE bw): df bg + fitted overlay",
             )
 
-    best_kernel_name = None
-    best_kernel_rss = float("inf")
-    best_kernel_bw = None
-    for r in results:
-        if r.name in ("gaussian", "uniform"):
-            i = int(np.argmin(r.test_rss))
-            val = float(r.test_rss[i])
-            if val < best_kernel_rss:
-                best_kernel_rss = val
-                best_kernel_name = r.name
-                best_kernel_bw = float(r.x1[i])
-        else:
-            flat = int(np.argmin(r.test_rss))
-            bi, bj = np.unravel_index(flat, r.test_rss.shape)
-            val = float(r.test_rss[bi, bj])
-            if val < best_kernel_rss:
-                best_kernel_rss = val
-                best_kernel_name = r.name
-                best_kernel_bw = float(r.x1[bi])  # sigma acts like bandwidth here
-
-    print(f"\n✓ Best kernel by mean test RSS: {best_kernel_name} bw/sigma={best_kernel_bw:g}  (RSS={best_kernel_rss:.6g})")
-    compare_linefield_models_rss(args.csv, kernel_bw=float(best_kernel_bw))
+        best_kernel_name, best_kernel_params, best_kernel_score = _best_nonparametric_from_cv(results, best_by="rss")
+        best_kernel_bw = float(best_kernel_params.get("bandwidth", best_kernel_params.get("sigma")))
+        print(f"\n✓ Best kernel by mean test RSS: {best_kernel_name} bw/sigma={best_kernel_bw:g}  (RSS={best_kernel_score:.6g})")
+        compare_linefield_models_rss(args.csv, kernel_bw=float(best_kernel_bw))
 
             
 if __name__ == "__main__":
