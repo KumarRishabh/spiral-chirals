@@ -26,7 +26,7 @@ pip install numpy pandas scipy matplotlib scikit-learn pyplot anywidgets
 from pathlib import Path
 from spiral_chirals import load_angle_coordinate_csv, build_spiral_dataset
 from spiral_chirals import smooth_line_field, angle_residual_line_field
-
+ 
 csv_path = Path("vf_exports/Front_EE-1_1_3000x_rings_coords.csv")
 df = load_angle_coordinate_csv(csv_path)
 data = build_spiral_dataset(df)
@@ -287,6 +287,7 @@ Use this checklist to keep the prediction pipeline reproducible and accurate.
 - [ ] Reproduce parametric fits (log, Archimedean, Fermat) on all datasets.
 - [ ] Save residual histograms and Q-Q plots for each model.
 - [ ] Track best model via BIC and Bayes factors.
+- [ ] Study the distributional regression problem and formulate a solution for the same.
 
 ### Non‑parametric models
 - [x] Cross‑validate kernel bandwidths for line‑field smoothing (multi-file K-Fold CV, `--vf-exports-dir`).
