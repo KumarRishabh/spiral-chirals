@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import glob
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -833,6 +835,122 @@ def run_linefield_cv_parametric(
 
     return acc
 
+def run_multifile_cv(
+    vf_exports_dir: str,
+    *,
+    bandwidths: np.ndarray,
+    n_splits: int = 20,
+    seed: int = 42,
+    kappas: np.ndarray | None = None,
+    scaling: bool = True,
+    use_sin: bool = False,
+) -> dict[str, float]:
+    """Run kernel + parametric CV over every *.csv in vf_exports_dir.
+
+    For each file: pick the best bandwidth per kernel family (lowest mean test RSS).
+    Average those per-file best-RSS scores across all files, then rank all models.
+    Returns dict model_label -> mean_test_RSS.
+    """
+    csv_files = sorted(glob.glob(str(Path(vf_exports_dir) / "*.csv")))
+    if not csv_files:
+        raise FileNotFoundError(f"No *.csv files found in {vf_exports_dir!r}")
+
+    print(f"\nFound {len(csv_files)} CSV files in {vf_exports_dir!r}:")
+    for f in csv_files:
+        print(f"  {Path(f).name}")
+
+    # model_label -> list[per-file best-RSS]
+    all_rss: dict[str, list[float]] = {}
+
+    for csv_file in csv_files:
+        fname = Path(csv_file).name
+        print(f"\n--- {fname} ---")
+
+        # ── Nonparametric kernels ────────────────────────────────────────────
+        try:
+            kernel_results = run_linefield_cv_kernels(
+                csv_file,
+                bandwidths=bandwidths,
+                n_splits=n_splits,
+                seed=seed,
+                kappas=kappas,
+            )
+        except Exception as exc:
+            print(f"  [SKIP kernel CV] {exc}")
+            kernel_results = []
+
+        for res in kernel_results:
+            if res.name in ("gaussian", "uniform"):
+                best_i = int(np.argmin(res.test_rss))
+                score = float(res.test_rss[best_i])
+                label = f"kernel:{res.name}"
+            else:  # multiplicative
+                flat = int(np.argmin(res.test_rss))
+                bi, bj = np.unravel_index(flat, res.test_rss.shape)
+                assert res.x2 is not None
+                score = float(res.test_rss[bi, bj])
+                label = f"kernel:{res.name}"
+            all_rss.setdefault(label, []).append(score)
+            print(f"  {label:30s}  best_test_RSS={score:.6g}")
+
+        # ── Parametric families ──────────────────────────────────────────────
+        try:
+            param_acc = run_linefield_cv_parametric(
+                csv_file,
+                n_splits=n_splits,
+                seed=seed,
+                scaling=scaling,
+                use_sin=use_sin,
+            )
+        except Exception as exc:
+            print(f"  [SKIP parametric CV] {exc}")
+            param_acc = {}
+
+        for model_name, metrics in param_acc.items():
+            label = f"parametric:{model_name}"
+            score = float(metrics["test_rss"])
+            all_rss.setdefault(label, []).append(score)
+            print(f"  {label:30s}  best_test_RSS={score:.6g}")
+
+    # ── Average across files & rank ──────────────────────────────────────────
+    mean_rss: dict[str, float] = {k: float(np.mean(v)) for k, v in all_rss.items()}
+
+    print("\n" + "=" * 72)
+    print("MULTI-FILE LEADERBOARD  (mean test RSS across files; lower is better)")
+    print("=" * 72)
+    for label, val in sorted(mean_rss.items(), key=lambda kv: kv[1]):
+        n_files = len(all_rss[label])
+        print(f"  {label:35s}  mean_RSS={val:.6g}  (n_files={n_files})")
+
+    # ── Bar chart ────────────────────────────────────────────────────────────
+    labels_sorted = sorted(mean_rss, key=lambda k: mean_rss[k])
+    vals_sorted = [mean_rss[k] for k in labels_sorted]
+    short = [l.replace("kernel:", "").replace("parametric:", "param:") for l in labels_sorted]
+    colors = ["steelblue" if l.startswith("kernel") else "tomato" for l in labels_sorted]
+
+    fig, ax = plt.subplots(figsize=(max(10, len(labels_sorted) * 1.3), 5))
+    bars = ax.bar(short, vals_sorted, color=colors)
+    for bar, val in zip(bars, vals_sorted):
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height() * 1.01,
+            f"{val:.3g}",
+            ha="center", va="bottom", fontsize=8,
+        )
+    ax.set_ylabel("Mean Test RSS (rad²) across files")
+    ax.set_title(
+        f"Model comparison: nonparametric (blue) vs parametric (red)\n"
+        f"Averaged over {len(csv_files)} CSV files · {n_splits}-fold CV each"
+    )
+    ax.set_xticks(range(len(short)))
+    ax.set_xticklabels(short, rotation=35, ha="right", fontsize=9)
+    ax.grid(axis="y", alpha=0.3)
+    plt.tight_layout()
+    plt.show()
+
+    return mean_rss
+
+
 def plot_streamplot_overlay_from_bw(
     csv_file: str,
     bandwidth: float,
@@ -935,6 +1053,8 @@ def main() -> None:
     ap.add_argument("--plot-overlay", action="store_true")
     ap.add_argument("--grid-n", type=int, default=140)
     ap.add_argument("--best-by", choices=["mae", "rss"], default="mae", help="Select best nonparametric estimator by mean test MAE or RSS.")
+    ap.add_argument("--vf-exports-dir", type=str, default=None,
+                    help="Directory of *.csv files; run multi-file CV comparison and exit.")
 
     args = ap.parse_args()
 
@@ -946,6 +1066,17 @@ def main() -> None:
     kappas = None
     if not args.no_multiplicative:
         kappas = np.array([float(s.strip()) for s in args.kappas.split(",") if s.strip()])
+
+    # ── Multi-file CV: average RSS across all vf_exports CSVs ───────────────
+    if args.vf_exports_dir is not None:
+        run_multifile_cv(
+            args.vf_exports_dir,
+            bandwidths=bandwidths,
+            n_splits=args.cv_splits,
+            seed=42,
+            kappas=kappas,
+        )
+        return
 
     if args.test_kernels:
         results = run_linefield_cv_kernels(

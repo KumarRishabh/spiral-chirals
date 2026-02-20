@@ -107,10 +107,16 @@ def smooth_line_field(
             raise ValueError(f"Unknown kernel: {kernel!r}")
 
     denom = np.sum(weights, axis=1)
-    denom[denom < 1e-12] = 1.0
+    zero_mask = denom < 1e-12
+    denom[zero_mask] = 1.0
 
-    avg_c2 = (weights @ c2) / denom
-    avg_s2 = (weights @ s2) / denom
+    with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+        avg_c2 = (weights @ c2) / denom
+        avg_s2 = (weights @ s2) / denom
+
+    # For points with effectively zero support, fall back to 0 pitch
+    avg_c2[zero_mask] = 0.0
+    avg_s2[zero_mask] = 0.0
 
     return 0.5 * np.arctan2(avg_s2, avg_c2)
 
