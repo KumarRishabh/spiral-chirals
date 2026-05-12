@@ -1,0 +1,13 @@
+@book{mardia2000,
+  title={Directional Statistics},
+  author={Mardia, Kanti V. and Jupp, Peter E.},
+  year={2000},
+  publisher={Wiley}
+}
+
+@book{vanDerVaart2000,
+  title={Asymptotic Statistics},
+  author={van der Vaart, Aad W.},
+  year={2000},
+  publisher={Cambridge University Press}
+}
