@@ -4,9 +4,11 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{placeins}
 \usepackage{siunitx}
+\graphicspath{{tex_images/}}
 
-\title{Spiral Line-Field Models and Kernel Regression for Chiral Data}
+\title{A Mathematical Consulting Report on Chiral Line-Field Experiments}
 \author{Rishabh Kumar}
 \date{\today}
 
@@ -14,90 +16,187 @@
 \maketitle
 
 \begin{abstract}
-We compare global parametric spiral vector fields with RKHS/Gaussian-process kernel regressions for cleaned image-derived chiral line-field data.  Each observation is a segment midpoint $z_i=(x_i,y_i)$ together with an axial direction $\hat\alpha_i\equiv \hat\alpha_i+\pi$.  The analysis uses local axial-consistency cleaning, held-out axial residual sum of squares (RSS), optimized Gaussian-process evidence for doubled-angle embeddings, and BIC approximations for finite-dimensional parametric models.  The multiplicative spatial--angular RKHS kernel is preferred by both held-out RSS and evidence-style model comparison on the 39-dataset cleaned stress test.
+This note explains the chiral line-field experiment in the same order in which the code runs it.  The data are short line segments extracted from images.  Each segment gives a location and an orientation, but not an arrow direction, so angles separated by $\pi$ are treated as the same observation.  We first study the uncleaned and cleaned files, then compare two kinds of models: low-dimensional spiral formulae indexed by an exponent $p$, and non-parametric Gaussian-process/RKHS kernel regressions.  The comparison uses two mathematically different scores: held-out axial RSS, which measures predictive error on unseen folds, and evidence-style scores, which combine fit with a complexity penalty through Gaussian-process marginal likelihood or BIC.
 \end{abstract}
 
-\section{Data and Parametric Spiral Model}
-For each dataset, the raw perpendicular segments are converted to midpoint locations $z_i=(x_i,y_i)$ and observed line-field angles $\hat\alpha_i=\operatorname{atan2}(\Delta y_i,\Delta x_i)$.  Coordinates are centered and the image $y$-axis is inverted to obtain a Cartesian convention.  Since the segments are axial, residuals identify $\alpha$ and $\alpha+\pi$:
+\section{What the Data Are}
+The experiment reads the files \texttt{data/**/arrow\_segments.mat}.  Each row is a segment with endpoints $(x_{1i},y_{1i})$ and $(x_{2i},y_{2i})$.  The location used for modelling is the midpoint
+\begin{equation}
+  z_i=(x_i,y_i)=\left(\frac{x_{1i}+x_{2i}}{2},\frac{y_{1i}+y_{2i}}{2}\right).
+\end{equation}
+The image $y$-axis points downward, so the code flips the vertical coordinate before forming the mathematical angle
+\begin{equation}
+  \hat\alpha_i=\operatorname{atan2}\{-(y_{2i}-y_{1i}),x_{2i}-x_{1i}\}.
+\end{equation}
+This is an \emph{axial} observation.  A line segment has no head and no tail, so $\hat\alpha_i$ and $\hat\alpha_i+\pi$ describe the same observed line.  Directional statistics handles this by doubling angles, because $\alpha$ and $\alpha+\pi$ become $2\alpha$ and $2\alpha+2\pi$, which are identical on the circle.  This is the standard axial-data construction described in Mardia and Jupp, \emph{Directional Statistics}, Chapter 1, Section 1.1 \cite{mardia2000}.
+
+The cleaned experiment uses a central circular region of interest.  If \texttt{arrow\_maps.mat} has shape $150\times150$, the centre is $(75,75)$ and the radius is $0.39\cdot150=58.5$.  A segment is retained exactly when
+\begin{equation}
+  \|z_i-(75,75)\|_2\leq 58.5.
+\end{equation}
+This rule is not a theorem; it is an experimental preprocessing rule chosen to remove the peripheral line fragments and keep the central circular line field.  Its effect is measured directly: across the 39 datasets, the median retained fraction was $0.992$, the retained fraction ranged from $0.414$ to $1.000$, and the median cleaned sample size was 123 segments.
+
+\section{Data Study: Uncleaned and Cleaned Files}
+Let the raw dataset for file $j$ be
+\[
+  \mathcal D_j^{\mathrm{raw}}
+  =
+  \{(z_{ij},\hat\alpha_{ij}): i=1,\ldots,n_j^{\mathrm{raw}}\}.
+\]
+The cleaned dataset is the deterministic subset
+\[
+  \mathcal D_j^{\mathrm{clean}}
+  =
+  \{(z_{ij},\hat\alpha_{ij})\in\mathcal D_j^{\mathrm{raw}}:
+  \|z_{ij}-c_j\|_2\leq R_j\},
+  \qquad
+  n_j^{\mathrm{clean}}\leq n_j^{\mathrm{raw}}.
+\]
+For the available arrow maps, $c_j=(75,75)$ and $R_j=58.5$.  This means the cleaning rule changes only the index set of retained observations; it does not rotate, smooth, or re-estimate any angle.  The raw files contain 5,092 total segments across 39 datasets.  The cleaned files contain 4,721 retained segments, so 371 segments are removed.  On a per-dataset basis, $n_j^{\mathrm{raw}}$ has mean 130.56 and median 128, while $n_j^{\mathrm{clean}}$ has mean 121.05 and median 123.  The median retention ratio $n_j^{\mathrm{clean}}/n_j^{\mathrm{raw}}$ is 0.992, which shows that most datasets are changed lightly, but a few peripheral-heavy files are changed strongly.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth]{data_cleaning_study.png}
+\caption{Quantitative data study comparing the uncleaned and cleaned files.  The top-left panel plots $n_j^{\mathrm{raw}}$ against $n_j^{\mathrm{clean}}$; points on the dashed line would mean no pruning.  The top-right panel shows the retention ratio.  The bottom-left panel identifies the datasets for which the central ROI removes the most segments.  The bottom-right panel compares the raw and cleaned sample-size distributions.}
+\label{fig:data-cleaning-study}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.86\linewidth]{cleaning_examples.png}
+\caption{Representative raw and cleaned line fields.  The left column shows the uncleaned segment set, and the right column shows the central-ROI subset used in the model comparison.  These plots visually justify the data-design statement that cleaning removes peripheral fragments while retaining the central circular line field.}
+\label{fig:cleaning-examples}
+\end{figure}
+
+\FloatBarrier
+
+\section{The Error for a Line Field}
+A signed angular error $\hat\alpha_i-\alpha_i$ would be wrong for these data because it would treat two equivalent line directions, $\alpha$ and $\alpha+\pi$, as different.  The experiment therefore uses the axial residual
 \begin{equation}
   \Delta_i^{\mathrm{ax}}(\mathcal M)
   =
   \frac{1}{2}
-  \operatorname{atan2}\{\sin(2[\hat\alpha_i-\hat\alpha_{\mathcal M}(z_i)]),
-  \cos(2[\hat\alpha_i-\hat\alpha_{\mathcal M}(z_i)])\}.
+  \operatorname{atan2}\left(
+    \sin\{2[\hat\alpha_i-\hat\alpha_{\mathcal M}(z_i)]\},
+    \cos\{2[\hat\alpha_i-\hat\alpha_{\mathcal M}(z_i)]\}
+  \right).
   \label{eq:axial-residual}
 \end{equation}
-The cleaned dataset is defined reproducibly by a central circular region of interest (ROI): a segment is retained only if its midpoint lies inside the central disk of the corresponding $150\times150$ arrow map, with center $(75,75)$ and radius $58.5$.  This rule preserves the central circular line field and removes peripheral segments outside the circle.  It retained a median fraction $0.992$ of segments across the 39 datasets, with range $0.414$--$1.000$ and median cleaned sample size 123.
+The factor of two removes the axial ambiguity, and the final factor of $1/2$ maps the residual back to an angle in $[-\pi/2,\pi/2]$.  A perfect fit has $\Delta_i^{\mathrm{ax}}=0$.  A model that is perpendicular to the observed line has $|\Delta_i^{\mathrm{ax}}|=\pi/2$.
 
-The parametric family is derived from the scalar potential
-\begin{equation}
-  V_\theta(r,\phi)=A g_p(r)-b\phi,\qquad
-  g_p(r)=
-  \begin{cases}
-    \log r, & p=0,\\
-    r^p/p, & p\neq 0,
-  \end{cases}
-\end{equation}
-with polar coordinates $(r,\phi)$.  Its vector field is
-\begin{equation}
-  F_\theta(r,\phi)
-  =
-  \nabla V_\theta(r,\phi)
-  =
-  A r^{p-1}e_r-\frac{b}{r}e_\phi,
-  \qquad
-  \rho_\theta(r)=\|F_\theta(r,\phi)\|
-  =
-  \left(A^2 r^{2p-2}+\frac{b^2}{r^2}\right)^{1/2}.
-  \label{eq:parametric-field}
-\end{equation}
-The fixed exponent models are $p=0$ (logarithmic), $p=1$ (Archimedean), and $p=2$ (Fermat).  We also fit a continuous exponent model with $p\in(-1,3)$.  The angular noise motivation is the standard delta-method approximation for the angle of a noisy two-dimensional vector: if $W_i=F_{\theta_0}(z_i)+\varepsilon_i$ and $\varepsilon_i\sim N(0,\sigma^2I_2)$, then $\operatorname{Var}(\hat\alpha_i)\approx \sigma^2/\rho_{\theta_0}(z_i)^2$ \cite{vanDerVaart2000,mardia2000}.  Thus weak-field regions are intrinsically less informative, but model scoring is axial rather than signed.
-
-\section{Exact Kernel Models}
-The kernel regressions use the same observations but replace the single global spiral law by a smooth non-parametric covariance structure.  Let $d(z,z')=\|z-z'\|_2$ and let $\vartheta(z)=\operatorname{atan2}(y,x)$ be the polar angle of the location.  The three kernel families used in the stress test are
-\begin{align}
-  K_{\mathrm{RBF}}(z,z';\ell)
-  &=
-  \exp\!\left[-\frac{d(z,z')^2}{2\ell^2}\right],
-  \label{eq:rbf-kernel}\\
-  K_{\mathrm{unif}}(z,z';\ell)
-  &=
-  \mathbf 1\{d(z,z')\leq \ell\},
-  \label{eq:uniform-kernel}\\
-  K_{\mathrm{mult}}(z,z';\ell,\kappa)
-  &=
-  \exp\!\left[-\frac{d(z,z')^2}{2\ell^2}\right]\,
-  \exp\!\left[\kappa\cos\{\vartheta(z)-\vartheta(z')\}\right].
-  \label{eq:multiplicative-kernel}
-\end{align}
-The Gaussian RBF kernel controls spatial smoothness through the length scale $\ell$.  The uniform kernel is a compact local-neighborhood smoother; when interpreted as a covariance matrix it is stabilized numerically by the nugget term described below.  The multiplicative kernel augments spatial similarity with polar-angle similarity.  Importantly, the angular term in \eqref{eq:multiplicative-kernel} uses the geometry of the location, not the observed response angle, and therefore does not leak held-out outcomes into the predictor.  In the implementation used for these results, the kernel amplitude is fixed to one and the observation-noise variance is swept explicitly.
-
-The Gaussian RBF kernel is universal on compact subsets of Euclidean space: its RKHS is dense in the continuous functions under the uniform norm \cite{steinwart2001}.  The angular factor in \eqref{eq:multiplicative-kernel} is the von-Mises kernel on $S^1$; for $\kappa>0$ its Fourier coefficients are strictly positive, so it is also universal on the circle.  Hence the product kernel is universal on compact subsets of the product geometry $(z,\vartheta)$, and its restriction to the observed spatial domain remains a flexible non-parametric prior.  This universality statement does not apply to the uniform indicator kernel, which is used here as a local smoothing baseline rather than as a theoretically universal covariance.
-
-For a kernel $K_\theta$, the Gaussian-process covariance matrix is
-\begin{equation}
-  C_\theta = K_\theta(X,X)+\sigma_n^2 I_n.
-  \label{eq:gp-covariance}
-\end{equation}
-The line-field response is represented by the doubled-angle embedding $u_i=(\cos2\hat\alpha_i,\sin2\hat\alpha_i)$.  The GP fits the two coordinates independently with the same covariance $C_\theta$, and predictions are mapped back to an axial angle by $\hat\alpha(z)=\frac12\operatorname{atan2}\{\hat u_2(z),\hat u_1(z)\}$.  The bandwidth grid is dataset-adaptive rather than fixed: if $s_X=\max\{\operatorname{range}(x),\operatorname{range}(y),1\}$ and $d_{\mathrm{nn}}$ is the median nearest-neighbor spacing, then
-\[
-  \ell \in \operatorname{geomspace}\{\max(d_{\mathrm{nn}}/2,s_X/80,10^{-3}),\ \max(1.5s_X,2d_{\mathrm{nn}},4s_X/80),\ 14\}.
-\]
-The multiplicative kernel additionally sweeps $\kappa\in\{0,0.5,1,2,4,8,16\}$, and each model sweeps eight dataset-adaptive values of $\sigma_n$.
-
-\section{RSS, Evidence, BIC, and Bayes Factors}
-The predictive metric is held-out axial RSS,
+For prediction, the code reports held-out axial RSS,
 \begin{equation}
   \operatorname{RSS}_{\mathrm{test}}(\mathcal M)
   =
   \frac{1}{K}\sum_{k=1}^K
   \frac{1}{|I_k|}
-  \sum_{i\in I_k}\{\Delta_i^{\mathrm{ax}}(\mathcal M_{-k})\}^2,
+  \sum_{i\in I_k}
+  \left\{\Delta_i^{\mathrm{ax}}(\mathcal M_{-k})\right\}^2,
   \label{eq:test-rss}
 \end{equation}
-where $\mathcal M_{-k}$ is fit without the $k$th fold.  RSS estimates predictive risk; it does not directly penalize model dimension except through held-out performance.
+where $I_k$ is the $k$th fold and $\mathcal M_{-k}$ is fit without that fold.  In the code, $K=\min(10,n)$ and the folds are shuffled with random seed 42.  Cross-validation is used here as an estimate of predictive risk; Arlot and Celisse review this risk-estimation and model-selection interpretation in Sections 1, 4, and 6 of their survey \cite{arlot2010}.
 
-The evidence score for the RKHS/GP models is the optimized log marginal likelihood of the two-dimensional doubled-angle response matrix $U\in\mathbb R^{n\times2}$ \cite{rasmussen2006}:
+\section{The Parametric Spiral Models}
+The parametric family used in the current \texttt{src/cleaned\_linefield\_comparison.py} experiment is a one-angle vector-field basis.  After centering the cleaned coordinates, write
+\[
+  r_i=\sqrt{x_i^2+y_i^2},
+  \qquad
+  \theta_i=\operatorname{atan2}(y_i,x_i).
+\]
+For exponent $p$ and pitch parameter $\gamma$, the implemented vector has radial component $\cos\gamma$ and tangential component $-\sin\gamma\,r_i^p$.  Therefore the predicted line angle is
+\begin{equation}
+  \hat\alpha_{p,\gamma}(z_i)
+  =
+  \theta_i+
+  \operatorname{atan2}\left(-\sin\gamma\,r_i^p,\cos\gamma\right)
+  \quad \mathrm{mod}\ \pi.
+  \label{eq:parametric-implemented}
+\end{equation}
+This formula is the mathematical model being tested.  The fixed families are $p=0$ (logarithmic label), $p=1$ (Archimedean label), and $p=2$ (Fermat label).  The continuous parametric family fits $p\in(-1,3)$.  For fixed $p$, the code searches over $\gamma\in[-\pi,\pi]$ and then refines the best values with L-BFGS-B.  For the continuous family, the code searches a grid over $p$ and $\gamma$ and then optimizes both parameters.
+
+Equation~\eqref{eq:parametric-implemented} is deliberately much smaller than a kernel model.  It asks whether one global spiral exponent and one pitch angle can describe the whole cleaned field.  This is an interpretable hypothesis, but it is also restrictive: if the data contain local bends, local noise, or spatially varying pitch, a single pair $(p,\gamma)$ cannot adapt to them.
+
+\section{The Kernel Models}
+The kernel models first convert each observed axial angle to the doubled-angle vector
+\begin{equation}
+  u_i=(\cos 2\hat\alpha_i,\sin 2\hat\alpha_i)\in\mathbb R^2.
+  \label{eq:doubled-embedding}
+\end{equation}
+This maps each line to a point on the unit circle without distinguishing $\hat\alpha_i$ from $\hat\alpha_i+\pi$.  A Gaussian process is fit independently to the two coordinates of $u_i$ using the same covariance matrix.  If the predicted vector at $z$ is $\hat u(z)=(\hat u_1(z),\hat u_2(z))$, the predicted line angle is
+\begin{equation}
+  \hat\alpha(z)=\frac{1}{2}\operatorname{atan2}\{\hat u_2(z),\hat u_1(z)\}.
+\end{equation}
+
+The three exact kernels in the experiment are
+\begin{align}
+  K_{\mathrm{RBF}}(z,z';\ell)
+  &=
+  \exp\!\left[-\frac{\|z-z'\|_2^2}{2\ell^2}\right],
+  \label{eq:rbf-kernel}\\
+  K_{\mathrm{unif}}(z,z';\ell)
+  &=
+  \mathbf 1\{\|z-z'\|_2\leq \ell\},
+  \label{eq:uniform-kernel}\\
+  K_{\mathrm{mult}}(z,z';\ell,\kappa)
+  &=
+  \exp\!\left[-\frac{\|z-z'\|_2^2}{2\ell^2}\right]\,
+  \exp\!\left[\kappa\cos\{\vartheta(z)-\vartheta(z')\}\right],
+  \label{eq:multiplicative-kernel}
+\end{align}
+where $\vartheta(z)=\operatorname{atan2}(y,x)$.  The Gaussian RBF kernel says that nearby points should have similar line directions.  The uniform kernel is a local-neighbourhood baseline.  The multiplicative kernel says that two points are especially related when they are both spatially close and have similar polar angle around the centre.
+
+The length-scale grid is not the old absolute grid $\operatorname{geomspace}(0.2,220,14)$.  It is now dataset-adaptive.  Let
+\[
+  s_X=\max\{\operatorname{range}(x),\operatorname{range}(y),1\},
+  \qquad
+  d_{\mathrm{nn}}=\operatorname{median}_i \min_{j\neq i}\|z_i-z_j\|_2.
+\]
+The code sets
+\begin{equation}
+  \ell_{\min}=\max\left\{\frac{d_{\mathrm{nn}}}{2},\frac{s_X}{80},10^{-3}\right\},
+  \qquad
+  \ell_{\max}=\max\left\{1.5s_X,4\ell_{\min}\right\},
+  \label{eq:ell-grid}
+\end{equation}
+and then uses 14 geometrically spaced values
+\begin{equation}
+  \ell_j=\ell_{\min}
+  \left(\frac{\ell_{\max}}{\ell_{\min}}\right)^{j/13},
+  \qquad j=0,\ldots,13.
+\end{equation}
+This is what \texttt{geomspace} means: adjacent candidate values have the same multiplicative ratio, so the sweep covers small, medium, and large spatial scales evenly on a logarithmic scale.  The multiplicative kernel additionally sweeps
+\[
+  \kappa\in\{0,0.5,1,2,4,8,16\}.
+\]
+For every kernel candidate, the observation-noise parameter $\sigma_n$ is also swept over eight geometrically spaced values,
+\begin{equation}
+  \sigma_n\in
+  \operatorname{geomspace}(0.05b,0.9b,8),
+  \qquad
+  b=\max\left\{\frac{\operatorname{sd}(u_1)+\operatorname{sd}(u_2)}{2},0.05\right\}.
+  \label{eq:sigma-grid}
+\end{equation}
+Thus the kernel comparison is not using one fixed noise value across all datasets.
+
+\section{Universality and What It Means Here}
+Universality is an approximation property, not a score.  A kernel is universal on a compact domain $X$ when its RKHS is dense in $C(X)$, the continuous real-valued functions on $X$ under the uniform norm.  In plain language: with enough data and the right regularization, functions in the RKHS can approximate any continuous target pattern on that compact domain.
+
+The Gaussian RBF kernel is universal on compact subsets of Euclidean space.  The precise reference is Steinwart \cite{steinwart2001}: Definition 4 introduces universal kernels, Corollaries 10 and 11 give universality conditions using Taylor or Fourier expansions, and Example 1 states the Gaussian RBF case.  This theorem supports the use of the RBF model as a flexible non-parametric family.  It does not say that the RBF will automatically win finite-sample prediction, and it does not remove the need to tune $\ell$ and $\sigma_n$.
+
+The multiplicative kernel in \eqref{eq:multiplicative-kernel} inherits the RBF's spatial flexibility and multiplies it by a von-Mises angular similarity.  The angular factor has the Fourier expansion
+\[
+  \exp\{\kappa\cos(\vartheta-\vartheta')\}
+  =
+  I_0(\kappa)+2\sum_{m=1}^{\infty}I_m(\kappa)\cos\{m(\vartheta-\vartheta')\},
+\]
+where $I_m(\kappa)>0$ for $\kappa>0$.  The positive Fourier coefficients are the mathematical reason this factor can represent smooth angular variation around the centre.  The uniform kernel is different: it is included as a local averaging baseline, not because we rely on a universality theorem for it.
+
+\section{Evidence, Bayes Factors, and BIC}
+RSS asks, ``How well did the fitted model predict held-out angles?''  Evidence asks a different question: ``How probable are the observed responses after integrating over the latent function values allowed by the model?''  For a kernel with covariance matrix
+\begin{equation}
+  C_\theta=K_\theta(X,X)+\sigma_n^2I_n,
+\end{equation}
+and doubled-angle response matrix $U\in\mathbb R^{n\times2}$, the implemented Gaussian-process log marginal likelihood is
 \begin{equation}
   \log p(U\mid X,\theta)
   =
@@ -106,28 +205,38 @@ The evidence score for the RKHS/GP models is the optimized log marginal likeliho
   -n\log(2\pi).
   \label{eq:gp-evidence}
 \end{equation}
-The first term is data fit and the log-determinant term is the Occam factor.  For the finite-dimensional parametric models, we use the BIC approximation \cite{schwarz1978}
+The first term rewards fit.  The log-determinant term penalizes models that spread probability mass too diffusely over many possible response patterns.  This is the Gaussian-process Occam factor.  Rasmussen and Williams derive the one-output version in \emph{Gaussian Processes for Machine Learning}, Chapter 2, Equation (2.30), and Algorithm 2.1 gives the Cholesky implementation used by standard GP code \cite{rasmussen2006}.  Equation~\eqref{eq:gp-evidence} is the two-output independent-coordinate extension of that formula.
+
+For the finite-dimensional parametric models, the experiment uses the BIC approximation
 \begin{equation}
   \operatorname{BIC}(\mathcal M)
   =
-  k_{\mathcal M}\log n - 2\log L(\hat\theta_{\mathcal M}),
+  k_{\mathcal M}\log n-2\log L(\hat\theta_{\mathcal M}),
   \qquad
   \log p(y\mid \mathcal M)\approx -\frac{1}{2}\operatorname{BIC}(\mathcal M).
   \label{eq:bic}
 \end{equation}
-Bayes factors are computed from aggregate evidence over independent datasets \cite{kass1995}:
+Here $k_{\mathcal M}=1$ for fixed $p$ because only $\gamma$ is fit, and $k_{\mathcal M}=2$ for continuous $p$ because both $p$ and $\gamma$ are fit.  Schwarz introduced this large-sample criterion in \emph{The Annals of Statistics}, 6(2):461--464 \cite{schwarz1978}.  Kass and Raftery, Section 3 and their opening summary, explain Bayes factors and note that BIC gives a rough approximation to log Bayes factors \cite{kass1995}.
+
+Across datasets, the total evidence for model $m$ is
+\begin{equation}
+  E_m^{\mathrm{tot}}=\sum_{j=1}^{39}E_{mj}.
+\end{equation}
+The Bayes factor comparing model $m$ to the best model $m_\star$ is
 \begin{equation}
   \operatorname{BF}_{m,m_\star}
   =
   \exp\{E_m^{\mathrm{tot}}-E_{m_\star}^{\mathrm{tot}}\},
   \qquad
-  E_m^{\mathrm{tot}}=\sum_{j=1}^{39}E_{mj}.
+  \log_{10}\operatorname{BF}_{m,m_\star}
+  =
+  \frac{E_m^{\mathrm{tot}}-E_{m_\star}^{\mathrm{tot}}}{\log 10}.
   \label{eq:bayes-factor}
 \end{equation}
-Because the evidence gaps are extremely large, we report $\log_{10}\operatorname{BF}$ rather than the underflow-prone raw Bayes factor.
+This is why the Bayes factor is related to the residual score but is not the same number.  Residuals enter the likelihood term, but the evidence also contains covariance geometry, noise scale, and the log-determinant complexity penalty.
 
-\section{Results}
-Tables~\ref{tab:rss-results} and \ref{tab:evidence-results} report the 39-dataset central-ROI axial stress test.  The multiplicative RBF--von-Mises RKHS is the leading model under held-out RSS and aggregate evidence.  The parametric spirals are much more competitive under evidence after removing peripheral segments, although they remain far weaker under held-out predictive RSS.
+\section{Results on the Cleaned Datasets}
+Table~\ref{tab:rss-results} reports the held-out predictive experiment.  The multiplicative RBF--von-Mises RKHS has the smallest mean test RSS, the smallest median test RSS, and the smallest mean absolute axial error.  It also wins the dataset-by-dataset RSS comparison on 32 of 39 datasets; the uniform kernel wins 5, and the Gaussian RBF wins 2.
 
 \begin{table}[h!]
 \centering
@@ -145,9 +254,11 @@ Parametric $p=0$ (Logarithmic) & 0.6889 & 0.6875 & $40.14^\circ$ \\
 Parametric $p\in(-1,3)$ & 0.6953 & 0.6789 & $40.33^\circ$ \\
 \bottomrule
 \end{tabular}
-\caption{Held-out predictive comparison on cleaned data.  RSS is the mean squared axial residual per held-out point.}
+\caption{Held-out axial prediction on 39 cleaned datasets.  Lower RSS and lower MAE are better.}
 \label{tab:rss-results}
 \end{table}
+
+Table~\ref{tab:evidence-results} reports the evidence-style comparison.  The same multiplicative kernel is the aggregate winner.  The ordering is not identical to RSS because evidence is not a held-out loss: it rewards fit, penalizes unnecessary flexibility through the log determinant, and depends on the optimized noise scale.  In dataset-by-dataset evidence winners, the multiplicative kernel wins 17 of 39 datasets, parametric $p=0$ wins 12, parametric $p=2$ wins 5, parametric $p=1$ wins 4, and the Gaussian RBF wins 1.  Aggregating evidence over all datasets still favours the multiplicative kernel by a large margin.
 
 \begin{table}[h!]
 \centering
@@ -165,14 +276,75 @@ Gaussian RBF RKHS & $-152.740$ & $-5956.851$ & $-251.910$ \\
 Uniform RKHS & $-261.668$ & $-10205.062$ & $-2096.884$ \\
 \bottomrule
 \end{tabular}
-\caption{Evidence-style comparison on cleaned data.  Kernel rows use optimized GP marginal likelihood for the doubled-angle embedding; parametric rows use $-\operatorname{BIC}/2$ from axial residuals.  Bayes factors are relative to the multiplicative RBF--VM RKHS model.}
+\caption{Evidence-style comparison on the same 39 cleaned datasets.  Kernel rows use optimized GP marginal likelihood for the doubled-angle embedding; parametric rows use $-\operatorname{BIC}/2$ from axial residuals.  Bayes factors are relative to the multiplicative RBF--VM RKHS model.}
 \label{tab:evidence-results}
 \end{table}
 
-\section{Interpretation and Caveats}
-The agreement between held-out axial RSS and evidence indicates that the multiplicative spatial--angular kernel is not merely overfitting training data; it also predicts held-out line-field directions best.  The result is plausible statistically: a single global spiral exponent cannot adapt to local deviations in the observed field, whereas the multiplicative kernel borrows strength from nearby points with similar polar position.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.96\linewidth]{winner_counts_cleaned.png}
+\caption{Dataset-by-dataset winners for the evidence-style score and held-out axial RSS.  This plot explains why the aggregate evidence and RSS tables should not be read as identical experiments: RSS chooses the model with lowest held-out prediction error, while evidence also includes a covariance-volume penalty.}
+\label{fig:winner-counts}
+\end{figure}
 
-Two caveats remain.  First, Table~\ref{tab:evidence-results} combines optimized GP marginal likelihoods for a two-output line embedding with BIC approximations for parametric axial residuals.  This is a reasonable evidence-style comparison, but it is not a fully Bayesian analysis with matched priors over all finite- and infinite-dimensional hyperparameters.  Second, the coherence filter is deliberately local and non-parametric; it removes isolated orientation outliers but does not prove that the remaining data follow any single global spiral law.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{cv_axial_rss_boxplot.png}
+\caption{Distribution of held-out axial RSS across the 39 cleaned datasets.  The vertical ordering matches Table~\ref{tab:rss-results}: the multiplicative RBF--VM kernel has the lowest typical predictive error, followed by the Gaussian and uniform kernels, while the current parametric spiral basis has much larger held-out axial error.}
+\label{fig:rss-boxplot}
+\end{figure}
+
+\FloatBarrier
+
+\section{Streamline Diagnostics}
+The numerical scores are the primary evidence, but streamline plots help explain what the fitted line fields look like.  A streamline is an integral curve of the fitted orientation field.  If $\hat\alpha(z)$ is the fitted line angle, the displayed curves follow the local direction
+\[
+  \frac{d z(t)}{dt}
+  =
+  \{\cos \hat\alpha(z(t)),\sin \hat\alpha(z(t))\},
+\]
+with the understanding that the opposite sign gives the same line field.  These plots are diagnostic rather than part of the scoring function: the scores come from Equations~\eqref{eq:test-rss} and \eqref{eq:gp-evidence}, while the streamlines translate the fitted angle functions into geometry.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{01_EE+0p2-data-225x225__EE_0.2data_rot_-22deg__arrow_segments_streamlines.png}
+\caption{Fitted streamlines for one cleaned dataset.  The diagnostic question is whether the fitted field follows the same local circular flow as the observed line segments.  Kernel smoothers can bend locally because $\hat\alpha(z)$ is learned through $K(z,z')$, whereas the parametric family must express the field through the single global form in Equation~\eqref{eq:parametric-implemented}.}
+\label{fig:streamline-example-one}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{02_EE-0p63-data-225x225__EE-0.63data_rot_6deg__arrow_segments_streamlines.png}
+\caption{A second fitted-streamline example from a dataset with heavier cleaning.  The visual comparison should be read together with the raw-clean study in Figure~\ref{fig:data-cleaning-study}: when peripheral segments are removed, the fitted field is evaluated on the central region where the circular line pattern is the object of study.}
+\label{fig:streamline-example-two}
+\end{figure}
+
+\FloatBarrier
+
+The consulting interpretation is therefore simple but important.  The cleaned central field is not best described by the current one-exponent parametric spiral family.  The parametric models are interpretable and sometimes score well under evidence because they are low-dimensional, but their held-out errors are much larger.  The multiplicative kernel performs best because it has the right kind of flexibility: it is smooth in Euclidean location and also respects polar position around the centre.
+
+\section{What Is Certain, and What Is Not}
+The exact data cleaning rule, axial residual, parametric formula, kernels, hyperparameter grids, RSS table, evidence table, and Bayes-factor table are backed by the cleaned-experiment code and its generated CSV files.  The relevant local paths are \path{src/cleaned_linefield_comparison.py} and \path{data/cleaned_linefield_comparison/}.  The citations above back the statistical tools: axial doubling, cross-validation, GP marginal likelihood, BIC, Bayes factors, and RBF universality.
+
+Two points are deliberately stated as limitations rather than conclusions.  First, the ROI cleaning rule is an experimental design choice, not a statistical theorem.  Second, the evidence table mixes exact GP marginal likelihoods for the kernel models with BIC approximations for the parametric models.  That is a useful evidence-style comparison, but it is not the same as a fully Bayesian analysis with matched priors over every kernel and parametric hyperparameter.
+
+\section{Citation Map}
+\begin{center}
+\small
+\begin{tabular}{p{0.28\linewidth}p{0.62\linewidth}}
+\toprule
+Concept used here & Where to find it in the literature \\
+\midrule
+Axial angles and doubled angles & Mardia and Jupp, \emph{Directional Statistics}, Chapter 1, Section 1.1, where axial data are converted to circular data by doubling angles \cite{mardia2000}. \\
+Delta-method intuition for transformed estimators & van der Vaart, \emph{Asymptotic Statistics}, Chapter 3, especially Theorem 3.1 on the delta method \cite{vanDerVaart2000}. \\
+Cross-validation as risk and model-selection tool & Arlot and Celisse, \emph{Statistics Surveys} 4:40--79, Sections 1, 4, and 6 \cite{arlot2010}. \\
+GP marginal likelihood & Rasmussen and Williams, \emph{Gaussian Processes for Machine Learning}, Chapter 2, Equation (2.30), and Algorithm 2.1 \cite{rasmussen2006}. \\
+Universality of Gaussian RBF kernels & Steinwart, \emph{JMLR} 2:67--93, Definition 4, Corollaries 10--11, and Example 1 \cite{steinwart2001}. \\
+BIC/Schwarz criterion & Schwarz, \emph{The Annals of Statistics} 6(2):461--464 \cite{schwarz1978}. \\
+Bayes factors and BIC approximation & Kass and Raftery, \emph{JASA} 90(430):773--795, especially Section 3 and the opening summary comments on BIC \cite{kass1995}. \\
+\bottomrule
+\end{tabular}
+\end{center}
 
 \bibliographystyle{plain}
 \bibliography{references}
