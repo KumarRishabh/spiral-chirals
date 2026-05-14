@@ -21,7 +21,8 @@ from spiral_chirals.types import SpiralDataset
 
 
 DEFAULT_CSV = Path("vf_exports/Front_EE-1_1_3000x_rings_coords.csv")
-DEFAULT_OUT = Path("src/experiments/multiplicative_kernel_traintest")
+timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+DEFAULT_OUT = Path(f"src/experiments/multiplicative_kernel_traintest_{timestamp}")
 
 
 @dataclass(frozen=True)
