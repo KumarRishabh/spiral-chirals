@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.10)  13 MAY 2026 12:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.10)  22 MAY 2026 17:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/rishabhkumar/spiral-chirals/tex_notes/model.tex
-(/Users/rishabhkumar/spiral-chirals/tex_notes/model.tex
+**/Users/rishabhkumar/.codex/worktrees/124b/spiral-chirals/tex_notes/model.tex
+(/Users/rishabhkumar/.codex/worktrees/124b/spiral-chirals/tex_notes/model.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -258,6 +258,8 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
 \Hy@SectionHShift=\skip54
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/siunitx/siunitx.sty
 Package: siunitx 2025-02-27 v3.4.6 A comprehensive (SI) units package
 \l__siunitx_number_uncert_offset_int=\count301
@@ -300,7 +302,7 @@ Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
 \backup@length=\skip56
 \ar@cellbox=\box63
 ))
-Package translations Info: No language package found. I am going to use `english' as default language. on input line 13.
+Package translations Info: No language package found. I am going to use `english' as default language. on input line 15.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2024/06/23 v1.3e Standard LaTeX Color (DPC)
  (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics-cfg/color.cfg
@@ -314,24 +316,24 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 ) (./model.aux)
 \openout1 = `model.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -386,7 +388,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 13.
+Package hyperref Info: Link coloring OFF on input line 15.
  (./model.out) (./model.out)
 \@outlinefile=\write3
 \openout3 = `model.out'.
@@ -394,12 +396,12 @@ Package hyperref Info: Link coloring OFF on input line 13.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/translations/translations-basic-dictionary-english.trsl
 File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
 )
-Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 13.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 15.
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 15.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 17.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 15.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 17.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
@@ -407,37 +409,137 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [1
 
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+<tex_images/data_cleaning_study.png, id=90, 658.6425pt x 463.842pt>
+File: tex_images/data_cleaning_study.png Graphic file (type png)
+<use tex_images/data_cleaning_study.png>
+Package pdftex.def Info: tex_images/data_cleaning_study.png  used on input line 62.
+(pdftex.def)             Requested size: 464.64622pt x 327.22804pt.
+<tex_images/cleaning_examples.png, id=92, 578.16pt x 664.081pt>
+File: tex_images/cleaning_examples.png Graphic file (type png)
+<use tex_images/cleaning_examples.png>
+Package pdftex.def Info: tex_images/cleaning_examples.png  used on input line 69.
+(pdftex.def)             Requested size: 420.62877pt x 483.13354pt.
+
+
+[2 <./tex_images/data_cleaning_study.png>]
+
+[3 <./tex_images/cleaning_examples.png>]
+
+[4
+
+]
+
+[5]
+
+[6]
+<tex_images/gabor_pitch_kernel_smoother_mean_rss.png, id=150, 614.295pt x 331.639pt>
+File: tex_images/gabor_pitch_kernel_smoother_mean_rss.png Graphic file (type png)
+<use tex_images/gabor_pitch_kernel_smoother_mean_rss.png>
+Package pdftex.def Info: tex_images/gabor_pitch_kernel_smoother_mean_rss.png  used on input line 290.
+(pdftex.def)             Requested size: 381.49963pt x 205.96321pt.
+<tex_images/gabor_pitch_kernel_vs_parametric_boxplot.png, id=151, 686.565pt x 375.804pt>
+File: tex_images/gabor_pitch_kernel_vs_parametric_boxplot.png Graphic file (type png)
+<use tex_images/gabor_pitch_kernel_vs_parametric_boxplot.png>
+Package pdftex.def Info: tex_images/gabor_pitch_kernel_vs_parametric_boxplot.png  used on input line 297.
+(pdftex.def)             Requested size: 420.62877pt x 230.23787pt.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+<tex_images/gabor_pitch_kernel_streamline_example.png, id=153, 1445.4pt x 780.516pt>
+File: tex_images/gabor_pitch_kernel_streamline_example.png Graphic file (type png)
+<use tex_images/gabor_pitch_kernel_streamline_example.png>
+Package pdftex.def Info: tex_images/gabor_pitch_kernel_streamline_example.png  used on input line 306.
+(pdftex.def)             Requested size: 479.31873pt x 258.8335pt.
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[7 <./tex_images/gabor_pitch_kernel_smoother_mean_rss.png>]
+
+[8 <./tex_images/gabor_pitch_kernel_vs_parametric_boxplot.png> <./tex_images/gabor_pitch_kernel_streamline_example.png>]
+<tex_images/optical_nw_smoother_mean_rss.png, id=173, 607.068pt x 346.896pt>
+File: tex_images/optical_nw_smoother_mean_rss.png Graphic file (type png)
+<use tex_images/optical_nw_smoother_mean_rss.png>
+Package pdftex.def Info: tex_images/optical_nw_smoother_mean_rss.png  used on input line 342.
+(pdftex.def)             Requested size: 381.49963pt x 218.00043pt.
+<tex_images/optical_nw_smoother_boxplot.png, id=174, 758.835pt x 245.718pt>
+File: tex_images/optical_nw_smoother_boxplot.png Graphic file (type png)
+<use tex_images/optical_nw_smoother_boxplot.png>
+Package pdftex.def Info: tex_images/optical_nw_smoother_boxplot.png  used on input line 349.
+(pdftex.def)             Requested size: 430.4129pt x 139.37457pt.
+<tex_images/optical_nw_streamline_example.png, id=175, 881.694pt x 794.97pt>
+File: tex_images/optical_nw_streamline_example.png Graphic file (type png)
+<use tex_images/optical_nw_streamline_example.png>
+Package pdftex.def Info: tex_images/optical_nw_streamline_example.png  used on input line 356.
+(pdftex.def)             Requested size: 479.31873pt x 432.16441pt.
+
+
+[9
+
+ <./tex_images/optical_nw_smoother_mean_rss.png> <./tex_images/optical_nw_smoother_boxplot.png>]
+
+[10 <./tex_images/optical_nw_streamline_example.png>]
+
+[11]
+<tex_images/winner_counts_cleaned.png, id=211, 867.24pt x 325.215pt>
+File: tex_images/winner_counts_cleaned.png Graphic file (type png)
+<use tex_images/winner_counts_cleaned.png>
+Package pdftex.def Info: tex_images/winner_counts_cleaned.png  used on input line 456.
+(pdftex.def)             Requested size: 469.54204pt x 176.07994pt.
+<tex_images/cv_axial_rss_boxplot.png, id=212, 722.7pt x 361.35pt>
+File: tex_images/cv_axial_rss_boxplot.png Graphic file (type png)
+<use tex_images/cv_axial_rss_boxplot.png>
+Package pdftex.def Info: tex_images/cv_axial_rss_boxplot.png  used on input line 463.
+(pdftex.def)             Requested size: 449.97374pt x 224.98856pt.
+
+
+[12 <./tex_images/winner_counts_cleaned.png>]
+<tex_images/01_EE+0p2-data-225x225__EE_0.2data_rot_-22deg__arrow_segments_streamlines.png, id=223, 953.964pt x 303.534pt>
+File: tex_images/01_EE+0p2-data-225x225__EE_0.2data_rot_-22deg__arrow_segments_streamlines.png Graphic file (type png)
+<use tex_images/01_EE+0p2-data-225x225__EE_0.2data_rot_-22deg__arrow_segments_streamlines.png>
+Package pdftex.def Info: tex_images/01_EE+0p2-data-225x225__EE_0.2data_rot_-22deg__arrow_segments_streamlines.png  used on input line 481.
+(pdftex.def)             Requested size: 479.31873pt x 152.5123pt.
+<tex_images/02_EE-0p63-data-225x225__EE-0.63data_rot_6deg__arrow_segments_streamlines.png, id=224, 953.964pt x 303.534pt>
+File: tex_images/02_EE-0p63-data-225x225__EE-0.63data_rot_6deg__arrow_segments_streamlines.png Graphic file (type png)
+<use tex_images/02_EE-0p63-data-225x225__EE-0.63data_rot_6deg__arrow_segments_streamlines.png>
+Package pdftex.def Info: tex_images/02_EE-0p63-data-225x225__EE-0.63data_rot_6deg__arrow_segments_streamlines.png  used on input line 488.
+(pdftex.def)             Requested size: 479.31873pt x 152.5123pt.
+
+
+[13 <./tex_images/cv_axial_rss_boxplot.png>]
+Overfull \hbox (38.75467pt too wide) in paragraph at lines 498--499
+\OT1/cmr/m/n/10 re-run is backed by $\OT1/cmtt/m/n/10 src / optical _ sem _ nw _ smoother _ comparison . py$ \OT1/cmr/m/n/10 and $\OT1/cmtt/m/n/10 data / optical _ sem _ nw _ smoother _ comparison/$\OT1/cmr/m/n/10 .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 512--512
+[]|\OT1/cmr/m/n/9 Cross-validation as risk and
+ []
 
 
 
-[2] (./model.bbl)
+[14 <./tex_images/01_EE+0p2-data-225x225__EE_0.2data_rot_-22deg__arrow_segments_streamlines.png> <./tex_images/02_EE-0p63-data-225x225__EE-0.63data_rot_6deg__arrow_segments_streamlines.png>] (./model.bbl)
 
-[3] (./model.aux)
+[15] (./model.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `model.out' has not changed.
-(rerunfilecheck)             Checksum: 883105FA5A17874C72E5F65DE8241A13;859.
+(rerunfilecheck)             Checksum: 1E337252E4D7273DC3098E8EC4980BF0;3058.
  ) 
 Here is how much of TeX's memory you used:
- 14274 strings out of 473190
- 279263 string characters out of 5715799
- 660605 words of memory out of 5000000
- 37349 multiletter control sequences out of 15000+600000
- 569523 words of font info for 77 fonts, out of 8000000 for 9000
+ 14501 strings out of 473190
+ 287049 string characters out of 5715799
+ 659577 words of memory out of 5000000
+ 37519 multiletter control sequences out of 15000+600000
+ 570372 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,10n,79p,812b,1025s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on model.pdf (3 pages, 260166 bytes).
+ 75i,10n,79p,883b,1122s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on model.pdf (15 pages, 4281442 bytes).
 PDF statistics:
- 189 PDF objects out of 1000 (max. 8388607)
- 138 compressed objects within 2 object streams
- 29 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 372 PDF objects out of 1000 (max. 8388607)
+ 283 compressed objects within 3 object streams
+ 79 named destinations out of 1000 (max. 500000)
+ 181 words of extra memory for PDF output out of 10000 (max. 10000000)
 

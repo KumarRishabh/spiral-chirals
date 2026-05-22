@@ -1,0 +1,11 @@
+dataset,n,model,kernel,bandwidth,kappa,sigma_n,evidence_score,family,p,rss_per_point,mae_deg,bic
+Front_EE-1_1_3000x_rings_coords.csv,168,Parametric p=1 (Archimedean),,,,,-216.1843757141052,parametric_fixed_p,1.0,0.7447152625375361,42.869512265297786,432.3687514282104
+Front_EE-1_2_3000x_rings_coords.csv,129,Parametric p=0 (Logarithmic),,,,,-161.38462900887103,parametric_fixed_p,0.0,0.688346620309131,40.202936608693435,322.76925801774206
+Front_EE-1_3_3000x_rings_coords.csv,178,Parametric p=0 (Logarithmic),,,,,-231.2562714122214,parametric_fixed_p,0.0,0.7644465753271957,43.27165165552022,462.5125428244428
+Front_EE-1_4_3000x_rings_coords.csv,179,Parametric p=1 (Archimedean),,,,,-230.1964572212896,parametric_fixed_p,1.0,0.7446586002033021,41.94215961118675,460.3929144425792
+Front_EE-1_5_3000x_rings_coords.csv,180,Parametric p=1 (Archimedean),,,,,-231.3413786006689,parametric_fixed_p,1.0,0.7435888153529381,41.90454804371121,462.6827572013378
+Front_EE1_1_3000x_rings_coords.csv,136,Parametric p=0 (Logarithmic),,,,,-174.879212268793,parametric_fixed_p,0.0,0.7391559091069033,42.162405620942565,349.758424537586
+Front_EE1_2_3000x_rings_coords.csv,178,Parametric p=1 (Archimedean),,,,,-220.83865153305555,parametric_fixed_p,1.0,0.6800050552438041,40.25293119789025,441.6773030661111
+Front_EE1_3_3000x_rings_coords.csv,180,Parametric p=0 (Logarithmic),,,,,-221.1102271828108,parametric_fixed_p,0.0,0.6636857400074386,39.77553287116056,442.2204543656216
+Front_EE1_4_3000x_rings_coords.csv,163,Parametric p=1 (Archimedean),,,,,-200.19438675817662,parametric_fixed_p,1.0,0.6618249235343066,39.95587914752555,400.38877351635324
+Front_EE1_5_3000x_rings_coords.csv,180,Parametric p=0 (Logarithmic),,,,,-237.14614135765092,parametric_fixed_p,0.0,0.7931287594353192,44.483630967492815,474.29228271530184

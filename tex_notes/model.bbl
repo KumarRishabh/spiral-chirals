@@ -1,14 +1,26 @@
 \begin{thebibliography}{1}
 
+\bibitem{arlot2010}
+Sylvain Arlot and Alain Celisse.
+\newblock A survey of cross-validation procedures for model selection.
+\newblock {\em Statistics Surveys}, 4:40--79, 2010.
+
 \bibitem{kass1995}
 Robert~E. Kass and Adrian~E. Raftery.
 \newblock Bayes factors.
-\newblock {\em Journal of the American Statistical Association}, 90(430):773--795, 1995.
+\newblock {\em Journal of the American Statistical Association},
+  90(430):773--795, 1995.
 
 \bibitem{mardia2000}
 Kanti~V. Mardia and Peter~E. Jupp.
 \newblock {\em Directional Statistics}.
 \newblock Wiley, 2000.
+
+\bibitem{nadaraya1964}
+E.~A. Nadaraya.
+\newblock On estimating regression.
+\newblock {\em Theory of Probability and Its Applications}, 9(1):141--142,
+  1964.
 
 \bibitem{rasmussen2006}
 Carl~Edward Rasmussen and Christopher K.~I. Williams.
@@ -22,12 +34,19 @@ Gideon Schwarz.
 
 \bibitem{steinwart2001}
 Ingo Steinwart.
-\newblock On the influence of the kernel on the consistency of support vector machines.
+\newblock On the influence of the kernel on the consistency of support vector
+  machines.
 \newblock {\em Journal of Machine Learning Research}, 2:67--93, 2001.
 
 \bibitem{vanDerVaart2000}
 Aad~W. van~der Vaart.
 \newblock {\em Asymptotic Statistics}.
 \newblock Cambridge University Press, 2000.
+
+\bibitem{watson1964}
+Geoffrey~S. Watson.
+\newblock Smooth regression analysis.
+\newblock {\em Sankhya: The Indian Journal of Statistics, Series A},
+  26(4):359--372, 1964.
 
 \end{thebibliography}

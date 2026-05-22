@@ -1,0 +1,8 @@
+model,family,datasets,evidence_score_mean,evidence_score_median,p_median
+Parametric p=0 (Logarithmic),parametric_fixed_p,10,-212.95040536574965,-221.242458830435,0.0
+Parametric p=1 (Archimedean),parametric_fixed_p,10,-213.0082338271337,-221.03791846121118,1.0
+Parametric continuous p,parametric_continuous_p,10,-214.157137960355,-223.41109225520813,0.0900811886592356
+Parametric p=2 (Fermat),parametric_fixed_p,10,-216.42286734082813,-224.10867919212637,2.0
+Gaussian RBF RKHS,kernel_gp_line_embedding_lml,10,-332.1157900987995,-363.36484781427123,
+Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_lml,10,-332.1157900987995,-363.36484781427123,
+Uniform RKHS,kernel_gp_line_embedding_lml,10,-366.6835940519716,-390.6430551703189,

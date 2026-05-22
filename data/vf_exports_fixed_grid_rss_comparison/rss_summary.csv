@@ -1,0 +1,8 @@
+model,family,datasets,mean_test_rss_mean,mean_test_rss_median,mean_test_mae_deg_mean,bandwidth_median,sigma_n_median,kappa_median,p_median
+Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,10,0.3395998536830728,0.3357835188455184,24.77232983050666,52.82291668885439,1.0,0.625,
+Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,10,0.34199574823724677,0.3416601298305961,24.87529197046475,50.37088952699659,0.5623413251903491,,
+Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,10,0.35764635252301663,0.34882817859788323,25.873660185496,58.55393110560139,5.623413251903491,,
+Parametric p=0 (Logarithmic),parametric_fixed_p,10,0.7850589635757116,0.7800299963851733,43.84302950551186,,,,0.0
+Parametric p=1 (Archimedean),parametric_fixed_p,10,0.7985607798226027,0.7736454672706853,43.9640414612843,,,,1.0
+Parametric continuous p,parametric_continuous_p,10,0.8044893483404814,0.8138336403039614,44.32549786861804,,,,0.1992602013014226
+Parametric p=2 (Fermat),parametric_fixed_p,10,0.827843418401663,0.8407214551736166,44.85180662980115,,,,2.0

@@ -2,37 +2,94 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\citation{vanDerVaart2000}
 \citation{mardia2000}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Data and Parametric Spiral Model}{1}{section.1}\protected@file@percent }
-\newlabel{eq:axial-residual}{{1}{1}{Data and Parametric Spiral Model}{equation.1}{}}
-\newlabel{eq:parametric-field}{{3}{1}{Data and Parametric Spiral Model}{equation.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Exact Kernel Models}{1}{section.2}\protected@file@percent }
-\newlabel{eq:rbf-kernel}{{4}{1}{Exact Kernel Models}{equation.4}{}}
-\newlabel{eq:uniform-kernel}{{5}{1}{Exact Kernel Models}{equation.5}{}}
-\newlabel{eq:multiplicative-kernel}{{6}{1}{Exact Kernel Models}{equation.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1}What the Gabor Data Are}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}What the Optical Data Are}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Optical Data Study: Uncleaned and Cleaned Files}{1}{section.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Quantitative data study comparing the uncleaned and cleaned files. The top-left panel plots $n_j^{\mathrm  {raw}}$ against $n_j^{\mathrm  {clean}}$; points on the dashed line would mean no pruning. The top-right panel shows the retention ratio. The bottom-left panel identifies the datasets for which the central ROI removes the most segments. The bottom-right panel compares the raw and cleaned sample-size distributions.}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:data-cleaning-study}{{1}{2}{Quantitative data study comparing the uncleaned and cleaned files. The top-left panel plots $n_j^{\mathrm {raw}}$ against $n_j^{\mathrm {clean}}$; points on the dashed line would mean no pruning. The top-right panel shows the retention ratio. The bottom-left panel identifies the datasets for which the central ROI removes the most segments. The bottom-right panel compares the raw and cleaned sample-size distributions}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Representative raw and cleaned line fields. The left column shows the uncleaned segment set, and the right column shows the central-ROI subset used in the model comparison. These plots visually justify the data-design statement that cleaning removes peripheral fragments while retaining the central circular line field.}}{3}{figure.2}\protected@file@percent }
+\newlabel{fig:cleaning-examples}{{2}{3}{Representative raw and cleaned line fields. The left column shows the uncleaned segment set, and the right column shows the central-ROI subset used in the model comparison. These plots visually justify the data-design statement that cleaning removes peripheral fragments while retaining the central circular line field}{figure.2}{}}
+\citation{arlot2010}
+\@writefile{toc}{\contentsline {section}{\numberline {4}The Error for a Line Field}{4}{section.4}\protected@file@percent }
+\newlabel{eq:axial-residual}{{4}{4}{The Error for a Line Field}{equation.4}{}}
+\newlabel{eq:test-rss}{{5}{4}{The Error for a Line Field}{equation.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}The Parametric Spiral Models}{4}{section.5}\protected@file@percent }
+\newlabel{eq:parametric-implemented}{{6}{4}{The Parametric Spiral Models}{equation.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}The Non-Parametric Kernel Smoother}{4}{section.6}\protected@file@percent }
+\newlabel{eq:nw-smoother}{{7}{4}{The Non-Parametric Kernel Smoother}{equation.7}{}}
 \citation{steinwart2001}
+\newlabel{eq:optical-nw-smoother}{{8}{5}{The Non-Parametric Kernel Smoother}{equation.8}{}}
+\newlabel{eq:optical-nw-backtransform}{{9}{5}{The Non-Parametric Kernel Smoother}{equation.9}{}}
+\newlabel{eq:gabor-global-angle}{{10}{5}{The Non-Parametric Kernel Smoother}{equation.10}{}}
+\newlabel{eq:pitch-doubled-embedding}{{11}{5}{The Non-Parametric Kernel Smoother}{equation.11}{}}
+\newlabel{eq:nw-backtransform}{{12}{5}{The Non-Parametric Kernel Smoother}{equation.12}{}}
+\newlabel{eq:rbf-kernel}{{13}{5}{The Non-Parametric Kernel Smoother}{equation.13}{}}
+\newlabel{eq:uniform-kernel}{{14}{5}{The Non-Parametric Kernel Smoother}{equation.14}{}}
+\newlabel{eq:multiplicative-kernel}{{15}{5}{The Non-Parametric Kernel Smoother}{equation.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Universality and What It Means Here}{5}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Experiment Design}{6}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Gabor vector-field dataset.}{6}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Optical/SEM line-segment dataset.}{6}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Results on the Gabor Dataset}{7}{section.9}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Gabor vector-field comparison using Nadaraya--Watson pitch-kernel smoothing. Lower held-out axial RSS and lower MAE indicate better reconstruction of held-out streamline orientations.}}{7}{table.1}\protected@file@percent }
+\newlabel{tab:gabor-pitch-results}{{1}{7}{Gabor vector-field comparison using Nadaraya--Watson pitch-kernel smoothing. Lower held-out axial RSS and lower MAE indicate better reconstruction of held-out streamline orientations}{table.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Mean held-out axial RSS for the two Gabor pitch-kernel smoothers.}}{7}{figure.3}\protected@file@percent }
+\newlabel{fig:gabor-pitch-rss}{{3}{7}{Mean held-out axial RSS for the two Gabor pitch-kernel smoothers}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Held-out axial RSS distribution comparing the selected Gabor pitch-kernel smoothers with the parametric spiral families.}}{8}{figure.4}\protected@file@percent }
+\newlabel{fig:gabor-pitch-parametric-boxplot}{{4}{8}{Held-out axial RSS distribution comparing the selected Gabor pitch-kernel smoothers with the parametric spiral families}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Representative Gabor streamline comparison. The multiplicative pitch smoother keeps the smooth streamline appearance of the notebook rendering while bending with local polar-angle structure. The parametric panels are smoother but more rigid because each uses one global spiral form.}}{8}{figure.5}\protected@file@percent }
+\newlabel{fig:gabor-streamline-example}{{5}{8}{Representative Gabor streamline comparison. The multiplicative pitch smoother keeps the smooth streamline appearance of the notebook rendering while bending with local polar-angle structure. The parametric panels are smoother but more rigid because each uses one global spiral form}{figure.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Results on the Optical SEM Dataset}{9}{section.10}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Optical SEM comparison using local Nadaraya--Watson smoothers on the doubled-angle line-field embedding. Lower held-out axial RSS and lower MAE are better.}}{9}{table.2}\protected@file@percent }
+\newlabel{tab:optical-nw-results}{{2}{9}{Optical SEM comparison using local Nadaraya--Watson smoothers on the doubled-angle line-field embedding. Lower held-out axial RSS and lower MAE are better}{table.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Mean held-out axial RSS for the three optical SEM local Nadaraya--Watson smoothers.}}{9}{figure.6}\protected@file@percent }
+\newlabel{fig:optical-nw-rss}{{6}{9}{Mean held-out axial RSS for the three optical SEM local Nadaraya--Watson smoothers}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Held-out axial RSS distribution comparing selected optical SEM NW smoothers.}}{9}{figure.7}\protected@file@percent }
+\newlabel{fig:optical-nw-boxplot}{{7}{9}{Held-out axial RSS distribution comparing selected optical SEM NW smoothers}{figure.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Representative optical SEM local-smoother streamline comparison. The observed cleaned line field is shown with fitted streamlines for the selected local NW kernels.}}{10}{figure.8}\protected@file@percent }
+\newlabel{fig:optical-nw-streamlines}{{8}{10}{Representative optical SEM local-smoother streamline comparison. The observed cleaned line field is shown with fitted streamlines for the selected local NW kernels}{figure.8}{}}
 \citation{rasmussen2006}
 \citation{schwarz1978}
 \citation{kass1995}
-\newlabel{eq:gp-covariance}{{7}{2}{Exact Kernel Models}{equation.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}RSS, Evidence, BIC, and Bayes Factors}{2}{section.3}\protected@file@percent }
-\newlabel{eq:test-rss}{{8}{2}{RSS, Evidence, BIC, and Bayes Factors}{equation.8}{}}
-\newlabel{eq:gp-evidence}{{9}{2}{RSS, Evidence, BIC, and Bayes Factors}{equation.9}{}}
-\newlabel{eq:bic}{{10}{2}{RSS, Evidence, BIC, and Bayes Factors}{equation.10}{}}
-\newlabel{eq:bayes-factor}{{11}{2}{RSS, Evidence, BIC, and Bayes Factors}{equation.11}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Results}{2}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11}Archived Evidence, Bayes Factors, and BIC}{11}{section.11}\protected@file@percent }
+\newlabel{eq:gp-evidence}{{17}{11}{Archived Evidence, Bayes Factors, and BIC}{equation.17}{}}
+\newlabel{eq:bic}{{18}{11}{Archived Evidence, Bayes Factors, and BIC}{equation.18}{}}
+\newlabel{eq:bayes-factor}{{20}{11}{Archived Evidence, Bayes Factors, and BIC}{equation.20}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {12}Archived Optical GP/RKHS Reference}{11}{section.12}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Archived held-out axial prediction on 39 cleaned optical datasets. The kernel rows are global RKHS/GP regressions, not the preferred Nadaraya--Watson local smoothers.}}{11}{table.3}\protected@file@percent }
+\newlabel{tab:rss-results}{{3}{11}{Archived held-out axial prediction on 39 cleaned optical datasets. The kernel rows are global RKHS/GP regressions, not the preferred Nadaraya--Watson local smoothers}{table.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Dataset-by-dataset winners for the evidence-style score and held-out axial RSS. This plot explains why the aggregate evidence and RSS tables should not be read as identical experiments: RSS chooses the model with lowest held-out prediction error, while evidence also includes a covariance-volume penalty.}}{12}{figure.9}\protected@file@percent }
+\newlabel{fig:winner-counts}{{9}{12}{Dataset-by-dataset winners for the evidence-style score and held-out axial RSS. This plot explains why the aggregate evidence and RSS tables should not be read as identical experiments: RSS chooses the model with lowest held-out prediction error, while evidence also includes a covariance-volume penalty}{figure.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Archived evidence-style comparison on the same 39 cleaned datasets. Kernel rows use optimized GP marginal likelihood for the doubled-angle embedding; this is not the selection criterion for the Nadaraya--Watson local smoother.}}{12}{table.4}\protected@file@percent }
+\newlabel{tab:evidence-results}{{4}{12}{Archived evidence-style comparison on the same 39 cleaned datasets. Kernel rows use optimized GP marginal likelihood for the doubled-angle embedding; this is not the selection criterion for the Nadaraya--Watson local smoother}{table.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Archived distribution of held-out axial RSS across the 39 cleaned datasets. The plot is retained as a global-regression baseline; the optical local-smoother rerun should regenerate the corresponding boxplot with Nadaraya--Watson kernel rows.}}{13}{figure.10}\protected@file@percent }
+\newlabel{fig:rss-boxplot}{{10}{13}{Archived distribution of held-out axial RSS across the 39 cleaned datasets. The plot is retained as a global-regression baseline; the optical local-smoother rerun should regenerate the corresponding boxplot with Nadaraya--Watson kernel rows}{figure.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {13}Optical Streamline Diagnostics}{13}{section.13}\protected@file@percent }
+\citation{mardia2000}
+\citation{vanDerVaart2000}
+\citation{nadaraya1964}
+\citation{watson1964}
+\citation{arlot2010}
+\citation{rasmussen2006}
+\citation{steinwart2001}
+\citation{schwarz1978}
+\citation{kass1995}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Fitted streamlines for one cleaned dataset. The diagnostic question is whether the fitted local NW field follows the same local circular flow as the observed line segments. The smoother can bend locally because $\hat  \alpha (z)$ is learned from nearby observations through the kernel weights.}}{14}{figure.11}\protected@file@percent }
+\newlabel{fig:streamline-example-one}{{11}{14}{Fitted streamlines for one cleaned dataset. The diagnostic question is whether the fitted local NW field follows the same local circular flow as the observed line segments. The smoother can bend locally because $\hat \alpha (z)$ is learned from nearby observations through the kernel weights}{figure.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces A second fitted-streamline example from a dataset with heavier cleaning. The visual comparison should be read together with the raw-clean study in Figure~\ref {fig:data-cleaning-study}: when peripheral segments are removed, the fitted field is evaluated on the central region where the circular line pattern is the object of study.}}{14}{figure.12}\protected@file@percent }
+\newlabel{fig:streamline-example-two}{{12}{14}{A second fitted-streamline example from a dataset with heavier cleaning. The visual comparison should be read together with the raw-clean study in Figure~\ref {fig:data-cleaning-study}: when peripheral segments are removed, the fitted field is evaluated on the central region where the circular line pattern is the object of study}{figure.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {14}What Is Certain, and What Is Not}{14}{section.14}\protected@file@percent }
 \bibstyle{plain}
 \bibdata{references}
-\bibcite{kass1995}{1}
-\bibcite{mardia2000}{2}
-\bibcite{rasmussen2006}{3}
-\bibcite{schwarz1978}{4}
-\bibcite{steinwart2001}{5}
-\bibcite{vanDerVaart2000}{6}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Held-out predictive comparison on cleaned data. RSS is the mean squared axial residual per held-out point.}}{3}{table.1}\protected@file@percent }
-\newlabel{tab:rss-results}{{1}{3}{Held-out predictive comparison on cleaned data. RSS is the mean squared axial residual per held-out point}{table.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Evidence-style comparison on cleaned data. Kernel rows use optimized GP marginal likelihood for the doubled-angle embedding; parametric rows use $-\operatorname  {BIC}/2$ from axial residuals. Bayes factors are relative to the multiplicative RBF--VM RKHS model.}}{3}{table.2}\protected@file@percent }
-\newlabel{tab:evidence-results}{{2}{3}{Evidence-style comparison on cleaned data. Kernel rows use optimized GP marginal likelihood for the doubled-angle embedding; parametric rows use $-\operatorname {BIC}/2$ from axial residuals. Bayes factors are relative to the multiplicative RBF--VM RKHS model}{table.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Interpretation and Caveats}{3}{section.5}\protected@file@percent }
-\gdef \@abspage@last{3}
+\bibcite{arlot2010}{1}
+\bibcite{kass1995}{2}
+\bibcite{mardia2000}{3}
+\bibcite{nadaraya1964}{4}
+\bibcite{rasmussen2006}{5}
+\bibcite{schwarz1978}{6}
+\bibcite{steinwart2001}{7}
+\bibcite{vanDerVaart2000}{8}
+\bibcite{watson1964}{9}
+\@writefile{toc}{\contentsline {section}{\numberline {15}Citation Map}{15}{section.15}\protected@file@percent }
+\gdef \@abspage@last{15}

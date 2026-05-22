@@ -1,0 +1,31 @@
+dataset,n,model,family,kernel,bandwidth,kappa,sigma_n,mean_test_rss,mean_test_mae_deg
+Front_EE-1_1_3000x_rings_coords.csv,168,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,92.95695884582472,,0.05623413251903491,0.2612908926451822,20.737364463230527
+Front_EE-1_1_3000x_rings_coords.csv,168,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,68.24657610074021,,3.1622776601683795,0.32681642481650214,24.47224735133241
+Front_EE-1_1_3000x_rings_coords.csv,168,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,92.95695884582472,0.75,0.1,0.25869897980907924,20.76348703495946
+Front_EE-1_2_3000x_rings_coords.csv,129,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,103.04231014174792,,0.1,0.2194246713010676,18.475569089527475
+Front_EE-1_2_3000x_rings_coords.csv,129,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,68.24657610074021,,5.623413251903491,0.24032457202683463,20.25028475457484
+Front_EE-1_2_3000x_rings_coords.csv,129,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,92.95695884582472,0.125,0.05623413251903491,0.21938011460424073,18.480236410197637
+Front_EE-1_3_3000x_rings_coords.csv,178,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,55.54097616955662,,0.31622776601683794,0.49085475536673095,31.812228150286803
+Front_EE-1_3_3000x_rings_coords.csv,178,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,50.10485720815216,,0.05623413251903491,0.49698925701296987,32.36114427307315
+Front_EE-1_3_3000x_rings_coords.csv,178,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,55.54097616955662,0.0,0.31622776601683794,0.49085475536673095,31.812228150286803
+Front_EE-1_4_3000x_rings_coords.csv,179,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,33.18525124066939,,1.0,0.3879659274703254,27.622956216871643
+Front_EE-1_4_3000x_rings_coords.csv,179,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,55.54097616955662,,10.0,0.41728581169134504,29.259503712124438
+Front_EE-1_4_3000x_rings_coords.csv,179,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,33.18525124066939,0.0,1.0,0.3879659274703254,27.622956216871643
+Front_EE-1_5_3000x_rings_coords.csv,180,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,40.77673693210865,,1.7782794100389228,0.3481793296050049,24.660982134394846
+Front_EE-1_5_3000x_rings_coords.csv,180,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,55.54097616955662,,10.0,0.3664439705316325,25.416152776067815
+Front_EE-1_5_3000x_rings_coords.csv,180,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,45.20080288443657,1.25,3.1622776601683795,0.3399632248586526,24.48791222771144
+Front_EE1_1_3000x_rings_coords.csv,136,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,33.18525124066939,,0.5623413251903491,0.1524248361481731,16.26238792375696
+Front_EE1_1_3000x_rings_coords.csv,136,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,45.20080288443657,,3.1622776601683795,0.1699436667085726,17.488718053145508
+Front_EE1_1_3000x_rings_coords.csv,136,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,29.93721733939893,0.75,1.0,0.14996821277044423,16.047134115803228
+Front_EE1_2_3000x_rings_coords.csv,178,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,55.54097616955662,,1.0,0.47899695166671863,30.537392732760207
+Front_EE1_2_3000x_rings_coords.csv,178,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,68.24657610074021,,5.623413251903491,0.4622370983097904,29.93474854215731
+Front_EE1_2_3000x_rings_coords.csv,178,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,50.10485720815216,0.5,1.7782794100389228,0.47700421683213995,30.479953215741563
+Front_EE1_3_3000x_rings_coords.csv,180,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,24.36374642994522,,0.001,0.3351409300561874,24.70265444308267
+Front_EE1_3_3000x_rings_coords.csv,180,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,55.54097616955662,,3.1622776601683795,0.33121238666413394,25.04363535356323
+Front_EE1_3_3000x_rings_coords.csv,180,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,24.36374642994522,3.0,1.0,0.33160381283238416,24.74161788632224
+Front_EE1_4_3000x_rings_coords.csv,163,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,45.20080288443657,,0.5623413251903491,0.2583578963163943,22.27049969939614
+Front_EE1_4_3000x_rings_coords.csv,163,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,61.56688604164617,,5.623413251903491,0.26615250817536057,22.851582059404638
+Front_EE1_4_3000x_rings_coords.csv,163,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,68.24657610074021,0.75,1.7782794100389228,0.25719806223978436,22.398663789015
+Front_EE1_5_3000x_rings_coords.csv,180,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,55.54097616955662,,10.0,0.48732129179668293,31.670884851340247
+Front_EE1_5_3000x_rings_coords.csv,180,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,61.56688604164617,,10.0,0.49905782929302445,31.65858497951665
+Front_EE1_5_3000x_rings_coords.csv,180,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,319.9529092712089,0.5,0.01778279410038923,0.4833612300469469,30.88910925815759

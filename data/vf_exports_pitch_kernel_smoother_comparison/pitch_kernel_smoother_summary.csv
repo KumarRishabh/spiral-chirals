@@ -1,0 +1,3 @@
+model,mean_test_rss_mean,mean_test_rss_median,mean_test_mae_deg_mean,bandwidth_median,kappa_median
+RBF-von-Mises pitch kernel smoother,0.36154323852545817,0.34827832431728317,26.267778632203527,33.18525124066939,28.0
+RBF pitch kernel smoother,0.5526304036665438,0.5822189167270168,34.73407411736613,47.65283004629437,

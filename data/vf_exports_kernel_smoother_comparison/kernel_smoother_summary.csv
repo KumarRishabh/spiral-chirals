@@ -1,0 +1,3 @@
+model,mean_test_rss_mean,mean_test_rss_median,mean_test_mae_deg_mean,bandwidth_median,kappa_median
+RBF-von-Mises kernel smoother,0.3576731396759141,0.3496025366497383,25.598308274654535,29.93721733939893,0.75
+RBF kernel smoother,0.36078616465791635,0.35395479525889956,25.674446259346762,29.93721733939893,

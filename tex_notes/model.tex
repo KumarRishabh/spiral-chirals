@@ -16,11 +16,14 @@
 \maketitle
 
 \begin{abstract}
-This note explains the chiral line-field experiment in the same order in which the code runs it.  The data are short line segments extracted from images.  Each segment gives a location and an orientation, but not an arrow direction, so angles separated by $\pi$ are treated as the same observation.  We first study the uncleaned and cleaned files, then compare two kinds of models: low-dimensional spiral formulae indexed by an exponent $p$, and non-parametric Gaussian-process/RKHS kernel regressions.  The comparison uses two mathematically different scores: held-out axial RSS, which measures predictive error on unseen folds, and evidence-style scores, which combine fit with a complexity penalty through Gaussian-process marginal likelihood or BIC.
+This note explains the chiral line-field experiment in the same order in which the analysis now uses it.  The data are unoriented line-field observations, so angles separated by $\pi$ are treated as the same observation.  The Gabor vector-field exports are analysed first because they are the target streamline dataset: each CSV supplies a coordinate and a local pitch angle $\alpha'$, and the non-parametric model is a Nadaraya--Watson kernel smoother for that pitch.  The optical/SEM line-segment measurements are treated as local line-field smoothing problems, not as global GP/RKHS regression problems and not as global parametric spiral fits.  In both settings, held-out axial reconstruction error is used as the main anti-overfitting diagnostic for the local kernel descriptions.
 \end{abstract}
 
-\section{What the Data Are}
-The experiment reads the files \texttt{data/**/arrow\_segments.mat}.  Each row is a segment with endpoints $(x_{1i},y_{1i})$ and $(x_{2i},y_{2i})$.  The location used for modelling is the midpoint
+\section{What the Gabor Data Are}
+The primary streamline experiment uses the Gabor vector-field exports in \path{vf_exports/*_rings_coords.csv}.  Each row contains a spatial coordinate and a local pitch angle $\alpha'$.  The coordinate column is parsed into $z_i=(x_i,y_i)$, the final non-data summary row is dropped, and the pitch angle is converted from degrees to radians.  Because $\alpha'$ is measured relative to the radial coordinate frame, the global field angle is obtained by adding the polar coordinate angle $\operatorname{atan2}(y_i,x_i)$.  The non-parametric model therefore smooths the pitch angle and then reconstructs the displayed streamline direction.
+
+\section{What the Optical Data Are}
+The optical reference experiment reads the files \texttt{data/**/arrow\_segments.mat}.  Each row is a segment with endpoints $(x_{1i},y_{1i})$ and $(x_{2i},y_{2i})$.  The location used for modelling is the midpoint
 \begin{equation}
   z_i=(x_i,y_i)=\left(\frac{x_{1i}+x_{2i}}{2},\frac{y_{1i}+y_{2i}}{2}\right).
 \end{equation}
@@ -36,7 +39,7 @@ The cleaned experiment uses a central circular region of interest.  If \texttt{a
 \end{equation}
 This rule is not a theorem; it is an experimental preprocessing rule chosen to remove the peripheral line fragments and keep the central circular line field.  Its effect is measured directly: across the 39 datasets, the median retained fraction was $0.992$, the retained fraction ranged from $0.414$ to $1.000$, and the median cleaned sample size was 123 segments.
 
-\section{Data Study: Uncleaned and Cleaned Files}
+\section{Optical Data Study: Uncleaned and Cleaned Files}
 Let the raw dataset for file $j$ be
 \[
   \mathcal D_j^{\mathrm{raw}}
@@ -97,7 +100,7 @@ For prediction, the code reports held-out axial RSS,
 where $I_k$ is the $k$th fold and $\mathcal M_{-k}$ is fit without that fold.  In the code, $K=\min(10,n)$ and the folds are shuffled with random seed 42.  Cross-validation is used here as an estimate of predictive risk; Arlot and Celisse review this risk-estimation and model-selection interpretation in Sections 1, 4, and 6 of their survey \cite{arlot2010}.
 
 \section{The Parametric Spiral Models}
-The parametric family used in the current \texttt{src/cleaned\_linefield\_comparison.py} experiment is a one-angle vector-field basis.  After centering the cleaned coordinates, write
+The parametric baseline is a one-angle vector-field basis.  After centering the cleaned coordinates, write
 \[
   r_i=\sqrt{x_i^2+y_i^2},
   \qquad
@@ -112,76 +115,95 @@ For exponent $p$ and pitch parameter $\gamma$, the implemented vector has radial
   \quad \mathrm{mod}\ \pi.
   \label{eq:parametric-implemented}
 \end{equation}
-This formula is the mathematical model being tested.  The fixed families are $p=0$ (logarithmic label), $p=1$ (Archimedean label), and $p=2$ (Fermat label).  The continuous parametric family fits $p\in(-1,3)$.  For fixed $p$, the code searches over $\gamma\in[-\pi,\pi]$ and then refines the best values with L-BFGS-B.  For the continuous family, the code searches a grid over $p$ and $\gamma$ and then optimizes both parameters.
+This formula is the mathematical model being tested.  The fixed families are $p=0$ (logarithmic label), $p=1$ (Archimedean label), and $p=2$ (Fermat label).  The continuous parametric family fits $p\in(-1,3)$.  For fixed $p$, the code searches over $\gamma\in[-\pi,\pi]$ and then refines the best values with L-BFGS-B.  More exactly, the coarse search uses
+\[
+  \gamma\in\operatorname{linspace}(-\pi,\pi,361),
+\]
+keeps the six best grid starts, and runs one-dimensional L-BFGS-B from those starts with bound $[-\pi,\pi]$.  For the continuous family, the code first searches
+\[
+  p\in\operatorname{linspace}(-0.95,2.95,79),
+\]
+using the same six-start $\gamma$ fit at each grid value.  It then keeps the eight best $(p,\gamma)$ starts and runs two-dimensional L-BFGS-B with bounds $p\in[-0.999,2.999]$ and $\gamma\in[-\pi,\pi]$.  In cross-validation, the same fitting rule is applied inside each training fold.
 
 Equation~\eqref{eq:parametric-implemented} is deliberately much smaller than a kernel model.  It asks whether one global spiral exponent and one pitch angle can describe the whole cleaned field.  This is an interpretable hypothesis, but it is also restrictive: if the data contain local bends, local noise, or spatially varying pitch, a single pair $(p,\gamma)$ cannot adapt to them.
 
-\section{The Kernel Models}
-The kernel models first convert each observed axial angle to the doubled-angle vector
+\section{The Non-Parametric Kernel Smoother}
+The non-parametric analysis uses a Nadaraya--Watson kernel smoother, not the Gaussian-process or kernel-ridge posterior mean.  The distinction matters.  A GP/KRR fit has the form
+\[
+  k_\eta(z,Z)\{K_\eta(Z,Z)+\sigma_n^2I\}^{-1}U,
+\]
+which solves one global linear system and can transmit influence through the whole dataset.  The smoother used here is instead a normalized local average:
 \begin{equation}
-  u_i=(\cos 2\hat\alpha_i,\sin 2\hat\alpha_i)\in\mathbb R^2.
-  \label{eq:doubled-embedding}
+  \hat a(z)
+  =
+  \frac{\sum_{i=1}^n K_\eta(z,z_i)a_i}
+       {\sum_{i=1}^n K_\eta(z,z_i)}.
+  \label{eq:nw-smoother}
 \end{equation}
-This maps each line to a point on the unit circle without distinguishing $\hat\alpha_i$ from $\hat\alpha_i+\pi$.  A Gaussian process is fit independently to the two coordinates of $u_i$ using the same covariance matrix.  If the predicted vector at $z$ is $\hat u(z)=(\hat u_1(z),\hat u_2(z))$, the predicted line angle is
-\begin{equation}
-  \hat\alpha(z)=\frac{1}{2}\operatorname{atan2}\{\hat u_2(z),\hat u_1(z)\}.
-\end{equation}
+There is no matrix inverse and no observation-noise parameter $\sigma_n$ in Equation~\eqref{eq:nw-smoother}.  The regularization is controlled by the bandwidth and, for the multiplicative kernel, by the angular concentration $\kappa$.  With a smooth positive kernel such as the Gaussian RBF, the fitted field changes continuously and smoothly with position; with a small bandwidth it remains local, and with a large bandwidth it approaches a global average.
 
-The three exact kernels in the experiment are
+For the optical SEM line fields, the smoother is applied directly to the observed line-angle embedding
+\begin{equation}
+  u_i=(\cos 2\hat\alpha_i,\sin 2\hat\alpha_i)\in\mathbb R^2,
+  \qquad
+  \hat u(z)
+  =
+  \frac{\sum_{i=1}^n K_\eta(z,z_i)u_i}
+       {\sum_{i=1}^n K_\eta(z,z_i)}.
+  \label{eq:optical-nw-smoother}
+\end{equation}
+The fitted optical line angle is then
+\begin{equation}
+  \hat\alpha(z)
+  =
+  \frac12\operatorname{atan2}\{\hat u_2(z),\hat u_1(z)\}.
+  \label{eq:optical-nw-backtransform}
+\end{equation}
+This is a local estimator of the line field itself.  It is therefore better matched to SEM images where the important structure is a smooth local texture rather than one globally coherent latent function over the whole image.
+
+For the Gabor CSV files, the observed angle column is the local pitch angle $\alpha'_i$, not the global field angle.  The global line-field angle is reconstructed as
+\begin{equation}
+  \phi_i=\operatorname{atan2}(y_i,x_i)+\alpha'_i.
+  \label{eq:gabor-global-angle}
+\end{equation}
+The smoother is therefore applied to the pitch embedding
+\begin{equation}
+  a_i=(\cos 2\alpha'_i,\sin 2\alpha'_i)\in\mathbb R^2,
+  \label{eq:pitch-doubled-embedding}
+\end{equation}
+which preserves the axial symmetry of the line field.  After smoothing, the fitted pitch and fitted streamline angle are
+\begin{equation}
+  \hat\alpha'(z)
+  =
+  \frac12\operatorname{atan2}\{\hat a_2(z),\hat a_1(z)\},
+  \qquad
+  \hat\phi(z)=\operatorname{atan2}(y,x)+\hat\alpha'(z).
+  \label{eq:nw-backtransform}
+\end{equation}
+This is the same modelling geometry used by \path{python_notebooks/streamlines.ipynb}: remove the analytic radial rotation, smooth the remaining pitch, and then reconstruct the streamline direction.
+
+The kernels used for the local smoothers are
 \begin{align}
-  K_{\mathrm{RBF}}(z,z';\ell)
+  K_{\mathrm{RBF}}(z,z';h)
   &=
-  \exp\!\left[-\frac{\|z-z'\|_2^2}{2\ell^2}\right],
+  \exp\!\left[-\frac{d(z,z')^2}{2h^2}\right],
   \label{eq:rbf-kernel}\\
-  K_{\mathrm{unif}}(z,z';\ell)
+  K_{\mathrm{unif}}(z,z';h)
   &=
-  \mathbf 1\{\|z-z'\|_2\leq \ell\},
+  \mathbf 1\{d(z,z')\leq h\},
   \label{eq:uniform-kernel}\\
-  K_{\mathrm{mult}}(z,z';\ell,\kappa)
+  K_{\mathrm{mult}}(z,z';h,\kappa)
   &=
-  \exp\!\left[-\frac{\|z-z'\|_2^2}{2\ell^2}\right]\,
-  \exp\!\left[\kappa\cos\{\vartheta(z)-\vartheta(z')\}\right],
+  \exp\!\left[-\frac{d(z,z')^2}{2h^2}\right]\,
+  \exp\!\left[\kappa\cos\{\vartheta-\vartheta'\}\right],
   \label{eq:multiplicative-kernel}
 \end{align}
-where $\vartheta(z)=\operatorname{atan2}(y,x)$.  The Gaussian RBF kernel says that nearby points should have similar line directions.  The uniform kernel is a local-neighbourhood baseline.  The multiplicative kernel says that two points are especially related when they are both spatially close and have similar polar angle around the centre.
-
-The length-scale grid is not the old absolute grid $\operatorname{geomspace}(0.2,220,14)$.  It is now dataset-adaptive.  Let
-\[
-  s_X=\max\{\operatorname{range}(x),\operatorname{range}(y),1\},
-  \qquad
-  d_{\mathrm{nn}}=\operatorname{median}_i \min_{j\neq i}\|z_i-z_j\|_2.
-\]
-The code sets
-\begin{equation}
-  \ell_{\min}=\max\left\{\frac{d_{\mathrm{nn}}}{2},\frac{s_X}{80},10^{-3}\right\},
-  \qquad
-  \ell_{\max}=\max\left\{1.5s_X,4\ell_{\min}\right\},
-  \label{eq:ell-grid}
-\end{equation}
-and then uses 14 geometrically spaced values
-\begin{equation}
-  \ell_j=\ell_{\min}
-  \left(\frac{\ell_{\max}}{\ell_{\min}}\right)^{j/13},
-  \qquad j=0,\ldots,13.
-\end{equation}
-This is what \texttt{geomspace} means: adjacent candidate values have the same multiplicative ratio, so the sweep covers small, medium, and large spatial scales evenly on a logarithmic scale.  The multiplicative kernel additionally sweeps
-\[
-  \kappa\in\{0,0.5,1,2,4,8,16\}.
-\]
-For every kernel candidate, the observation-noise parameter $\sigma_n$ is also swept over eight geometrically spaced values,
-\begin{equation}
-  \sigma_n\in
-  \operatorname{geomspace}(0.05b,0.9b,8),
-  \qquad
-  b=\max\left\{\frac{\operatorname{sd}(u_1)+\operatorname{sd}(u_2)}{2},0.05\right\}.
-  \label{eq:sigma-grid}
-\end{equation}
-Thus the kernel comparison is not using one fixed noise value across all datasets.
+where $\vartheta=\operatorname{atan2}(y,x)$.  For the Gabor pitch smoother, $d(z,z')=|r-r'|$ with $r=\|z\|_2$, so the RBF borrows information across similar radii and the multiplicative RBF--von-Mises smoother additionally requires similar polar angle.  For the optical SEM line fields, $d(z,z')=\|z-z'\|_2$, so the RBF borrows information from nearby image locations, the uniform kernel is a local-neighbourhood average, and the multiplicative kernel further localizes by polar position around the fitted centre.  In all cases, the smoother remains local in the sense needed for streamline fitting: it adapts to local structure without solving a global regression problem.
 
 \section{Universality and What It Means Here}
 Universality is an approximation property, not a score.  A kernel is universal on a compact domain $X$ when its RKHS is dense in $C(X)$, the continuous real-valued functions on $X$ under the uniform norm.  In plain language: with enough data and the right regularization, functions in the RKHS can approximate any continuous target pattern on that compact domain.
 
-The Gaussian RBF kernel is universal on compact subsets of Euclidean space.  The precise reference is Steinwart \cite{steinwart2001}: Definition 4 introduces universal kernels, Corollaries 10 and 11 give universality conditions using Taylor or Fourier expansions, and Example 1 states the Gaussian RBF case.  This theorem supports the use of the RBF model as a flexible non-parametric family.  It does not say that the RBF will automatically win finite-sample prediction, and it does not remove the need to tune $\ell$ and $\sigma_n$.
+The Gaussian RBF kernel is universal on compact subsets of Euclidean space.  The precise reference is Steinwart \cite{steinwart2001}: Definition 4 introduces universal kernels, Corollaries 10 and 11 give universality conditions using Taylor or Fourier expansions, and Example 1 states the Gaussian RBF case.  This theorem supports the use of the RBF as a flexible smooth kernel.  It does not say that the RBF will automatically win finite-sample reconstruction, and it does not remove the need to tune the bandwidth.
 
 The multiplicative kernel in \eqref{eq:multiplicative-kernel} inherits the RBF's spatial flexibility and multiplies it by a von-Mises angular similarity.  The angular factor has the Fourier expansion
 \[
@@ -189,9 +211,158 @@ The multiplicative kernel in \eqref{eq:multiplicative-kernel} inherits the RBF's
   =
   I_0(\kappa)+2\sum_{m=1}^{\infty}I_m(\kappa)\cos\{m(\vartheta-\vartheta')\},
 \]
-where $I_m(\kappa)>0$ for $\kappa>0$.  The positive Fourier coefficients are the mathematical reason this factor can represent smooth angular variation around the centre.  The uniform kernel is different: it is included as a local averaging baseline, not because we rely on a universality theorem for it.
+where $I_m(\kappa)>0$ for $\kappa>0$.  The positive Fourier coefficients are the mathematical reason this factor can represent smooth angular variation around the centre.  In the Gabor pitch-smoothing experiment the multiplicative kernel is a product of radial RBF smoothing and circular von-Mises smoothing; it is used because streamline pitch changes both with radius and with polar location.
+\section{Experiment Design}
 
-\section{Evidence, Bayes Factors, and BIC}
+The experiments use local Nadaraya--Watson kernel smoothers as the main non-parametric descriptions, where the field is reconstructed by averaging nearby observed directions according to a spatial or polar similarity kernel.  For the Gabor streamline data, these smoothers are also compared with low-dimensional parametric spiral baselines, where the entire field is described by one global exponent and one global pitch parameter.  For the optical SEM line fields, the current analysis is restricted to local smoothers because the data are not expected to follow one global spiral law.
+
+We organize the experiments in two stages. s  The Gabor vector-field exports are analyzed first, because they provide pitch-angle measurements on ring-like coordinate clouds and can be directly rerun with the Nadaraya--Watson pitch smoothers.  The optical/SEM line-segment data should then be analyzed with the same local-smoothing philosophy, using Equation~\eqref{eq:optical-nw-smoother} on the doubled-angle line embedding.
+
+\paragraph{Gabor vector-field dataset.}
+The Gabor dataset consists of the ten CSV files in \path{vf_exports/*_rings_coords.csv}.
+Each row contains a spatial coordinate and a local pitch-angle column
+\[
+  \texttt{Angle (alpha-prime)}.
+\]
+The loader parses the coordinate column, removes the non-numeric summary row, converts the pitch angles from degrees to radians, and constructs the corresponding global line-field angle using Equation~\eqref{eq:gabor-global-angle}.
+
+For this dataset, we compare the fixed and continuous parametric spiral families from Equation~\eqref{eq:parametric-implemented} against two Nadaraya--Watson pitch smoothers.  The first is the radial RBF pitch smoother, which uses spatial proximity alone.  The second is the multiplicative RBF--von-Mises pitch smoother from Equations~\eqref{eq:rbf-kernel}--\eqref{eq:multiplicative-kernel}, which combines radial smoothing with angular localization.  The latter is designed for ring-structured fields, where two points may have similar radius but different polar position and therefore should not necessarily be treated as equivalent.
+
+The Gabor kernel sweep is fixed before seeing the test folds.  The bandwidth values are
+\[
+  h\in\{h_1,\dots,h_{72}\},\quad h_1=1,\ h_{72}=1500,\ \text{and }\frac{h_{j+1}}{h_j}=\text{constant for }j=1,\dots,71,
+\]
+and the multiplicative smoother additionally searches over
+\[
+  \kappa\in
+  \{0,0.125,0.25,0.5,0.75,1,1.25,1.5,2,3,4,6,8,12,16,24,32,48,64\}.
+\]
+Every candidate model is scored by shuffled 10-fold held-out axial reconstruction RSS with random seed 42.  This cross-validation criterion is used as an anti-overfitting check: the goal is still to obtain a good streamline description of each field, but the selected smoother must reconstruct held-out orientations rather than merely interpolate all observed directions.
+
+\paragraph{Optical/SEM line-segment dataset.}
+The optical dataset consists of 39 cleaned SEM line-field files summarized in \path{data/cleaned_linefield_comparison/}.
+Each observation is an image-derived unoriented segment, represented by its midpoint and axial angle.  The preprocessing takes segment midpoints, flips the vertical image axis into mathematical coordinates, and retains the central circular region of interest.
+
+For the optical data, the preferred non-parametric model is the direct line-field Nadaraya--Watson smoother in Equation~\eqref{eq:optical-nw-smoother}.  The RBF smoother uses Euclidean image distance, the uniform smoother uses a finite local neighbourhood, and the multiplicative RBF--von-Mises smoother uses Euclidean image distance times polar-angle similarity about the image centre.  Hyperparameters are selected by spatially blocked held-out axial RSS, not by GP marginal likelihood, because the goal is a smooth local streamline description rather than a globally regularized probabilistic interpolant.
+
+The optical NW sweep uses
+\[
+  h\in\{h_1,\dots,h_{72}\},\quad h_1=1,\ h_{72}=220,\ \text{and }\frac{h_{j+1}}{h_j}=\text{constant for }j=1,\dots,71,
+\]
+for the RBF and uniform kernels, and the same bandwidth grid crossed with
+\[
+  \kappa\in
+  \{0,0.125,0.25,0.5,0.75,1,1.25,1.5,2,3,4,6,8,12,16,24,32,48,64\}
+\]
+for the multiplicative kernel.  The held-out score uses five spatially blocked folds whenever enough spatial blocks are available; otherwise it falls back to shuffled folds.  The raw files used for this rerun are the 39 \path{arrow_segments.mat} files in \path{/Users/rishabhkumar/Downloads/arrow_export_integrated}.  Outputs are written to \path{data/optical_sem_nw_smoother_comparison/}.  The existing files in \path{data/cleaned_linefield_comparison/} are retained only as an archived RKHS/GP reference.
+
+\section{Results on the Gabor Dataset}
+
+Table~\ref{tab:gabor-pitch-results} reports the Gabor streamline comparison under the Nadaraya--Watson pitch-smoothing framework.  The main outcome is that the multiplicative RBF--von-Mises pitch smoother performs best across the ten Gabor exports.  It has both the lowest mean held-out axial RSS and the lowest mean axial MAE.
+
+This result is consistent with the geometry of the data.  The plain radial RBF smoother averages directions according to spatial scale alone.  It produces visually smooth fields, but it does not explicitly encode the angular localization present in the ring-structured coordinate clouds.  The multiplicative RBF--von-Mises smoother, by contrast, combines radial proximity with polar-angle proximity.  It therefore preserves the smoothness of the kernel reconstruction while allowing the field to bend with the local ring geometry.
+
+The parametric spiral models provide a useful baseline.  They are much more restrictive because each fitted field is described by one global spiral exponent and one global pitch parameter.  The continuous-$p$ model is the strongest member of this parametric family, but its average performance remains close to the plain RBF smoother and substantially worse than the multiplicative pitch smoother.  This suggests that the Gabor fields contain local angular structure that is not fully captured by a single global spiral law.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+Model & Mean test RSS & Median test RSS & Mean MAE \\
+\midrule
+RBF--von-Mises pitch kernel smoother & 0.3615 & 0.3483 & $26.27^\circ$ \\
+RBF pitch kernel smoother & 0.5526 & 0.5822 & $34.73^\circ$ \\
+Parametric $p\in(-1,3)$ & 0.5588 & 0.5885 & $35.22^\circ$ \\
+Parametric $p=1$ (Archimedean) & 0.5949 & 0.5892 & $36.67^\circ$ \\
+Parametric $p=0$ (Logarithmic) & 0.6362 & 0.6331 & $38.24^\circ$ \\
+Parametric $p=2$ (Fermat) & 0.6567 & 0.6875 & $38.88^\circ$ \\
+\bottomrule
+\end{tabular}
+\caption{Gabor vector-field comparison using Nadaraya--Watson pitch-kernel smoothing.  Lower held-out axial RSS and lower MAE indicate better reconstruction of held-out streamline orientations.}
+\label{tab:gabor-pitch-results}
+\end{table}
+
+Figure~\ref{fig:gabor-pitch-rss} summarizes the mean held-out RSS for the two kernel smoothers.  The gap between the RBF smoother and the RBF--von-Mises smoother shows the value of adding angular localization to the kernel.  Figure~\ref{fig:gabor-pitch-parametric-boxplot} compares the selected kernel smoothers with the parametric spiral families across the ten datasets.  The multiplicative pitch smoother gives the most stable improvement, while the remaining models occupy a similar higher-error range.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.78\linewidth]{gabor_pitch_kernel_smoother_mean_rss.png}
+\caption{Mean held-out axial RSS for the two Gabor pitch-kernel smoothers.}
+\label{fig:gabor-pitch-rss}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.86\linewidth]{gabor_pitch_kernel_vs_parametric_boxplot.png}
+\caption{Held-out axial RSS distribution comparing the selected Gabor pitch-kernel smoothers with the parametric spiral families.}
+\label{fig:gabor-pitch-parametric-boxplot}
+\end{figure}
+
+A representative streamline comparison is shown in Figure~\ref{fig:gabor-streamline-example}.  The multiplicative smoother retains the smooth visual character of the notebook streamline rendering while adapting to local polar-angle structure.  The parametric reconstructions are smoother in a global sense, but they are also more rigid: each panel is constrained by one global spiral form.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.98\linewidth]{gabor_pitch_kernel_streamline_example.png}
+\caption{Representative Gabor streamline comparison.  The multiplicative pitch smoother keeps the smooth streamline appearance of the notebook rendering while bending with local polar-angle structure.  The parametric panels are smoother but more rigid because each uses one global spiral form.}
+\label{fig:gabor-streamline-example}
+\end{figure}
+
+\FloatBarrier
+
+\section{Results on the Optical SEM Dataset}
+
+Table~\ref{tab:optical-nw-results} reports the optical SEM comparison using only local Nadaraya--Watson smoothers.  The multiplicative RBF--von-Mises smoother is the strongest of the three local kernels: it has the lowest mean held-out axial RSS, the lowest median held-out axial RSS, and the lowest mean axial MAE.  For these optical SEM line fields, the modeling goal is not to test a single global spiral family; it is to identify which local smoother gives the best held-out reconstruction of the observed streamline geometry without overfitting.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+Model & Mean test RSS & Median test RSS & Mean MAE \\
+\midrule
+RBF--von-Mises NW smoother & 0.1746 & 0.1700 & $16.72^\circ$ \\
+RBF NW smoother & 0.2206 & 0.2270 & $19.70^\circ$ \\
+Uniform NW smoother & 0.2312 & 0.2379 & $20.52^\circ$ \\
+\bottomrule
+\end{tabular}
+\caption{Optical SEM comparison using local Nadaraya--Watson smoothers on the doubled-angle line-field embedding.  Lower held-out axial RSS and lower MAE are better.}
+\label{tab:optical-nw-results}
+\end{table}
+
+The optical SEM hyperparameter search was deterministic and fixed before scoring the held-out folds.  For the RBF and uniform kernels, the bandwidth candidates were 72 positive values between 1 and 220 pixels, with each consecutive value obtained by multiplying the previous one by the same constant ratio.  For the multiplicative RBF--von-Mises kernel, this same bandwidth grid was crossed with the fixed angular-concentration grid
+\[
+  \kappa\in
+  \{0,0.125,0.25,0.5,0.75,1,1.25,1.5,2,3,4,6,8,12,16,24,32,48,64\}.
+\]
+Each candidate was selected, per dataset and kernel family, by spatially blocked held-out axial RSS.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.78\linewidth]{optical_nw_smoother_mean_rss.png}
+\caption{Mean held-out axial RSS for the three optical SEM local Nadaraya--Watson smoothers.}
+\label{fig:optical-nw-rss}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.88\linewidth]{optical_nw_smoother_boxplot.png}
+\caption{Held-out axial RSS distribution comparing selected optical SEM NW smoothers.}
+\label{fig:optical-nw-boxplot}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.98\linewidth]{optical_nw_streamline_example.png}
+\caption{Representative optical SEM local-smoother streamline comparison.  The observed cleaned line field is shown with fitted streamlines for the selected local NW kernels.}
+\label{fig:optical-nw-streamlines}
+\end{figure}
+
+\FloatBarrier
+
+\section{Archived Evidence, Bayes Factors, and BIC}
+This section is retained only to document the previous optical RKHS/GP reference run.  It is not the preferred model-selection methodology for the local kernel-smoothing analysis.  For the Nadaraya--Watson smoothers, the primary criterion is held-out axial reconstruction error, because there is no GP covariance inverse or observation-noise parameter in Equation~\eqref{eq:nw-smoother}.
+
 RSS asks, ``How well did the fitted model predict held-out angles?''  Evidence asks a different question: ``How probable are the observed responses after integrating over the latent function values allowed by the model?''  For a kernel with covariance matrix
 \begin{equation}
   C_\theta=K_\theta(X,X)+\sigma_n^2I_n,
@@ -235,8 +406,8 @@ The Bayes factor comparing model $m$ to the best model $m_\star$ is
 \end{equation}
 This is why the Bayes factor is related to the residual score but is not the same number.  Residuals enter the likelihood term, but the evidence also contains covariance geometry, noise scale, and the log-determinant complexity penalty.
 
-\section{Results on the Cleaned Datasets}
-Table~\ref{tab:rss-results} reports the held-out predictive experiment.  The multiplicative RBF--von-Mises RKHS has the smallest mean test RSS, the smallest median test RSS, and the smallest mean absolute axial error.  It also wins the dataset-by-dataset RSS comparison on 32 of 39 datasets; the uniform kernel wins 5, and the Gaussian RBF wins 2.
+\section{Archived Optical GP/RKHS Reference}
+Table~\ref{tab:rss-results} reports the previous held-out optical-reference experiment on the 39 cleaned SEM line-field datasets.  These rows are not Nadaraya--Watson smoothers; they are global RKHS/GP regressions on the doubled-angle embedding.  The table is useful as a historical baseline because it already shows that flexible non-parametric descriptions outperform the global parametric spiral family.  The final optical analysis should replace these kernel rows by local Nadaraya--Watson smoothers.
 
 \begin{table}[h!]
 \centering
@@ -254,11 +425,11 @@ Parametric $p=0$ (Logarithmic) & 0.6889 & 0.6875 & $40.14^\circ$ \\
 Parametric $p\in(-1,3)$ & 0.6953 & 0.6789 & $40.33^\circ$ \\
 \bottomrule
 \end{tabular}
-\caption{Held-out axial prediction on 39 cleaned datasets.  Lower RSS and lower MAE are better.}
+\caption{Archived held-out axial prediction on 39 cleaned optical datasets.  The kernel rows are global RKHS/GP regressions, not the preferred Nadaraya--Watson local smoothers.}
 \label{tab:rss-results}
 \end{table}
 
-Table~\ref{tab:evidence-results} reports the evidence-style comparison.  The same multiplicative kernel is the aggregate winner.  The ordering is not identical to RSS because evidence is not a held-out loss: it rewards fit, penalizes unnecessary flexibility through the log determinant, and depends on the optimized noise scale.  In dataset-by-dataset evidence winners, the multiplicative kernel wins 17 of 39 datasets, parametric $p=0$ wins 12, parametric $p=2$ wins 5, parametric $p=1$ wins 4, and the Gaussian RBF wins 1.  Aggregating evidence over all datasets still favours the multiplicative kernel by a large margin.
+Table~\ref{tab:evidence-results} reports the archived evidence-style comparison from the same GP/RKHS run.  This table should not be used to choose the optical local smoother.  The ordering is not identical to RSS because evidence is not a held-out loss: it rewards fit, penalizes unnecessary flexibility through the log determinant, and depends on the optimized noise scale.  For the optical SEM goal stated here, this is less directly relevant than local held-out axial reconstruction error.
 
 \begin{table}[h!]
 \centering
@@ -276,7 +447,7 @@ Gaussian RBF RKHS & $-152.740$ & $-5956.851$ & $-251.910$ \\
 Uniform RKHS & $-261.668$ & $-10205.062$ & $-2096.884$ \\
 \bottomrule
 \end{tabular}
-\caption{Evidence-style comparison on the same 39 cleaned datasets.  Kernel rows use optimized GP marginal likelihood for the doubled-angle embedding; parametric rows use $-\operatorname{BIC}/2$ from axial residuals.  Bayes factors are relative to the multiplicative RBF--VM RKHS model.}
+\caption{Archived evidence-style comparison on the same 39 cleaned datasets.  Kernel rows use optimized GP marginal likelihood for the doubled-angle embedding; this is not the selection criterion for the Nadaraya--Watson local smoother.}
 \label{tab:evidence-results}
 \end{table}
 
@@ -290,25 +461,25 @@ Uniform RKHS & $-261.668$ & $-10205.062$ & $-2096.884$ \\
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{cv_axial_rss_boxplot.png}
-\caption{Distribution of held-out axial RSS across the 39 cleaned datasets.  The vertical ordering matches Table~\ref{tab:rss-results}: the multiplicative RBF--VM kernel has the lowest typical predictive error, followed by the Gaussian and uniform kernels, while the current parametric spiral basis has much larger held-out axial error.}
+\caption{Archived distribution of held-out axial RSS across the 39 cleaned datasets.  The plot is retained as a global-regression baseline; the optical local-smoother rerun should regenerate the corresponding boxplot with Nadaraya--Watson kernel rows.}
 \label{fig:rss-boxplot}
 \end{figure}
 
 \FloatBarrier
 
-\section{Streamline Diagnostics}
+\section{Optical Streamline Diagnostics}
 The numerical scores are the primary evidence, but streamline plots help explain what the fitted line fields look like.  A streamline is an integral curve of the fitted orientation field.  If $\hat\alpha(z)$ is the fitted line angle, the displayed curves follow the local direction
 \[
   \frac{d z(t)}{dt}
   =
   \{\cos \hat\alpha(z(t)),\sin \hat\alpha(z(t))\},
 \]
-with the understanding that the opposite sign gives the same line field.  These plots are diagnostic rather than part of the scoring function: the scores come from Equations~\eqref{eq:test-rss} and \eqref{eq:gp-evidence}, while the streamlines translate the fitted angle functions into geometry.
+with the understanding that the opposite sign gives the same line field.  These plots are diagnostic rather than part of the scoring function: the final local-smoother scores should come from Equation~\eqref{eq:test-rss}, while the archived GP/RKHS evidence score is defined in Equation~\eqref{eq:gp-evidence}.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.98\linewidth]{01_EE+0p2-data-225x225__EE_0.2data_rot_-22deg__arrow_segments_streamlines.png}
-\caption{Fitted streamlines for one cleaned dataset.  The diagnostic question is whether the fitted field follows the same local circular flow as the observed line segments.  Kernel smoothers can bend locally because $\hat\alpha(z)$ is learned through $K(z,z')$, whereas the parametric family must express the field through the single global form in Equation~\eqref{eq:parametric-implemented}.}
+\caption{Fitted streamlines for one cleaned dataset.  The diagnostic question is whether the fitted local NW field follows the same local circular flow as the observed line segments.  The smoother can bend locally because $\hat\alpha(z)$ is learned from nearby observations through the kernel weights.}
 \label{fig:streamline-example-one}
 \end{figure}
 
@@ -321,12 +492,12 @@ with the understanding that the opposite sign gives the same line field.  These 
 
 \FloatBarrier
 
-The consulting interpretation is therefore simple but important.  The cleaned central field is not best described by the current one-exponent parametric spiral family.  The parametric models are interpretable and sometimes score well under evidence because they are low-dimensional, but their held-out errors are much larger.  The multiplicative kernel performs best because it has the right kind of flexibility: it is smooth in Euclidean location and also respects polar position around the centre.
+The consulting interpretation is therefore simple but important.  For the optical SEM data, the relevant comparison is among local Nadaraya--Watson smoothers rather than global GP/RKHS regressions or global spiral formulae.  That choice gives the desired behaviour: local adaptation to observed line texture while preserving continuity and smoothness through the bandwidth-controlled kernel.
 
 \section{What Is Certain, and What Is Not}
-The exact data cleaning rule, axial residual, parametric formula, kernels, hyperparameter grids, RSS table, evidence table, and Bayes-factor table are backed by the cleaned-experiment code and its generated CSV files.  The relevant local paths are \path{src/cleaned_linefield_comparison.py} and \path{data/cleaned_linefield_comparison/}.  The citations above back the statistical tools: axial doubling, cross-validation, GP marginal likelihood, BIC, Bayes factors, and RBF universality.
+The Gabor Nadaraya--Watson pitch-smoothing results are backed by \path{src/vf_exports_pitch_kernel_smoother_comparison.py} and \path{data/vf_exports_pitch_kernel_smoother_comparison/}.  The optical Nadaraya--Watson rerun is backed by \path{src/optical_sem_nw_smoother_comparison.py} and \path{data/optical_sem_nw_smoother_comparison/}.  The archived optical GP/RKHS tables are backed by \path{src/cleaned_linefield_comparison.py} and \path{data/cleaned_linefield_comparison/}, and should be read only as a previous baseline.  The citations above back the statistical tools: axial doubling, Nadaraya--Watson smoothing, cross-validation, GP marginal likelihood, BIC, Bayes factors, and RBF universality.
 
-Two points are deliberately stated as limitations rather than conclusions.  First, the ROI cleaning rule is an experimental design choice, not a statistical theorem.  Second, the evidence table mixes exact GP marginal likelihoods for the kernel models with BIC approximations for the parametric models.  That is a useful evidence-style comparison, but it is not the same as a fully Bayesian analysis with matched priors over every kernel and parametric hyperparameter.
+Two points are deliberately stated as limitations rather than conclusions.  First, the ROI cleaning rule is an experimental design choice, not a statistical theorem.  Second, the archived evidence table mixes exact GP marginal likelihoods for the optical kernel models with BIC approximations for the parametric models; this is no longer the preferred optical selection criterion.
 
 \section{Citation Map}
 \begin{center}
@@ -337,6 +508,7 @@ Concept used here & Where to find it in the literature \\
 \midrule
 Axial angles and doubled angles & Mardia and Jupp, \emph{Directional Statistics}, Chapter 1, Section 1.1, where axial data are converted to circular data by doubling angles \cite{mardia2000}. \\
 Delta-method intuition for transformed estimators & van der Vaart, \emph{Asymptotic Statistics}, Chapter 3, especially Theorem 3.1 on the delta method \cite{vanDerVaart2000}. \\
+Nadaraya--Watson kernel smoothing & Nadaraya's 1964 kernel regression estimator and Watson's 1964 smoothed regression estimator \cite{nadaraya1964,watson1964}. \\
 Cross-validation as risk and model-selection tool & Arlot and Celisse, \emph{Statistics Surveys} 4:40--79, Sections 1, 4, and 6 \cite{arlot2010}. \\
 GP marginal likelihood & Rasmussen and Williams, \emph{Gaussian Processes for Machine Learning}, Chapter 2, Equation (2.30), and Algorithm 2.1 \cite{rasmussen2006}. \\
 Universality of Gaussian RBF kernels & Steinwart, \emph{JMLR} 2:67--93, Definition 4, Corollaries 10--11, and Example 1 \cite{steinwart2001}. \\

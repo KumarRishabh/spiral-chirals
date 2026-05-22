@@ -1,0 +1,11 @@
+dataset,n,model,family,kernel,bandwidth,kappa,sigma_n,mean_test_rss,mean_test_mae_deg,sd_test_rss,p_median,gamma_median
+Front_EE-1_1_3000x_rings_coords.csv,168,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,92.95695884582472,0.75,0.1,0.25869897980907924,20.76348703495946,,,
+Front_EE-1_2_3000x_rings_coords.csv,129,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,92.95695884582472,0.125,0.05623413251903491,0.21938011460424073,18.480236410197637,,,
+Front_EE-1_3_3000x_rings_coords.csv,178,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,55.54097616955662,,0.31622776601683794,0.49085475536673095,31.812228150286803,,,
+Front_EE-1_4_3000x_rings_coords.csv,179,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,33.18525124066939,,1.0,0.3879659274703254,27.622956216871643,,,
+Front_EE-1_5_3000x_rings_coords.csv,180,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,45.20080288443657,1.25,3.1622776601683795,0.3399632248586526,24.48791222771144,,,
+Front_EE1_1_3000x_rings_coords.csv,136,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,29.93721733939893,0.75,1.0,0.14996821277044423,16.047134115803228,,,
+Front_EE1_2_3000x_rings_coords.csv,178,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,68.24657610074021,,5.623413251903491,0.4622370983097904,29.93474854215731,,,
+Front_EE1_3_3000x_rings_coords.csv,180,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,55.54097616955662,,3.1622776601683795,0.33121238666413394,25.04363535356323,,,
+Front_EE1_4_3000x_rings_coords.csv,163,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,68.24657610074021,0.75,1.7782794100389228,0.25719806223978436,22.398663789015,,,
+Front_EE1_5_3000x_rings_coords.csv,180,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,319.9529092712089,0.5,0.01778279410038923,0.4833612300469469,30.88910925815759,,,

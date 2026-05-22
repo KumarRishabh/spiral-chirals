@@ -1,0 +1,3 @@
+model,wins
+Uniform RKHS,9
+Multiplicative RBF-VM RKHS,1
