@@ -1,0 +1,4 @@
+model,wins
+Multiplicative RBF-VM RKHS,6
+Gaussian RBF RKHS,2
+Uniform RKHS,2

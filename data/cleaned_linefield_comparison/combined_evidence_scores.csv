@@ -1,0 +1,274 @@
+dataset,n,model,kernel,bandwidth,kappa,sigma_n,evidence_score,family,p,rss_per_point,mae_deg,bic
+EE+0p2-data-225x225/EE_0.2data_rot_-22deg/arrow_segments.mat,136,Gaussian RBF RKHS,gaussian_rbf,15.132790203511458,,0.2760844814211254,-156.81491013712235,kernel_gp_line_embedding_lml,,,,
+EE+0p2-data-225x225/EE_0.2data_rot_-22deg/arrow_segments.mat,136,Uniform RKHS,uniform,117.51961628363846,,0.6305089896303894,-298.98273244568213,kernel_gp_line_embedding_lml,,,,
+EE+0p2-data-225x225/EE_0.2data_rot_-22deg/arrow_segments.mat,136,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,27.180622440486303,0.5,0.2760844814211254,-148.09728124536466,kernel_gp_line_embedding_lml,,,,
+EE+0p22-data-225x225/EE_0.22data_rot_35.5deg/arrow_segments.mat,125,Gaussian RBF RKHS,gaussian_rbf,14.322405654896652,,0.25843344067072316,-142.63227421471925,kernel_gp_line_embedding_lml,,,,
+EE+0p22-data-225x225/EE_0.22data_rot_35.5deg/arrow_segments.mat,125,Uniform RKHS,uniform,102.97767120462187,,0.5901983578550194,-260.35046679488374,kernel_gp_line_embedding_lml,,,,
+EE+0p22-data-225x225/EE_0.22data_rot_35.5deg/arrow_segments.mat,125,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,14.322405654896652,0.0,0.25843344067072316,-142.63227421471925,kernel_gp_line_embedding_lml,,,,
+EE+0p23-data-225x225/EE_0.23data_rot_0deg/arrow_segments.mat,85,Gaussian RBF RKHS,gaussian_rbf,17.576023799500128,,0.40406015508081133,-119.23135042917478,kernel_gp_line_embedding_lml,,,,
+EE+0p23-data-225x225/EE_0.23data_rot_0deg/arrow_segments.mat,85,Uniform RKHS,uniform,88.2618893144557,,0.6106195006888079,-183.4855667774271,kernel_gp_line_embedding_lml,,,,
+EE+0p23-data-225x225/EE_0.23data_rot_0deg/arrow_segments.mat,85,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,17.576023799500128,0.0,0.40406015508081133,-119.23135042917478,kernel_gp_line_embedding_lml,,,,
+EE+0p4-data-225x225/EE_0.4data_rot_-67deg/arrow_segments.mat,142,Gaussian RBF RKHS,gaussian_rbf,25.164896030783254,,0.4074716834544199,-175.10725830394236,kernel_gp_line_embedding_lml,,,,
+EE+0p4-data-225x225/EE_0.4data_rot_-67deg/arrow_segments.mat,142,Uniform RKHS,uniform,102.97767120462187,,0.6157750344029945,-305.4066109399266,kernel_gp_line_embedding_lml,,,,
+EE+0p4-data-225x225/EE_0.4data_rot_-67deg/arrow_segments.mat,142,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,77.68791770496118,1.0,0.4074716834544199,-168.1608748397457,kernel_gp_line_embedding_lml,,,,
+EE+0p42-data-225x225/EE_0.42data_rot_-7.5deg/arrow_segments.mat,128,Gaussian RBF RKHS,gaussian_rbf,13.888198952138389,,0.27321533106046564,-159.01346157801157,kernel_gp_line_embedding_lml,,,,
+EE+0p42-data-225x225/EE_0.42data_rot_-7.5deg/arrow_segments.mat,128,Uniform RKHS,uniform,95.64339158873616,,0.6239565565284437,-279.65880416375194,kernel_gp_line_embedding_lml,,,,
+EE+0p42-data-225x225/EE_0.42data_rot_-7.5deg/arrow_segments.mat,128,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,126.0,2.0,0.27321533106046564,-125.07286550786685,kernel_gp_line_embedding_lml,,,,
+EE+0p43-data-225x225/EE_0.43data_rot_14.5deg/arrow_segments.mat,129,Gaussian RBF RKHS,gaussian_rbf,18.29622558235923,,0.4078521700944526,-212.41223840827084,kernel_gp_line_embedding_lml,,,,
+EE+0p43-data-225x225/EE_0.43data_rot_14.5deg/arrow_segments.mat,129,Uniform RKHS,uniform,95.64339158873616,,0.6163500293863753,-279.9509901850447,kernel_gp_line_embedding_lml,,,,
+EE+0p43-data-225x225/EE_0.43data_rot_14.5deg/arrow_segments.mat,129,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,126.0,1.0,0.4078521700944526,-187.12089786976534,kernel_gp_line_embedding_lml,,,,
+EE+0p6-data-225x225/EE_0.6data_rot_39.5deg/arrow_segments.mat,69,Gaussian RBF RKHS,gaussian_rbf,16.021289717542732,,0.4032117368688245,-108.98914385972233,kernel_gp_line_embedding_lml,,,,
+EE+0p6-data-225x225/EE_0.6data_rot_39.5deg/arrow_segments.mat,69,Uniform RKHS,uniform,73.33763548955437,,0.6093373631197743,-149.1622829373809,kernel_gp_line_embedding_lml,,,,
+EE+0p6-data-225x225/EE_0.6data_rot_39.5deg/arrow_segments.mat,69,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,94.5,1.0,0.4032117368688245,-92.93029950501455,kernel_gp_line_embedding_lml,,,,
+EE+0p62-data-225x225/EE_0.62data_rot_37.5deg/arrow_segments.mat,68,Gaussian RBF RKHS,gaussian_rbf,16.021289717542732,,0.4025226412108767,-108.0646288142274,kernel_gp_line_embedding_lml,,,,
+EE+0p62-data-225x225/EE_0.62data_rot_37.5deg/arrow_segments.mat,68,Uniform RKHS,uniform,73.33763548955437,,0.6082959952905242,-146.60302350366413,kernel_gp_line_embedding_lml,,,,
+EE+0p62-data-225x225/EE_0.62data_rot_37.5deg/arrow_segments.mat,68,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,94.5,1.0,0.4025226412108767,-93.29572282244905,kernel_gp_line_embedding_lml,,,,
+EE+0p63-data-225x225/EE_0.63data_rot_-30.5deg/arrow_segments.mat,87,Gaussian RBF RKHS,gaussian_rbf,16.81962526923401,,0.39518678872230634,-131.04877364154822,kernel_gp_line_embedding_lml,,,,
+EE+0p63-data-225x225/EE_0.63data_rot_-30.5deg/arrow_segments.mat,87,Uniform RKHS,uniform,80.82851262784433,,0.597209986122405,-185.21567239518964,kernel_gp_line_embedding_lml,,,,
+EE+0p63-data-225x225/EE_0.63data_rot_-30.5deg/arrow_segments.mat,87,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,105.0,1.0,0.39518678872230634,-113.98385205252174,kernel_gp_line_embedding_lml,,,,
+EE+0p8-data-226x225/EE_0.8data_rot_0deg/arrow_segments.mat,163,Gaussian RBF RKHS,gaussian_rbf,20.280992505120025,,0.411004450253859,-203.17634080776247,kernel_gp_line_embedding_lml,,,,
+EE+0p8-data-226x225/EE_0.8data_rot_0deg/arrow_segments.mat,163,Uniform RKHS,uniform,117.51961628363846,,0.6211137847647866,-353.3680842431539,kernel_gp_line_embedding_lml,,,,
+EE+0p8-data-226x225/EE_0.8data_rot_0deg/arrow_segments.mat,163,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,87.68800134256274,1.0,0.411004450253859,-194.87996500887127,kernel_gp_line_embedding_lml,,,,
+EE+0p82-data-226x225/EE_0.82data_rot_-24.5deg/arrow_segments.mat,123,Gaussian RBF RKHS,gaussian_rbf,18.984779409205064,,0.40787969167627763,-180.53635213282726,kernel_gp_line_embedding_lml,,,,
+EE+0p82-data-226x225/EE_0.82data_rot_-24.5deg/arrow_segments.mat,123,Uniform RKHS,uniform,102.97767120462187,,0.6163916202592707,-265.45542545880386,kernel_gp_line_embedding_lml,,,,
+EE+0p82-data-226x225/EE_0.82data_rot_-24.5deg/arrow_segments.mat,123,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,33.35682646557795,0.5,0.40787969167627763,-174.41743161905254,kernel_gp_line_embedding_lml,,,,
+EE+0p83-data-226x225/EE_0.83data_rot_43deg/arrow_segments.mat,158,Gaussian RBF RKHS,gaussian_rbf,20.894189947394523,,0.2546004188808181,-142.1928367095088,kernel_gp_line_embedding_lml,,,,
+EE+0p83-data-226x225/EE_0.83data_rot_43deg/arrow_segments.mat,158,Uniform RKHS,uniform,124.7334781593721,,0.5814446796926532,-320.45779114366735,kernel_gp_line_embedding_lml,,,,
+EE+0p83-data-226x225/EE_0.83data_rot_43deg/arrow_segments.mat,158,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,37.90338847138779,1.0,0.2546004188808181,-125.8705259449986,kernel_gp_line_embedding_lml,,,,
+EE+1-data-225x225/EE_1data_rot_0deg/arrow_segments.mat,194,Gaussian RBF RKHS,gaussian_rbf,20.894189947394523,,0.27629904218184703,-193.36169796470207,kernel_gp_line_embedding_lml,,,,
+EE+1-data-225x225/EE_1data_rot_0deg/arrow_segments.mat,194,Uniform RKHS,uniform,124.7334781593721,,0.6309989935877309,-424.1412257156423,kernel_gp_line_embedding_lml,,,,
+EE+1-data-225x225/EE_1data_rot_0deg/arrow_segments.mat,194,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,68.75915559445191,1.0,0.27629904218184703,-152.83938001739,kernel_gp_line_embedding_lml,,,,
+EE+12-data-225x225/EE_12data_rot_-41.5deg/arrow_segments.mat,101,Gaussian RBF RKHS,gaussian_rbf,17.576023799500128,,0.41226651627941346,-141.61079961581214,kernel_gp_line_embedding_lml,,,,
+EE+12-data-225x225/EE_12data_rot_-41.5deg/arrow_segments.mat,101,Uniform RKHS,uniform,88.2618893144557,,0.6230210307940474,-221.1524587868386,kernel_gp_line_embedding_lml,,,,
+EE+12-data-225x225/EE_12data_rot_-41.5deg/arrow_segments.mat,101,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,115.5,1.0,0.41226651627941346,-128.76595491083813,kernel_gp_line_embedding_lml,,,,
+EE+13-data-225x225/EE_13data_rot_34.5deg/arrow_segments.mat,80,Gaussian RBF RKHS,gaussian_rbf,13.431108806750808,,0.3761340920381147,-125.41417432653496,kernel_gp_line_embedding_lml,,,,
+EE+13-data-225x225/EE_13data_rot_34.5deg/arrow_segments.mat,80,Uniform RKHS,uniform,88.2618893144557,,0.5684173719787272,-163.89361289875325,kernel_gp_line_embedding_lml,,,,
+EE+13-data-225x225/EE_13data_rot_34.5deg/arrow_segments.mat,80,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,115.5,1.0,0.3761340920381147,-115.06872487033729,kernel_gp_line_embedding_lml,,,,
+EE-0p2-data-225x225/EE-0.2data_rot_62.5deg/arrow_segments.mat,196,Gaussian RBF RKHS,gaussian_rbf,20.280992505120025,,0.277884764914374,-217.8820316537538,kernel_gp_line_embedding_lml,,,,
+EE-0p2-data-225x225/EE-0.2data_rot_62.5deg/arrow_segments.mat,196,Uniform RKHS,uniform,117.51961628363846,,0.6346203939387143,-430.4584995382302,kernel_gp_line_embedding_lml,,,,
+EE-0p2-data-225x225/EE-0.2data_rot_62.5deg/arrow_segments.mat,196,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,117.51961628363846,1.0,0.277884764914374,-179.0264163452326,kernel_gp_line_embedding_lml,,,,
+EE-0p22-data-225x225/EE-0.22data_rot_0deg/arrow_segments.mat,167,Gaussian RBF RKHS,gaussian_rbf,20.280992505120025,,0.2728529511538054,-110.57571514798448,kernel_gp_line_embedding_lml,,,,
+EE-0p22-data-225x225/EE-0.22data_rot_0deg/arrow_segments.mat,167,Uniform RKHS,uniform,117.51961628363846,,0.6231289700316056,-361.7012774992312,kernel_gp_line_embedding_lml,,,,
+EE-0p22-data-225x225/EE-0.22data_rot_0deg/arrow_segments.mat,167,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,157.5,1.0,0.2728529511538054,-65.61514237078308,kernel_gp_line_embedding_lml,,,,
+EE-0p23-data-225x225/EE-0.23data_rot_90deg/arrow_segments.mat,117,Gaussian RBF RKHS,gaussian_rbf,11.054252092940754,,0.27525172039506307,-150.04671399052518,kernel_gp_line_embedding_lml,,,,
+EE-0p23-data-225x225/EE-0.23data_rot_90deg/arrow_segments.mat,117,Uniform RKHS,uniform,110.268636569268,,0.628607168454337,-256.5634157313994,kernel_gp_line_embedding_lml,,,,
+EE-0p23-data-225x225/EE-0.23data_rot_90deg/arrow_segments.mat,117,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,26.189388284631097,1.0,0.27525172039506307,-138.52964622953053,kernel_gp_line_embedding_lml,,,,
+EE-0p4-data-225x225/EE-0.4data_rot_31deg/arrow_segments.mat,92,Gaussian RBF RKHS,gaussian_rbf,13.431108806750808,,0.40088967419547605,-132.3049813166959,kernel_gp_line_embedding_lml,,,,
+EE-0p4-data-225x225/EE-0.4data_rot_31deg/arrow_segments.mat,92,Uniform RKHS,uniform,88.2618893144557,,0.6058282402024586,-198.8139007247009,kernel_gp_line_embedding_lml,,,,
+EE-0p4-data-225x225/EE-0.4data_rot_31deg/arrow_segments.mat,92,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,115.5,1.0,0.40088967419547605,-123.00861743123625,kernel_gp_line_embedding_lml,,,,
+EE-0p42-data-225x225/EE-0.42data_rot_-12deg/arrow_segments.mat,90,Gaussian RBF RKHS,gaussian_rbf,17.576023799500128,,0.39637908928877136,-136.34220989836052,kernel_gp_line_embedding_lml,,,,
+EE-0p42-data-225x225/EE-0.42data_rot_-12deg/arrow_segments.mat,90,Uniform RKHS,uniform,88.2618893144557,,0.5990118019347566,-190.88917322548053,kernel_gp_line_embedding_lml,,,,
+EE-0p42-data-225x225/EE-0.42data_rot_-12deg/arrow_segments.mat,90,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,23.000082647333304,0.5,0.39637908928877136,-133.45300973882354,kernel_gp_line_embedding_lml,,,,
+EE-0p43-data-225x225/EE-0.43data_rot_56.5deg/arrow_segments.mat,89,Gaussian RBF RKHS,gaussian_rbf,12.947669461618,,0.2769383741974842,-114.29228688406505,kernel_gp_line_embedding_lml,,,,
+EE-0p43-data-225x225/EE-0.43data_rot_56.5deg/arrow_segments.mat,89,Uniform RKHS,uniform,80.82851262784433,,0.6324590705219459,-197.37911131324344,kernel_gp_line_embedding_lml,,,,
+EE-0p43-data-225x225/EE-0.43data_rot_56.5deg/arrow_segments.mat,89,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,36.87146991197789,1.0,0.2769383741974842,-93.35935735059178,kernel_gp_line_embedding_lml,,,,
+EE-0p6-data-225x225/EE-0.6data_rot_-67deg/arrow_segments.mat,65,Gaussian RBF RKHS,gaussian_rbf,10.542178181282909,,0.3476936327382466,-113.39100576187678,kernel_gp_line_embedding_lml,,,,
+EE-0p6-data-225x225/EE-0.6data_rot_-67deg/arrow_segments.mat,65,Uniform RKHS,uniform,95.64339158873616,,0.525437882814366,-127.74320799161,kernel_gp_line_embedding_lml,,,,
+EE-0p6-data-225x225/EE-0.6data_rot_-67deg/arrow_segments.mat,65,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,10.542178181282909,0.0,0.3476936327382466,-113.39100576187678,kernel_gp_line_embedding_lml,,,,
+EE-0p62-data-225x225/EE-0.62data_rot_27deg/arrow_segments.mat,172,Gaussian RBF RKHS,gaussian_rbf,20.894189947394523,,0.41771768705370194,-236.3401420765271,kernel_gp_line_embedding_lml,,,,
+EE-0p62-data-225x225/EE-0.62data_rot_27deg/arrow_segments.mat,172,Uniform RKHS,uniform,124.7334781593721,,0.6312588912574224,-378.67184964357693,kernel_gp_line_embedding_lml,,,,
+EE-0p62-data-225x225/EE-0.62data_rot_27deg/arrow_segments.mat,172,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,92.60976531984863,1.0,0.41771768705370194,-229.40084599932388,kernel_gp_line_embedding_lml,,,,
+EE-0p63-data-225x225/EE-0.63data_rot_6deg/arrow_segments.mat,41,Gaussian RBF RKHS,gaussian_rbf,9.30568669182521,,0.3686678135037716,-73.40710599195255,kernel_gp_line_embedding_lml,,,,
+EE-0p63-data-225x225/EE-0.63data_rot_6deg/arrow_segments.mat,41,Uniform RKHS,uniform,65.78232068203505,,0.557134261745469,-83.70064067598118,kernel_gp_line_embedding_lml,,,,
+EE-0p63-data-225x225/EE-0.63data_rot_6deg/arrow_segments.mat,41,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,9.30568669182521,0.0,0.3686678135037716,-73.40710599195255,kernel_gp_line_embedding_lml,,,,
+EE-0p8-data-226x225/EE-0.8data_rot_34deg/arrow_segments.mat,68,Gaussian RBF RKHS,gaussian_rbf,13.431108806750808,,0.37393918094357737,-113.11402015076314,kernel_gp_line_embedding_lml,,,,
+EE-0p8-data-226x225/EE-0.8data_rot_34deg/arrow_segments.mat,68,Uniform RKHS,uniform,88.2618893144557,,0.5651004017213289,-139.2362170670629,kernel_gp_line_embedding_lml,,,,
+EE-0p8-data-226x225/EE-0.8data_rot_34deg/arrow_segments.mat,68,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,39.38645791613813,1.0,0.37393918094357737,-111.9325818473303,kernel_gp_line_embedding_lml,,,,
+EE-0p82-data-225x225/EE-0.82data_rot_37deg/arrow_segments.mat,99,Gaussian RBF RKHS,gaussian_rbf,16.81962526923401,,0.38286964645879007,-143.36220644256525,kernel_gp_line_embedding_lml,,,,
+EE-0p82-data-225x225/EE-0.82data_rot_37deg/arrow_segments.mat,99,Uniform RKHS,uniform,80.82851262784433,,0.5785962050695388,-206.7925761629731,kernel_gp_line_embedding_lml,,,,
+EE-0p82-data-225x225/EE-0.82data_rot_37deg/arrow_segments.mat,99,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,105.0,1.0,0.38286964645879007,-132.5609964926347,kernel_gp_line_embedding_lml,,,,
+EE-0p83-data-226x225/EE-0.83data_rot_-41.5deg/arrow_segments.mat,115,Gaussian RBF RKHS,gaussian_rbf,24.10333202413078,,0.4101398749736944,-154.36897435952557,kernel_gp_line_embedding_lml,,,,
+EE-0p83-data-226x225/EE-0.83data_rot_-41.5deg/arrow_segments.mat,115,Uniform RKHS,uniform,95.64339158873616,,0.6198072304825997,-249.81901231939008,kernel_gp_line_embedding_lml,,,,
+EE-0p83-data-226x225/EE-0.83data_rot_-41.5deg/arrow_segments.mat,115,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,41.831962277299844,0.5,0.4101398749736944,-143.81104273871037,kernel_gp_line_embedding_lml,,,,
+EE-1-data-368x368/EE-1data_rot_58deg/arrow_segments.mat,151,Gaussian RBF RKHS,gaussian_rbf,14.73651174277032,,0.2771344846030162,-179.35428447341397,kernel_gp_line_embedding_lml,,,,
+EE-1-data-368x368/EE-1data_rot_58deg/arrow_segments.mat,151,Uniform RKHS,uniform,110.268636569268,,0.6329069384101067,-332.22861397520217,kernel_gp_line_embedding_lml,,,,
+EE-1-data-368x368/EE-1data_rot_58deg/arrow_segments.mat,151,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,147.0,2.0,0.2771344846030162,-122.65767027563768,kernel_gp_line_embedding_lml,,,,
+EE-1-data-368x368/EE-1data_rot_60.5deg/arrow_segments.mat,154,Gaussian RBF RKHS,gaussian_rbf,26.189388284631097,,0.4192062516798357,-179.64468471676344,kernel_gp_line_embedding_lml,,,,
+EE-1-data-368x368/EE-1data_rot_60.5deg/arrow_segments.mat,154,Uniform RKHS,uniform,110.268636569268,,0.6335084240988161,-339.3294853493014,kernel_gp_line_embedding_lml,,,,
+EE-1-data-368x368/EE-1data_rot_60.5deg/arrow_segments.mat,154,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,147.0,2.0,0.2773978604900863,-121.79341691187119,kernel_gp_line_embedding_lml,,,,
+EE-12-data-368x368/EE-12data_rot_78.5deg/arrow_segments.mat,117,Gaussian RBF RKHS,gaussian_rbf,18.29622558235923,,0.4111821307128966,-153.26640309877203,kernel_gp_line_embedding_lml,,,,
+EE-12-data-368x368/EE-12data_rot_78.5deg/arrow_segments.mat,117,Uniform RKHS,uniform,95.64339158873616,,0.6213822971429943,-255.09336692904787,kernel_gp_line_embedding_lml,,,,
+EE-12-data-368x368/EE-12data_rot_78.5deg/arrow_segments.mat,117,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,126.0,1.0,0.4111821307128966,-141.21836343890496,kernel_gp_line_embedding_lml,,,,
+EE-12-data-368x368/EE-12data_rot_80deg/arrow_segments.mat,120,Gaussian RBF RKHS,gaussian_rbf,18.29622558235923,,0.41205924932869187,-150.29723276567378,kernel_gp_line_embedding_lml,,,,
+EE-12-data-368x368/EE-12data_rot_80deg/arrow_segments.mat,120,Uniform RKHS,uniform,126.0,,0.6227078070317745,-261.90966604489995,kernel_gp_line_embedding_lml,,,,
+EE-12-data-368x368/EE-12data_rot_80deg/arrow_segments.mat,120,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,126.0,1.0,0.41205924932869187,-135.9688640255299,kernel_gp_line_embedding_lml,,,,
+EE-13-data-225x225/EE-13data_rot_59deg/arrow_segments.mat,143,Gaussian RBF RKHS,gaussian_rbf,14.73651174277032,,0.2763709260364653,-149.3452433535466,kernel_gp_line_embedding_lml,,,,
+EE-13-data-225x225/EE-13data_rot_59deg/arrow_segments.mat,143,Uniform RKHS,uniform,110.268636569268,,0.6311631586154526,-314.28961237285665,kernel_gp_line_embedding_lml,,,,
+EE-13-data-225x225/EE-13data_rot_59deg/arrow_segments.mat,143,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,46.543175935761376,1.0,0.2763709260364653,-136.89714189569855,kernel_gp_line_embedding_lml,,,,
+EE-13-data-225x225/EE-13data_rot_64.5deg/arrow_segments.mat,145,Gaussian RBF RKHS,gaussian_rbf,14.73651174277032,,0.2768362503549544,-161.2158355639776,kernel_gp_line_embedding_lml,,,,
+EE-13-data-225x225/EE-13data_rot_64.5deg/arrow_segments.mat,145,Uniform RKHS,uniform,110.268636569268,,0.6322258448062549,-319.2620679642463,kernel_gp_line_embedding_lml,,,,
+EE-13-data-225x225/EE-13data_rot_64.5deg/arrow_segments.mat,145,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,62.0470795270879,1.0,0.2768362503549544,-139.02450082034008,kernel_gp_line_embedding_lml,,,,
+EE0-data-225x225/EE0data_rot_34.5deg/arrow_segments.mat,153,Gaussian RBF RKHS,gaussian_rbf,19.64536148795532,,0.2775033609463915,-143.3095250159722,kernel_gp_line_embedding_lml,,,,
+EE0-data-225x225/EE0data_rot_34.5deg/arrow_segments.mat,153,Uniform RKHS,uniform,110.268636569268,,0.6337493611691217,-336.7159536095579,kernel_gp_line_embedding_lml,,,,
+EE0-data-225x225/EE0data_rot_34.5deg/arrow_segments.mat,153,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,34.913282666938585,0.5,0.2775033609463915,-131.3723884213107,kernel_gp_line_embedding_lml,,,,
+EE0-data-225x225/EE0data_rot_37.5deg/arrow_segments.mat,154,Gaussian RBF RKHS,gaussian_rbf,19.64536148795532,,0.2781200449372879,-137.36233080891242,kernel_gp_line_embedding_lml,,,,
+EE0-data-225x225/EE0data_rot_37.5deg/arrow_segments.mat,154,Uniform RKHS,uniform,110.268636569268,,0.6351577155902756,-339.31361760707995,kernel_gp_line_embedding_lml,,,,
+EE0-data-225x225/EE0data_rot_37.5deg/arrow_segments.mat,154,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,147.0,1.0,0.2781200449372879,-120.82778055371176,kernel_gp_line_embedding_lml,,,,
+EE02-data-225x225/EE02data_rot_57.5deg/arrow_segments.mat,141,Gaussian RBF RKHS,gaussian_rbf,20.280992505120025,,0.4136400852133423,-218.92393013061968,kernel_gp_line_embedding_lml,,,,
+EE02-data-225x225/EE02data_rot_57.5deg/arrow_segments.mat,141,Uniform RKHS,uniform,117.51961628363846,,0.6250967810655127,-307.1934658312781,kernel_gp_line_embedding_lml,,,,
+EE02-data-225x225/EE02data_rot_57.5deg/arrow_segments.mat,141,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,20.280992505120025,0.0,0.4136400852133423,-218.92393013061968,kernel_gp_line_embedding_lml,,,,
+EE02-data-225x225/EE02data_rot_59.5deg/arrow_segments.mat,136,Gaussian RBF RKHS,gaussian_rbf,20.280992505120025,,0.41368288092442507,-208.8546247834896,kernel_gp_line_embedding_lml,,,,
+EE02-data-225x225/EE02data_rot_59.5deg/arrow_segments.mat,136,Uniform RKHS,uniform,117.51961628363846,,0.6251614543459745,-297.06415479968337,kernel_gp_line_embedding_lml,,,,
+EE02-data-225x225/EE02data_rot_59.5deg/arrow_segments.mat,136,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,20.280992505120025,0.0,0.41368288092442507,-208.8546247834896,kernel_gp_line_embedding_lml,,,,
+EE03-data-225x225/EE03data_rot_-20.5deg/arrow_segments.mat,105,Gaussian RBF RKHS,gaussian_rbf,18.29622558235923,,0.40286194772420253,-136.76739201477275,kernel_gp_line_embedding_lml,,,,
+EE03-data-225x225/EE03data_rot_-20.5deg/arrow_segments.mat,105,Uniform RKHS,uniform,95.64339158873616,,0.6088087584797233,-225.56028033976656,kernel_gp_line_embedding_lml,,,,
+EE03-data-225x225/EE03data_rot_-20.5deg/arrow_segments.mat,105,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,18.29622558235923,0.0,0.40286194772420253,-136.76739201477275,kernel_gp_line_embedding_lml,,,,
+EE03-data-225x225/EE03data_rot_-23.5deg/arrow_segments.mat,103,Gaussian RBF RKHS,gaussian_rbf,17.576023799500128,,0.39660575750105964,-143.47583236632636,kernel_gp_line_embedding_lml,,,,
+EE03-data-225x225/EE03data_rot_-23.5deg/arrow_segments.mat,103,Uniform RKHS,uniform,88.2618893144557,,0.5993543450656965,-218.04759593996187,kernel_gp_line_embedding_lml,,,,
+EE03-data-225x225/EE03data_rot_-23.5deg/arrow_segments.mat,103,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,30.098036269113837,0.5,0.39660575750105964,-142.63823866401358,kernel_gp_line_embedding_lml,,,,
+EE+0p2-data-225x225/EE_0.2data_rot_-22deg/arrow_segments.mat,136,Parametric p=0 (Logarithmic),,,,,-168.739363936078,parametric_fixed_p,0.0,0.6753404840647431,40.499352403589526,337.478727872156
+EE+0p2-data-225x225/EE_0.2data_rot_-22deg/arrow_segments.mat,136,Parametric p=1 (Archimedean),,,,,-168.65917109896623,parametric_fixed_p,1.0,0.6745445201256642,40.43581921248508,337.31834219793245
+EE+0p2-data-225x225/EE_0.2data_rot_-22deg/arrow_segments.mat,136,Parametric p=2 (Fermat),,,,,-168.70871894447703,parametric_fixed_p,2.0,0.6750362025829778,40.41414005695178,337.41743788895405
+EE+0p2-data-225x225/EE_0.2data_rot_-22deg/arrow_segments.mat,136,Parametric continuous p,,,,,-171.10906294576657,parametric_continuous_p,1.2356051244771264,0.6744806834985383,40.422217487150725,342.21812589153313
+EE+0p22-data-225x225/EE_0.22data_rot_35.5deg/arrow_segments.mat,125,Parametric p=0 (Logarithmic),,,,,-152.7593955250748,parametric_fixed_p,0.0,0.6489800853326392,38.9687130451233,305.5187910501496
+EE+0p22-data-225x225/EE_0.22data_rot_35.5deg/arrow_segments.mat,125,Parametric p=1 (Archimedean),,,,,-152.71878453487537,parametric_fixed_p,1.0,0.6485585307233106,38.882395737045215,305.43756906975074
+EE+0p22-data-225x225/EE_0.22data_rot_35.5deg/arrow_segments.mat,125,Parametric p=2 (Fermat),,,,,-152.6188912906499,parametric_fixed_p,2.0,0.6475227728142783,38.83437240259494,305.2377825812998
+EE+0p22-data-225x225/EE_0.22data_rot_35.5deg/arrow_segments.mat,125,Parametric continuous p,,,,,-154.94087444026226,parametric_continuous_p,2.999,0.6465685233269057,38.786118350435345,309.8817488805245
+EE+0p23-data-225x225/EE_0.23data_rot_0deg/arrow_segments.mat,85,Parametric p=0 (Logarithmic),,,,,-108.30697436356512,parametric_fixed_p,0.0,0.7105299670031737,40.7942134023601,216.61394872713024
+EE+0p23-data-225x225/EE_0.23data_rot_0deg/arrow_segments.mat,85,Parametric p=1 (Archimedean),,,,,-108.29636744192675,parametric_fixed_p,1.0,0.7103526588785645,40.79618911054593,216.5927348838535
+EE+0p23-data-225x225/EE_0.23data_rot_0deg/arrow_segments.mat,85,Parametric p=2 (Fermat),,,,,-108.53547278318212,parametric_fixed_p,2.0,0.7143603717827143,41.23278336078926,217.07094556636423
+EE+0p23-data-225x225/EE_0.23data_rot_0deg/arrow_segments.mat,85,Parametric continuous p,,,,,-110.31203291975642,parametric_continuous_p,1.3959765781951539,0.7069235216586944,41.03021199131219,220.62406583951284
+EE+0p4-data-225x225/EE_0.4data_rot_-67deg/arrow_segments.mat,142,Parametric p=0 (Logarithmic),,,,,-175.85052202636297,parametric_fixed_p,0.0,0.6730004093495771,40.05037080106215,351.70104405272593
+EE+0p4-data-225x225/EE_0.4data_rot_-67deg/arrow_segments.mat,142,Parametric p=1 (Archimedean),,,,,-175.86292508820858,parametric_fixed_p,1.0,0.6731179867416601,40.07892169839069,351.72585017641717
+EE+0p4-data-225x225/EE_0.4data_rot_-67deg/arrow_segments.mat,142,Parametric p=2 (Fermat),,,,,-175.87401263902686,parametric_fixed_p,2.0,0.673223110863548,40.05477863009126,351.7480252780537
+EE+0p4-data-225x225/EE_0.4data_rot_-67deg/arrow_segments.mat,142,Parametric continuous p,,,,,-178.3261979900037,parametric_continuous_p,-0.637609078261996,0.6729792000743675,40.043377810266655,356.6523959800074
+EE+0p42-data-225x225/EE_0.42data_rot_-7.5deg/arrow_segments.mat,128,Parametric p=0 (Logarithmic),,,,,-151.25317034708215,parametric_fixed_p,0.0,0.5990245084028569,37.72679484206334,302.5063406941643
+EE+0p42-data-225x225/EE_0.42data_rot_-7.5deg/arrow_segments.mat,128,Parametric p=1 (Archimedean),,,,,-151.3229465714309,parametric_fixed_p,1.0,0.5996779531184625,37.751367485473466,302.6458931428618
+EE+0p42-data-225x225/EE_0.42data_rot_-7.5deg/arrow_segments.mat,128,Parametric p=2 (Fermat),,,,,-151.31348931909318,parametric_fixed_p,2.0,0.59958934551344,37.7853021274934,302.62697863818636
+EE+0p42-data-225x225/EE_0.42data_rot_-7.5deg/arrow_segments.mat,128,Parametric continuous p,,,,,-153.66885852405898,parametric_continuous_p,-0.39237334701995275,0.5989278584017874,37.73088080118305,307.33771704811795
+EE+0p43-data-225x225/EE_0.43data_rot_14.5deg/arrow_segments.mat,129,Parametric p=0 (Logarithmic),,,,,-154.22866953616798,parametric_fixed_p,0.0,0.6160618790855069,37.19545404059055,308.45733907233597
+EE+0p43-data-225x225/EE_0.43data_rot_14.5deg/arrow_segments.mat,129,Parametric p=1 (Archimedean),,,,,-154.10632420358976,parametric_fixed_p,1.0,0.6148944239449743,37.250233276371404,308.21264840717953
+EE+0p43-data-225x225/EE_0.43data_rot_14.5deg/arrow_segments.mat,129,Parametric p=2 (Fermat),,,,,-153.74177101587486,parametric_fixed_p,2.0,0.6114288513166044,36.92046070601437,307.4835420317497
+EE+0p43-data-225x225/EE_0.43data_rot_14.5deg/arrow_segments.mat,129,Parametric continuous p,,,,,-155.9917593288394,parametric_continuous_p,2.999,0.6097256931337791,36.74949745192388,311.9835186576788
+EE+0p6-data-225x225/EE_0.6data_rot_39.5deg/arrow_segments.mat,69,Parametric p=0 (Logarithmic),,,,,-81.43526630872647,parametric_fixed_p,0.0,0.5834488877338154,34.57379110020357,162.87053261745294
+EE+0p6-data-225x225/EE_0.6data_rot_39.5deg/arrow_segments.mat,69,Parametric p=1 (Archimedean),,,,,-81.6259231284081,parametric_fixed_p,1.0,0.5866821180004292,35.31801829228486,163.2518462568162
+EE+0p6-data-225x225/EE_0.6data_rot_39.5deg/arrow_segments.mat,69,Parametric p=2 (Fermat),,,,,-81.9827030169575,parametric_fixed_p,2.0,0.5927807393997366,36.002836685133055,163.965406033915
+EE+0p6-data-225x225/EE_0.6data_rot_39.5deg/arrow_segments.mat,69,Parametric continuous p,,,,,-83.02014327011851,parametric_continuous_p,-0.999,0.5745180136519508,34.52040050163625,166.04028654023702
+EE+0p62-data-225x225/EE_0.62data_rot_37.5deg/arrow_segments.mat,68,Parametric p=0 (Logarithmic),,,,,-79.69724764553678,parametric_fixed_p,0.0,0.5735604429509625,34.72424886289843,159.39449529107355
+EE+0p62-data-225x225/EE_0.62data_rot_37.5deg/arrow_segments.mat,68,Parametric p=1 (Archimedean),,,,,-80.87091235794745,parametric_fixed_p,1.0,0.5937051849344621,35.68304923446498,161.7418247158949
+EE+0p62-data-225x225/EE_0.62data_rot_37.5deg/arrow_segments.mat,68,Parametric p=2 (Fermat),,,,,-81.90624839346671,parametric_fixed_p,2.0,0.6120622140948558,37.39961203561659,163.81249678693342
+EE+0p62-data-225x225/EE_0.62data_rot_37.5deg/arrow_segments.mat,68,Parametric continuous p,,,,,-81.61436721628533,parametric_continuous_p,-0.48249567193218734,0.5703200017959285,34.953277363180945,163.22873443257066
+EE+0p63-data-225x225/EE_0.63data_rot_-30.5deg/arrow_segments.mat,87,Parametric p=0 (Logarithmic),,,,,-101.36286814763781,parametric_fixed_p,0.0,0.5717642821510023,35.51800466317433,202.72573629527562
+EE+0p63-data-225x225/EE_0.63data_rot_-30.5deg/arrow_segments.mat,87,Parametric p=1 (Archimedean),,,,,-99.09389961861179,parametric_fixed_p,1.0,0.5427053918409085,35.02837277079943,198.18779923722357
+EE+0p63-data-225x225/EE_0.63data_rot_-30.5deg/arrow_segments.mat,87,Parametric p=2 (Fermat),,,,,-99.73798728774753,parametric_fixed_p,2.0,0.5508008055255312,35.0977205913766,199.47597457549506
+EE+0p63-data-225x225/EE_0.63data_rot_-30.5deg/arrow_segments.mat,87,Parametric continuous p,,,,,-101.30156683031039,parametric_continuous_p,1.1308775356600014,0.542390005160519,35.02060614550612,202.60313366062078
+EE+0p8-data-226x225/EE_0.8data_rot_0deg/arrow_segments.mat,163,Parametric p=0 (Logarithmic),,,,,-201.17390754188656,parametric_fixed_p,0.0,0.6698271639965527,39.45170424522202,402.3478150837731
+EE+0p8-data-226x225/EE_0.8data_rot_0deg/arrow_segments.mat,163,Parametric p=1 (Archimedean),,,,,-202.03416711669877,parametric_fixed_p,1.0,0.676934858278634,39.69087499447972,404.06833423339754
+EE+0p8-data-226x225/EE_0.8data_rot_0deg/arrow_segments.mat,163,Parametric p=2 (Fermat),,,,,-205.3990358451315,parametric_fixed_p,2.0,0.7054682593518113,40.64670452339893,410.798071690263
+EE+0p8-data-226x225/EE_0.8data_rot_0deg/arrow_segments.mat,163,Parametric continuous p,,,,,-202.2292464259911,parametric_continuous_p,-0.999,0.6576801093128066,38.89631857265693,404.4584928519822
+EE+0p82-data-226x225/EE_0.82data_rot_-24.5deg/arrow_segments.mat,123,Parametric p=0 (Logarithmic),,,,,-152.71375223508153,parametric_fixed_p,0.0,0.6744551672916795,39.78065537488878,305.42750447016306
+EE+0p82-data-226x225/EE_0.82data_rot_-24.5deg/arrow_segments.mat,123,Parametric p=1 (Archimedean),,,,,-149.13371834816172,parametric_fixed_p,1.0,0.636314712709239,37.95190579063301,298.26743669632344
+EE+0p82-data-226x225/EE_0.82data_rot_-24.5deg/arrow_segments.mat,123,Parametric p=2 (Fermat),,,,,-145.2825364751013,parametric_fixed_p,2.0,0.5976901218702474,36.60921702565563,290.5650729502026
+EE+0p82-data-226x225/EE_0.82data_rot_-24.5deg/arrow_segments.mat,123,Parametric continuous p,,,,,-146.77616073633507,parametric_continuous_p,2.999,0.5888877287180565,36.62120466343144,293.55232147267014
+EE+0p83-data-226x225/EE_0.83data_rot_43deg/arrow_segments.mat,158,Parametric p=0 (Logarithmic),,,,,-201.76886696212944,parametric_fixed_p,0.0,0.7291451076807468,41.77558177510514,403.5377339242589
+EE+0p83-data-226x225/EE_0.83data_rot_43deg/arrow_segments.mat,158,Parametric p=1 (Archimedean),,,,,-200.7086689275437,parametric_fixed_p,1.0,0.7194251815772428,41.099204963998325,401.4173378550874
+EE+0p83-data-226x225/EE_0.83data_rot_43deg/arrow_segments.mat,158,Parametric p=2 (Fermat),,,,,-202.53755356279373,parametric_fixed_p,2.0,0.7362744716533679,42.972598827357594,405.07510712558746
+EE+0p83-data-226x225/EE_0.83data_rot_43deg/arrow_segments.mat,158,Parametric continuous p,,,,,-199.77937138555149,parametric_continuous_p,2.993510270185075,0.6885910362673374,40.34599265617066,399.55874277110297
+EE+1-data-225x225/EE_1data_rot_0deg/arrow_segments.mat,194,Parametric p=0 (Logarithmic),,,,,-240.63259185770042,parametric_fixed_p,0.0,0.6809389633801517,40.35786638813599,481.26518371540084
+EE+1-data-225x225/EE_1data_rot_0deg/arrow_segments.mat,194,Parametric p=1 (Archimedean),,,,,-238.7822520927324,parametric_fixed_p,1.0,0.6680727043913407,39.858968082731316,477.5645041854648
+EE+1-data-225x225/EE_1data_rot_0deg/arrow_segments.mat,194,Parametric p=2 (Fermat),,,,,-239.25857429679326,parametric_fixed_p,2.0,0.6713613688652491,39.78496891596845,478.5171485935865
+EE+1-data-225x225/EE_1data_rot_0deg/arrow_segments.mat,194,Parametric continuous p,,,,,-241.39293800085304,parametric_continuous_p,0.9027563284086159,0.66791263977171,39.84854919496421,482.7858760017061
+EE+12-data-225x225/EE_12data_rot_-41.5deg/arrow_segments.mat,101,Parametric p=0 (Logarithmic),,,,,-124.1562035922697,parametric_fixed_p,0.0,0.6537484438455005,39.38203080524072,248.3124071845394
+EE+12-data-225x225/EE_12data_rot_-41.5deg/arrow_segments.mat,101,Parametric p=1 (Archimedean),,,,,-124.05485565071022,parametric_fixed_p,1.0,0.6524377583162771,39.20725371205431,248.10971130142045
+EE+12-data-225x225/EE_12data_rot_-41.5deg/arrow_segments.mat,101,Parametric p=2 (Fermat),,,,,-123.40861124748673,parametric_fixed_p,2.0,0.6441417600731042,38.97485077807982,246.81722249497346
+EE+12-data-225x225/EE_12data_rot_-41.5deg/arrow_segments.mat,101,Parametric continuous p,,,,,-125.45416010614706,parametric_continuous_p,2.999,0.640808385508433,38.934108601360904,250.90832021229411
+EE+13-data-225x225/EE_13data_rot_34.5deg/arrow_segments.mat,80,Parametric p=0 (Logarithmic),,,,,-95.87250117406359,parametric_fixed_p,0.0,0.6090591619136514,37.021591212110835,191.74500234812717
+EE+13-data-225x225/EE_13data_rot_34.5deg/arrow_segments.mat,80,Parametric p=1 (Archimedean),,,,,-96.02486632794059,parametric_fixed_p,1.0,0.6113835709129735,37.070712461209915,192.04973265588117
+EE+13-data-225x225/EE_13data_rot_34.5deg/arrow_segments.mat,80,Parametric p=2 (Fermat),,,,,-96.63490396737177,parametric_fixed_p,2.0,0.6207792097279843,37.34809610771887,193.26980793474354
+EE+13-data-225x225/EE_13data_rot_34.5deg/arrow_segments.mat,80,Parametric continuous p,,,,,-97.98255871438302,parametric_continuous_p,-0.38217704248060924,0.6078277370284146,36.861606913846785,195.96511742876604
+EE-0p2-data-225x225/EE-0.2data_rot_62.5deg/arrow_segments.mat,196,Parametric p=0 (Logarithmic),,,,,-255.28264010018503,parametric_fixed_p,0.0,0.7711430966652556,43.43703303335357,510.56528020037007
+EE-0p2-data-225x225/EE-0.2data_rot_62.5deg/arrow_segments.mat,196,Parametric p=1 (Archimedean),,,,,-249.92308554241376,parametric_fixed_p,1.0,0.7301022719618834,42.28263360569769,499.8461710848275
+EE-0p2-data-225x225/EE-0.2data_rot_62.5deg/arrow_segments.mat,196,Parametric p=2 (Fermat),,,,,-248.66068739765248,parametric_fixed_p,2.0,0.7207576923657205,41.99246088281724,497.32137479530496
+EE-0p2-data-225x225/EE-0.2data_rot_62.5deg/arrow_segments.mat,196,Parametric continuous p,,,,,-249.97077947447298,parametric_continuous_p,2.999,0.7110495651505611,41.589879942000515,499.94155894894595
+EE-0p22-data-225x225/EE-0.22data_rot_0deg/arrow_segments.mat,167,Parametric p=0 (Logarithmic),,,,,-211.02833380189475,parametric_fixed_p,0.0,0.7108894822093362,41.41662582784819,422.0566676037895
+EE-0p22-data-225x225/EE-0.22data_rot_0deg/arrow_segments.mat,167,Parametric p=1 (Archimedean),,,,,-211.0934223743559,parametric_fixed_p,1.0,0.7114438393397304,41.37389405496203,422.1868447487118
+EE-0p22-data-225x225/EE-0.22data_rot_0deg/arrow_segments.mat,167,Parametric p=2 (Fermat),,,,,-211.07629076125446,parametric_fixed_p,2.0,0.7112978880778629,41.37171924137378,422.1525815225089
+EE-0p22-data-225x225/EE-0.22data_rot_0deg/arrow_segments.mat,167,Parametric continuous p,,,,,-213.3989346418884,parametric_continuous_p,-0.999,0.7092873527749745,41.67452129319876,426.7978692837768
+EE-0p23-data-225x225/EE-0.23data_rot_90deg/arrow_segments.mat,117,Parametric p=0 (Logarithmic),,,,,-149.65926963594558,parametric_fixed_p,0.0,0.7259302854656928,42.1342910865678,299.31853927189115
+EE-0p23-data-225x225/EE-0.23data_rot_90deg/arrow_segments.mat,117,Parametric p=1 (Archimedean),,,,,-149.63849103802497,parametric_fixed_p,1.0,0.7256724882857004,41.95629795659322,299.27698207604993
+EE-0p23-data-225x225/EE-0.23data_rot_90deg/arrow_segments.mat,117,Parametric p=2 (Fermat),,,,,-150.12526523859458,parametric_fixed_p,2.0,0.7317359475421663,42.09551345219222,300.25053047718916
+EE-0p23-data-225x225/EE-0.23data_rot_90deg/arrow_segments.mat,117,Parametric continuous p,,,,,-151.75596307580372,parametric_continuous_p,-0.999,0.7224097920255055,42.310163457306665,303.51192615160744
+EE-0p4-data-225x225/EE-0.4data_rot_31deg/arrow_segments.mat,92,Parametric p=0 (Logarithmic),,,,,-105.73356468258727,parametric_fixed_p,0.0,0.555175394920694,35.05044285901068,211.46712936517454
+EE-0p4-data-225x225/EE-0.4data_rot_31deg/arrow_segments.mat,92,Parametric p=1 (Archimedean),,,,,-105.83312429392791,parametric_fixed_p,1.0,0.5563782841497438,35.07670279378758,211.66624858785582
+EE-0p4-data-225x225/EE-0.4data_rot_31deg/arrow_segments.mat,92,Parametric p=2 (Fermat),,,,,-105.81158410524337,parametric_fixed_p,2.0,0.5561178126780199,35.144801199620396,211.62316821048674
+EE-0p4-data-225x225/EE-0.4data_rot_31deg/arrow_segments.mat,92,Parametric continuous p,,,,,-107.80202126574817,parametric_continuous_p,-0.999,0.552857709734263,34.953192018215624,215.60404253149633
+EE-0p42-data-225x225/EE-0.42data_rot_-12deg/arrow_segments.mat,90,Parametric p=0 (Logarithmic),,,,,-113.07091291160404,parametric_fixed_p,0.0,0.6871600818956347,40.77321169085611,226.14182582320808
+EE-0p42-data-225x225/EE-0.42data_rot_-12deg/arrow_segments.mat,90,Parametric p=1 (Archimedean),,,,,-110.4343906211657,parametric_fixed_p,1.0,0.648056508293039,38.80414618057863,220.8687812423314
+EE-0p42-data-225x225/EE-0.42data_rot_-12deg/arrow_segments.mat,90,Parametric p=2 (Fermat),,,,,-110.84804571981306,parametric_fixed_p,2.0,0.6540411253194635,38.44771444386734,221.69609143962612
+EE-0p42-data-225x225/EE-0.42data_rot_-12deg/arrow_segments.mat,90,Parametric continuous p,,,,,-112.66931996345602,parametric_continuous_p,1.0959380324633687,0.6478408782719292,38.77163478778376,225.33863992691204
+EE-0p43-data-225x225/EE-0.43data_rot_56.5deg/arrow_segments.mat,89,Parametric p=0 (Logarithmic),,,,,-113.13699892323982,parametric_fixed_p,0.0,0.7075784920879009,42.102582308044774,226.27399784647963
+EE-0p43-data-225x225/EE-0.43data_rot_56.5deg/arrow_segments.mat,89,Parametric p=1 (Archimedean),,,,,-113.1821234417342,parametric_fixed_p,1.0,0.7082963647360783,41.282316023270845,226.3642468834684
+EE-0p43-data-225x225/EE-0.43data_rot_56.5deg/arrow_segments.mat,89,Parametric p=2 (Fermat),,,,,-112.6019116105948,parametric_fixed_p,2.0,0.6991212101307862,41.21347939155722,225.2038232211896
+EE-0p43-data-225x225/EE-0.43data_rot_56.5deg/arrow_segments.mat,89,Parametric continuous p,,,,,-114.31045439252307,parametric_continuous_p,2.999,0.6907543322271991,41.06579099442833,228.62090878504614
+EE-0p6-data-225x225/EE-0.6data_rot_-67deg/arrow_segments.mat,65,Parametric p=0 (Logarithmic),,,,,-81.0786331843825,parametric_fixed_p,0.0,0.6653971263290609,38.93932197627053,162.157266368765
+EE-0p6-data-225x225/EE-0.6data_rot_-67deg/arrow_segments.mat,65,Parametric p=1 (Archimedean),,,,,-82.0405592735648,parametric_fixed_p,1.0,0.6853857172651636,39.7564659817712,164.0811185471296
+EE-0p6-data-225x225/EE-0.6data_rot_-67deg/arrow_segments.mat,65,Parametric p=2 (Fermat),,,,,-85.43235967708213,parametric_fixed_p,2.0,0.760780484811171,43.286842015982145,170.86471935416427
+EE-0p6-data-225x225/EE-0.6data_rot_-67deg/arrow_segments.mat,65,Parametric continuous p,,,,,-82.94674935959446,parametric_continuous_p,0.23857787954735374,0.6609268710693198,38.54752529932805,165.89349871918893
+EE-0p62-data-225x225/EE-0.62data_rot_27deg/arrow_segments.mat,172,Parametric p=0 (Logarithmic),,,,,-210.49603796106896,parametric_fixed_p,0.0,0.6569311821993075,38.606695674989915,420.99207592213793
+EE-0p62-data-225x225/EE-0.62data_rot_27deg/arrow_segments.mat,172,Parametric p=1 (Archimedean),,,,,-210.17221371236653,parametric_fixed_p,1.0,0.654462225900545,38.596831690778785,420.34442742473306
+EE-0p62-data-225x225/EE-0.62data_rot_27deg/arrow_segments.mat,172,Parametric p=2 (Fermat),,,,,-210.41573059008425,parametric_fixed_p,2.0,0.6563180218309366,38.746564698006104,420.8314611801685
+EE-0p62-data-225x225/EE-0.62data_rot_27deg/arrow_segments.mat,172,Parametric continuous p,,,,,-212.7425465341546,parametric_continuous_p,1.0783129681837156,0.6544362426175078,38.61315091200654,425.4850930683092
+EE-0p63-data-225x225/EE-0.63data_rot_6deg/arrow_segments.mat,41,Parametric p=0 (Logarithmic),,,,,-50.709583488629065,parametric_fixed_p,0.0,0.6345661284467842,37.4037120975455,101.41916697725813
+EE-0p63-data-225x225/EE-0.63data_rot_6deg/arrow_segments.mat,41,Parametric p=1 (Archimedean),,,,,-50.892882548307014,parametric_fixed_p,1.0,0.6402654913817262,38.742219117462454,101.78576509661403
+EE-0p63-data-225x225/EE-0.63data_rot_6deg/arrow_segments.mat,41,Parametric p=2 (Fermat),,,,,-50.85513682181669,parametric_fixed_p,2.0,0.6390876840304871,38.87265223383257,101.71027364363339
+EE-0p63-data-225x225/EE-0.63data_rot_6deg/arrow_segments.mat,41,Parametric continuous p,,,,,-51.51980941268265,parametric_continuous_p,-0.999,0.6029834742264758,36.58809950098232,103.0396188253653
+EE-0p8-data-226x225/EE-0.8data_rot_34deg/arrow_segments.mat,68,Parametric p=0 (Logarithmic),,,,,-76.82805480017338,parametric_fixed_p,0.0,0.5271448135250353,33.73538777289896,153.65610960034675
+EE-0p8-data-226x225/EE-0.8data_rot_34deg/arrow_segments.mat,68,Parametric p=1 (Archimedean),,,,,-76.514715655857,parametric_fixed_p,1.0,0.5223090393354819,33.85934308238674,153.029431311714
+EE-0p8-data-226x225/EE-0.8data_rot_34deg/arrow_segments.mat,68,Parametric p=2 (Fermat),,,,,-76.37062613639988,parametric_fixed_p,2.0,0.5201002154560562,33.91983563069232,152.74125227279976
+EE-0p8-data-226x225/EE-0.8data_rot_34deg/arrow_segments.mat,68,Parametric continuous p,,,,,-78.40698094419409,parametric_continuous_p,2.999,0.5189786365504228,33.78126568516254,156.81396188838818
+EE-0p82-data-225x225/EE-0.82data_rot_37deg/arrow_segments.mat,99,Parametric p=0 (Logarithmic),,,,,-105.0343931571364,parametric_fixed_p,0.0,0.46655214489325486,32.07306197449973,210.0687863142728
+EE-0p82-data-225x225/EE-0.82data_rot_37deg/arrow_segments.mat,99,Parametric p=1 (Archimedean),,,,,-105.1520252943884,parametric_fixed_p,1.0,0.4676621810153877,32.156034954903575,210.3040505887768
+EE-0p82-data-225x225/EE-0.82data_rot_37deg/arrow_segments.mat,99,Parametric p=2 (Fermat),,,,,-105.38436122525482,parametric_fixed_p,2.0,0.46986238548993714,32.32378079721846,210.76872245050964
+EE-0p82-data-225x225/EE-0.82data_rot_37deg/arrow_segments.mat,99,Parametric continuous p,,,,,-107.28056625598003,parametric_continuous_p,0.40712601454131114,0.46606806016491104,32.01169785399352,214.56113251196007
+EE-0p83-data-226x225/EE-0.83data_rot_-41.5deg/arrow_segments.mat,115,Parametric p=0 (Logarithmic),,,,,-141.71061699366751,parametric_fixed_p,0.0,0.6606012483331135,39.192178632645756,283.42123398733503
+EE-0p83-data-226x225/EE-0.83data_rot_-41.5deg/arrow_segments.mat,115,Parametric p=1 (Archimedean),,,,,-142.3371711697681,parametric_fixed_p,1.0,0.6678389135113137,39.83263015609837,284.6743423395362
+EE-0p83-data-226x225/EE-0.83data_rot_-41.5deg/arrow_segments.mat,115,Parametric p=2 (Fermat),,,,,-141.9088457258669,parametric_fixed_p,2.0,0.6628825723332887,39.08800870824724,283.8176914517338
+EE-0p83-data-226x225/EE-0.83data_rot_-41.5deg/arrow_segments.mat,115,Parametric continuous p,,,,,-142.35312679747122,parametric_continuous_p,-0.999,0.641022275071309,38.294190073224314,284.70625359494244
+EE-1-data-368x368/EE-1data_rot_58deg/arrow_segments.mat,151,Parametric p=0 (Logarithmic),,,,,-179.5350820000422,parametric_fixed_p,0.0,0.610696005740505,38.052274049100724,359.0701640000844
+EE-1-data-368x368/EE-1data_rot_58deg/arrow_segments.mat,151,Parametric p=1 (Archimedean),,,,,-179.13494625358544,parametric_fixed_p,1.0,0.607467993685492,37.81822009095241,358.2698925071709
+EE-1-data-368x368/EE-1data_rot_58deg/arrow_segments.mat,151,Parametric p=2 (Fermat),,,,,-179.67765636255746,parametric_fixed_p,2.0,0.6118503349681454,37.92851987319656,359.3553127251149
+EE-1-data-368x368/EE-1data_rot_58deg/arrow_segments.mat,151,Parametric continuous p,,,,,-181.63017921247447,parametric_continuous_p,0.8743305424500264,0.6073601317553143,37.80810797609352,363.26035842494895
+EE-1-data-368x368/EE-1data_rot_60.5deg/arrow_segments.mat,154,Parametric p=0 (Logarithmic),,,,,-181.166323952525,parametric_fixed_p,0.0,0.5958447402083231,37.155414533747326,362.33264790505
+EE-1-data-368x368/EE-1data_rot_60.5deg/arrow_segments.mat,154,Parametric p=1 (Archimedean),,,,,-181.3914188653806,parametric_fixed_p,1.0,0.5975891278786368,37.066235526532815,362.7828377307612
+EE-1-data-368x368/EE-1data_rot_60.5deg/arrow_segments.mat,154,Parametric p=2 (Fermat),,,,,-181.50529407089883,parametric_fixed_p,2.0,0.5984735555348835,37.004242318450345,363.01058814179765
+EE-1-data-368x368/EE-1data_rot_60.5deg/arrow_segments.mat,154,Parametric continuous p,,,,,-183.6360856272575,parametric_continuous_p,-0.904722280536701,0.5954678937924545,37.07811183917594,367.272171254515
+EE-12-data-368x368/EE-12data_rot_78.5deg/arrow_segments.mat,117,Parametric p=0 (Logarithmic),,,,,-137.427697909123,parametric_fixed_p,0.0,0.5889653117770328,36.67192820852811,274.855395818246
+EE-12-data-368x368/EE-12data_rot_78.5deg/arrow_segments.mat,117,Parametric p=1 (Archimedean),,,,,-138.15624236956018,parametric_fixed_p,1.0,0.5963460026408746,37.23823086574812,276.31248473912035
+EE-12-data-368x368/EE-12data_rot_78.5deg/arrow_segments.mat,117,Parametric p=2 (Fermat),,,,,-139.0983294734293,parametric_fixed_p,2.0,0.6060273354272596,37.02945679024334,278.1966589468586
+EE-12-data-368x368/EE-12data_rot_78.5deg/arrow_segments.mat,117,Parametric continuous p,,,,,-139.75657928705036,parametric_continuous_p,0.24996803385654315,0.5884399516766378,36.79514502089766,279.5131585741007
+EE-12-data-368x368/EE-12data_rot_80deg/arrow_segments.mat,120,Parametric p=0 (Logarithmic),,,,,-144.44404599781438,parametric_fixed_p,0.0,0.624769770504567,38.45290087401853,288.88809199562877
+EE-12-data-368x368/EE-12data_rot_80deg/arrow_segments.mat,120,Parametric p=1 (Archimedean),,,,,-143.40979333120453,parametric_fixed_p,1.0,0.6140925626191394,38.05473869215335,286.81958666240905
+EE-12-data-368x368/EE-12data_rot_80deg/arrow_segments.mat,120,Parametric p=2 (Fermat),,,,,-142.7294864030929,parametric_fixed_p,2.0,0.6071690307681777,37.9761561399326,285.4589728061858
+EE-12-data-368x368/EE-12data_rot_80deg/arrow_segments.mat,120,Parametric continuous p,,,,,-145.0558042055212,parametric_continuous_p,2.7448488030088654,0.6064870767756455,37.9532414535673,290.1116084110424
+EE-13-data-225x225/EE-13data_rot_59deg/arrow_segments.mat,143,Parametric p=0 (Logarithmic),,,,,-179.09641922031392,parametric_fixed_p,0.0,0.692299059680378,40.8398783675482,358.19283844062784
+EE-13-data-225x225/EE-13data_rot_59deg/arrow_segments.mat,143,Parametric p=1 (Archimedean),,,,,-175.8351013585249,parametric_fixed_p,1.0,0.6614306841510332,40.02689987830804,351.6702027170498
+EE-13-data-225x225/EE-13data_rot_59deg/arrow_segments.mat,143,Parametric p=2 (Fermat),,,,,-174.29712220682987,parametric_fixed_p,2.0,0.647355106168198,39.767527641293654,348.59424441365974
+EE-13-data-225x225/EE-13data_rot_59deg/arrow_segments.mat,143,Parametric continuous p,,,,,-176.7114592379395,parametric_continuous_p,2.436949984958158,0.6467480063885569,39.770523081453135,353.422918475879
+EE-13-data-225x225/EE-13data_rot_64.5deg/arrow_segments.mat,145,Parametric p=0 (Logarithmic),,,,,-177.24729197075703,parametric_fixed_p,0.0,0.6521966618044427,39.42443870073595,354.49458394151407
+EE-13-data-225x225/EE-13data_rot_64.5deg/arrow_segments.mat,145,Parametric p=1 (Archimedean),,,,,-176.95980143982607,parametric_fixed_p,1.0,0.6496155707733788,39.15478916013633,353.91960287965213
+EE-13-data-225x225/EE-13data_rot_64.5deg/arrow_segments.mat,145,Parametric p=2 (Fermat),,,,,-177.93130259976212,parametric_fixed_p,2.0,0.6583790138233163,39.33292149600597,355.86260519952424
+EE-13-data-225x225/EE-13data_rot_64.5deg/arrow_segments.mat,145,Parametric continuous p,,,,,-179.1249916514533,parametric_continuous_p,0.5968754932426762,0.6467262829372101,39.18011946962205,358.2499833029066
+EE0-data-225x225/EE0data_rot_34.5deg/arrow_segments.mat,153,Parametric p=0 (Logarithmic),,,,,-194.2376690188894,parametric_fixed_p,0.0,0.7177017051789423,42.0802873352369,388.4753380377788
+EE0-data-225x225/EE0data_rot_34.5deg/arrow_segments.mat,153,Parametric p=1 (Archimedean),,,,,-195.22450463310412,parametric_fixed_p,1.0,0.7270198944410541,42.27568971268625,390.44900926620824
+EE0-data-225x225/EE0data_rot_34.5deg/arrow_segments.mat,153,Parametric p=2 (Fermat),,,,,-197.395474510041,parametric_fixed_p,2.0,0.7479473093734811,42.34062515093649,394.790949020082
+EE0-data-225x225/EE0data_rot_34.5deg/arrow_segments.mat,153,Parametric continuous p,,,,,-196.74734325495874,parametric_continuous_p,0.060285412872480584,0.7176496880010693,42.07111958774853,393.49468650991747
+EE0-data-225x225/EE0data_rot_37.5deg/arrow_segments.mat,154,Parametric p=0 (Logarithmic),,,,,-195.7874730879726,parametric_fixed_p,0.0,0.7204421954438396,42.5452915270548,391.5749461759452
+EE0-data-225x225/EE0data_rot_37.5deg/arrow_segments.mat,154,Parametric p=1 (Archimedean),,,,,-194.3762575529584,parametric_fixed_p,1.0,0.7073585706184752,41.94720800106288,388.7525151059168
+EE0-data-225x225/EE0data_rot_37.5deg/arrow_segments.mat,154,Parametric p=2 (Fermat),,,,,-195.62956020985266,parametric_fixed_p,2.0,0.7189662146311198,42.06496695651186,391.2591204197053
+EE0-data-225x225/EE0data_rot_37.5deg/arrow_segments.mat,154,Parametric continuous p,,,,,-196.86689227736204,parametric_continuous_p,0.8887200222035285,0.7071028509050112,41.97253530734366,393.7337845547241
+EE02-data-225x225/EE02data_rot_57.5deg/arrow_segments.mat,141,Parametric p=0 (Logarithmic),,,,,-183.92082081445176,parametric_fixed_p,0.0,0.7678440047468805,43.017002969195154,367.8416416289035
+EE02-data-225x225/EE02data_rot_57.5deg/arrow_segments.mat,141,Parametric p=1 (Archimedean),,,,,-183.67321957882965,parametric_fixed_p,1.0,0.7651520095894588,42.863251438079985,367.3464391576593
+EE02-data-225x225/EE02data_rot_57.5deg/arrow_segments.mat,141,Parametric p=2 (Fermat),,,,,-183.09691763889396,parametric_fixed_p,2.0,0.7589227729735878,42.614155976533866,366.1938352777879
+EE02-data-225x225/EE02data_rot_57.5deg/arrow_segments.mat,141,Parametric continuous p,,,,,-183.88340271836853,parametric_continuous_p,-0.999,0.7409686025612223,42.52955564605187,367.76680543673706
+EE02-data-225x225/EE02data_rot_59.5deg/arrow_segments.mat,136,Parametric p=0 (Logarithmic),,,,,-178.19449015614393,parametric_fixed_p,0.0,0.7760857047547317,43.94787906266252,356.38898031228786
+EE02-data-225x225/EE02data_rot_59.5deg/arrow_segments.mat,136,Parametric p=1 (Archimedean),,,,,-178.6173886577262,parametric_fixed_p,1.0,0.7809272955083257,43.91304586890568,357.2347773154524
+EE02-data-225x225/EE02data_rot_59.5deg/arrow_segments.mat,136,Parametric p=2 (Fermat),,,,,-179.50811354570746,parametric_fixed_p,2.0,0.7912238701288465,43.89841743197493,359.0162270914149
+EE02-data-225x225/EE02data_rot_59.5deg/arrow_segments.mat,136,Parametric continuous p,,,,,-179.37874283959403,parametric_continuous_p,-0.999,0.7617024368508171,42.7037636401359,358.75748567918805
+EE03-data-225x225/EE03data_rot_-20.5deg/arrow_segments.mat,105,Parametric p=0 (Logarithmic),,,,,-129.53485432296992,parametric_fixed_p,0.0,0.6604261702905742,39.64101856173396,259.06970864593984
+EE03-data-225x225/EE03data_rot_-20.5deg/arrow_segments.mat,105,Parametric p=1 (Archimedean),,,,,-130.28799522333915,parametric_fixed_p,1.0,0.6699686231431033,39.621927250127314,260.5759904466783
+EE03-data-225x225/EE03data_rot_-20.5deg/arrow_segments.mat,105,Parametric p=2 (Fermat),,,,,-130.28895006451765,parametric_fixed_p,2.0,0.669980808275429,39.45729438113781,260.5779001290353
+EE03-data-225x225/EE03data_rot_-20.5deg/arrow_segments.mat,105,Parametric continuous p,,,,,-130.30594172600672,parametric_continuous_p,-0.999,0.6411409261845803,38.94471954362358,260.61188345201344
+EE03-data-225x225/EE03data_rot_-23.5deg/arrow_segments.mat,103,Parametric p=0 (Logarithmic),,,,,-124.79509467471287,parametric_fixed_p,0.0,0.6314928159728164,38.067173911426295,249.59018934942574
+EE03-data-225x225/EE03data_rot_-23.5deg/arrow_segments.mat,103,Parametric p=1 (Archimedean),,,,,-124.82415407996352,parametric_fixed_p,1.0,0.6318492428454702,38.03782696429656,249.64830815992704
+EE03-data-225x225/EE03data_rot_-23.5deg/arrow_segments.mat,103,Parametric p=2 (Fermat),,,,,-124.87736799190043,parametric_fixed_p,2.0,0.6325024573507652,37.87093199905015,249.75473598380086
+EE03-data-225x225/EE03data_rot_-23.5deg/arrow_segments.mat,103,Parametric continuous p,,,,,-127.1106082453952,parametric_continuous_p,0.23252926849726152,0.6314701203641465,38.08885616959865,254.2212164907904

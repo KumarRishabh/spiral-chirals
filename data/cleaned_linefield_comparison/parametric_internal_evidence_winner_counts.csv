@@ -1,0 +1,5 @@
+model,wins
+Parametric p=0 (Logarithmic),18
+Parametric p=1 (Archimedean),10
+Parametric p=2 (Fermat),10
+Parametric continuous p,1

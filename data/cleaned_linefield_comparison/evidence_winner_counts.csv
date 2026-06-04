@@ -1,0 +1,6 @@
+model,wins
+Multiplicative RBF-VM RKHS,17
+Parametric p=0 (Logarithmic),12
+Parametric p=2 (Fermat),5
+Parametric p=1 (Archimedean),4
+Gaussian RBF RKHS,1

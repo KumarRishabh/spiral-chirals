@@ -1,0 +1,7 @@
+estimator,model,kernel,datasets,mean_test_rss_mean,mean_test_rss_median,mean_test_mae_deg_mean
+GP/KRR,GP/KRR RBF-von-Mises line field,multiplicative_rbf_vm,39,0.14224980547172145,0.1426743315037848,14.329062852234955
+Nadaraya-Watson,NW RBF-von-Mises line field,multiplicative_rbf_vm,39,0.1737429915275079,0.15188127840793586,16.55382680756249
+GP/KRR,GP/KRR RBF line field,rbf,39,0.17598450242524616,0.1646427005381837,16.164461765634808
+Nadaraya-Watson,NW RBF line field,rbf,39,0.21336792758054848,0.2094887384670668,19.112698413955204
+Nadaraya-Watson,NW uniform line field,uniform,39,0.22725325536002294,0.2194040413413197,20.213965539317403
+GP/KRR,GP/KRR uniform line field,uniform,39,0.5344593813635823,0.5361738661228992,34.76304506568329

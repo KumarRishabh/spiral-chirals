@@ -1,0 +1,4 @@
+model,wins
+RBF-von-Mises NW smoother,37
+Uniform NW smoother,1
+RBF NW smoother,1

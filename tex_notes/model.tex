@@ -1,15 +1,22 @@
-\documentclass[11pt]{article}
-\usepackage[a4paper,margin=1in]{geometry}
-\usepackage{amsmath,amsfonts,amssymb,amsthm}
-\usepackage{graphicx}
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=0.55in]{geometry}
+\usepackage{amsmath,amsfonts,amssymb}
 \usepackage{booktabs}
+\usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{siunitx}
-\usepackage{graphicx}
-\newtheorem{theorem}{Theorem}
-% \newtheorem{thm}{Theorem}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
+\usepackage[section]{placeins}
+\graphicspath{{tex_images/}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\textfloatsep}{8pt}
+\setlength{\floatsep}{6pt}
+\setlength{\intextsep}{6pt}
+\emergencystretch=2em
+\renewcommand{\arraystretch}{0.9}
 
-\title{Mathematical Model Report: Spiral Vector Field Fitting}
+\title{Parametric and Kernel Models for Chiral Line Fields}
 \author{Rishabh Kumar}
 \date{\today}
 
@@ -17,543 +24,269 @@
 \maketitle
 
 \begin{abstract}
-This report details the statistical formulation for fitting a parametric spiral vector field to noisy angular data. We derive the vector field from a scalar potential function, analyze the heteroskedastic noise structure induced by the Cartesian-to-Polar transformation, and formulate a Weighted Least Squares (WLS) objective function to estimate the model parameters.
+The analysis compares a low-dimensional parametric spiral family with two non-parametric kernel-regression frameworks, Nadaraya--Watson (NW) local smoothing and Gaussian-process/kernel-ridge regression (GP/KRR).  The two datasets have different observation structures: the Gabor data provide samples of a director/vector field encoded by local pitch relative to the radial frame, while the optical SEM data provide unoriented line segments.  Both are analyzed through axial angles, so directions separated by $\pi$ are equivalent.  Model selection is based on held-out axial RSS.  The central empirical finding is that the RBF--von-Mises kernel captures the relevant polar geometry; GP/KRR can lower held-out RSS for smooth positive kernels, but NW remains the more conservative local descriptive smoother when fitted streamlines indicate possible overfitting.
 \end{abstract}
 
-\section{Introduction}
-The objective of this model is to recover the parameters of a spiral vector field given a set of spatial observations. Unlike standard regression problems where errors are often assumed to be homoskedastic and Euclidean, this problem involves directional data where the noise variance depends on the magnitude of the underlying field.
-
-\section{Data and Preprocessing}
-The dataset consists of spatial coordinates $Z_i = (x_i, y_i)$ and observed vectors $W_i \in \mathbb{R}^2$. Preprocessing involves converting Cartesian vector observations into angular measurements $\hat{\alpha}_i$ and calculating the radial distances $r_i = \|Z_i\|$ for each observation point.
-
-\section{Model Specification}
-
-\subsection{Parametric Spiral Vector Field}
-We define the vector field $F_\theta$ as the gradient of a scalar potential function $V_\theta(r, \phi)$, defined in polar coordinates $(r, \phi)$. The potential is given by:
+\section{Shared Observation Model}
+The two data sources differ before modelling.  In the Gabor data, a sampled director/vector field is reduced to a local pitch angle $\alpha_i'$; the radial frame supplies the missing global rotation.  In the optical SEM data, the input is an unoriented line segment, and only the axis of the segment is observed.  Thus the raw observations may be directed vectors, directors, or line fields.  For a common comparison criterion, each observation is projected to an axial angle $\hat\alpha_i$, where $\hat\alpha_i$ and $\hat\alpha_i+\pi$ are equivalent.  Following the standard treatment of axial data in directional statistics \cite{mardia2000}, the response is embedded as
 \begin{equation}
-V_\theta(r,\phi) = A\,g_p(r) - b\,\phi,
+  u_i=(\cos 2\hat\alpha_i,\sin 2\hat\alpha_i)\in\mathbb R^2.
+  \label{eq:embedding}
 \end{equation}
-where $A, b \in \mathbb{R}$ are coefficients, and the radial function $g_p(r)$ is defined as:
-\begin{equation} 
-    % Use monotonically increasing condition on g_p (through kernels maybe?)
-g_p(r) =
-\begin{cases}
-\ln r, & p = 0, \\[6pt]
-\dfrac{r^p}{p}, & p \neq 0.
-\end{cases}
+For a fitted angle $\alpha_{\mathcal M}(z_i)$, the axial residual is
+\begin{equation}
+  \Delta_i^{\rm ax}(\mathcal M)
+  =
+  \frac12\operatorname{atan2}\!\left(
+    \sin 2\{\hat\alpha_i-\alpha_{\mathcal M}(z_i)\},
+    \cos 2\{\hat\alpha_i-\alpha_{\mathcal M}(z_i)\}
+  \right).
+  \label{eq:axial-residual}
 \end{equation}
-The parameter set is $\theta = \{A, b, p\}$. The induced vector field is the gradient of the potential. In polar coordinates, the gradient operator is $\nabla = \mathbf{e}_r \frac{\partial}{\partial r} + \mathbf{e}_\phi \frac{1}{r} \frac{\partial}{\partial \phi}$. Thus:
+Held-out error is reported as fold-averaged per-observation RSS,
+\begin{equation}
+  {\rm RSS}_{\rm test}(\mathcal M)=
+  \frac1K\sum_{k=1}^K\frac1{|I_k|}
+  \sum_{i\in I_k}\{\Delta_i^{\rm ax}(\mathcal M_{-k})\}^2.
+  \label{eq:test-rss}
+\end{equation}
+This axial projection gives the common observation model used for both parametric and non-parametric fits.  The only difference is the mean field $\alpha_{\mathcal M}(z)$ used to predict the projected angle.
+
+The angles are noisy measurements of an underlying field, not deterministic targets.  A local vector-noise model is
+\begin{equation}
+  W_i=F_{\theta_0}(Z_i)+\varepsilon_i,\qquad
+  \varepsilon_i\sim N(0,\sigma^2I_2),
+  \qquad
+  \hat\alpha_i=\operatorname{atan2}(W_{i,2},W_{i,1}).
+  \label{eq:vector-noise}
+\end{equation}
+Writing $\alpha_{\theta_0}(z)=\operatorname{atan2}\{F_{\theta_0,2}(z),F_{\theta_0,1}(z)\}$ and $\rho_{\theta_0}(z)=\|F_{\theta_0}(z)\|_2$, the delta method \cite{vanDerVaart2000} gives the local approximation
+\begin{equation}
+  \hat\alpha_i
+  \approx
+  \alpha_{\theta_0}(Z_i)+\eta_i,
+  \qquad
+  {\rm Var}(\eta_i)\approx\frac{\sigma^2}{\rho_{\theta_0}(Z_i)^2}.
+  \label{eq:heteroskedastic-angle}
+\end{equation}
+Thus angle noise is heteroskedastic: weak local vector magnitude produces noisier angle measurements.  The present experiments use unweighted axial RSS, so the reported model comparisons should be read as reconstruction-risk comparisons rather than full likelihood fits for \eqref{eq:heteroskedastic-angle}.
+
+For the optical SEM data, $z_i$ is the midpoint of an image-derived line segment and $\hat\alpha_i=\operatorname{atan2}\{-(y_{2i}-y_{1i}),x_{2i}-x_{1i}\}$ after flipping the image $y$-axis into mathematical coordinates.  For the Gabor data, the observed angle is a pitch angle $\alpha_i'$ relative to the radial frame, so the global axial field angle is
+\begin{equation}
+  \phi_i=\theta_i+\alpha_i',
+  \qquad
+  \theta_i=\operatorname{atan2}(y_i,x_i).
+  \label{eq:gabor-angle}
+\end{equation}
+The Gabor regressions therefore fit $\alpha'(z)$ and reconstruct $\phi(z)=\theta(z)+\alpha'(z)$.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.88\linewidth]{observed_data_examples.png}
+\caption{Representative observed data.  Left: a Gabor director/vector-field sample, where the measured pitch is interpreted relative to the radial frame.  Right: an optical SEM sample after converting image segments to unoriented line-field observations.}
+\label{fig:observed-data}
+\end{figure}
+
+\section{Models}
+Equation~\eqref{eq:heteroskedastic-angle} gives the statistical template for all model classes:
+\[
+  \hat\alpha_i = m(z_i)+\eta_i \quad {\rm mod}\ \pi,
+\]
+where $m$ is the unknown mean axial field angle after the common projection and $\eta_i$ is angle noise induced by measurement noise in the underlying vector, director, or segment estimate.  Model selection is therefore a question about the function class used for $m$.  The parametric spiral family restricts $m$ to a low-dimensional spiral form; NW and GP/KRR replace that form by a kernel-based non-parametric mean estimator.
+
+\paragraph{Potential-gradient parametric spirals.}
+After centering coordinates, let $r_i=\|z_i\|_2$ and $\theta_i=\operatorname{atan2}(y_i,x_i)$.  The parametric family is the line direction induced by the potential-gradient field
+\[
+  V_{p,A,b}(r,\theta)=A g_p(r)-b\theta,\qquad
+  g_p(r)=
+  \begin{cases}
+    \log r, & p=0,\\
+    r^p/p, & p\ne0,
+  \end{cases}
+\]
+for which
+\[
+  \nabla V_{p,A,b}(r,\theta)=A r^{p-1}\mathbf e_r-\frac{b}{r}\mathbf e_\theta .
+\]
+Only the ratio $b/A$ is identifiable from angles.  Writing $A=\cos\gamma$ and $b=\sin\gamma$, the mean angle used in the implementation is
+\begin{equation}
+  m_{p,\gamma}(z_i)=
+  \theta_i+\operatorname{atan2}\{-\sin(\gamma),\cos(\gamma)r_i^p\}
+  \quad {\rm mod}\ \pi .
+  \label{eq:parametric}
+\end{equation}
+The stochastic observation model is then $\hat\alpha_i=m_{p,\gamma}(z_i)+\eta_i$ modulo $\pi$.  The fixed families are $p=0,1,2$; the continuous family estimates $p\in(-1,3)$ as part of the mean function.  For fixed $p$, $\gamma\in[-\pi,\pi]$ is fit by a deterministic grid followed by L-BFGS-B refinement.  The implementation minimizes empirical axial RSS, which is the corresponding least-squares or quasi-likelihood criterion under approximately homoskedastic angle noise.  Thus the parametric model is not noise-free; only its mean function is deterministic.
+
+\paragraph{Nadaraya--Watson local regression.}
+The NW fit treats the doubled-angle response as a noisy non-parametric regression observation,
+\[
+  u_i=\mu(z_i)+\xi_i,\qquad
+  \mathbb E(\xi_i\mid z_i)=0,\qquad
+  \mu(z)=(\cos 2m(z),\sin 2m(z)).
+\]
+No parametric form is imposed on $m$ or $\mu$.  The kernel enters only through the local weights
+\[
+  w_i(z)=\frac{K_\eta(z,z_i)}{\sum_j K_\eta(z,z_j)}.
+\]
+Thus $K_\eta(z,z_i)$ is not a covariance in the NW model; it is a window function that determines how much observation $i$ contributes to the estimate at $z$.  A small bandwidth gives nonzero weight only to nearby observations, while a large bandwidth makes the estimator closer to a global average.  Following Nadaraya and Watson \cite{nadaraya1964,watson1964}, at each target point $z$ the estimator is the local constant conditional mean, equivalently the solution of
+\[
+  \hat u_{\rm NW}(z)=
+  \arg\min_{v\in\mathbb R^2}\sum_i K_\eta(z,z_i)\|u_i-v\|_2^2,
+\]
+which has the closed form
+\begin{equation}
+  \hat u_{\rm NW}(z)=
+  \frac{\sum_i K_\eta(z,z_i)u_i}{\sum_i K_\eta(z,z_i)},
+  \qquad
+  \hat\alpha_{\rm NW}(z)=\frac12\operatorname{atan2}\{\hat u_2(z),\hat u_1(z)\}.
+  \label{eq:nw}
+\end{equation}
+For the Gabor data, $u_i=(\cos 2\alpha_i',\sin 2\alpha_i')$ and the fitted pitch is added back to $\theta(z)$.  This is a local conditional-mean model rather than a full likelihood: it requires a useful nonnegative weighting rule with a nonzero denominator.  Positive definiteness is required only if the same kernel is to be used as a GP/KRR covariance.
+
+\paragraph{GP/KRR regression.}
+GP/KRR uses a stronger probabilistic model for the same embedded responses.  For output coordinate $j=1,2$,
+\[
+  f_j\sim{\rm GP}(0,K_\eta),\qquad
+  U_{ij}=f_j(z_i)+\varepsilon_{ij},\qquad
+  \varepsilon_{ij}\stackrel{\rm iid}{\sim}N(0,\sigma_n^2),
+\]
+with the two coordinates treated as conditionally independent given the latent functions.  The posterior mean is
+\begin{equation}
+  \hat u_{\rm GP}(z)=K_\eta(z,Z)\{K_\eta(Z,Z)+\sigma_n^2I\}^{-1}U,
+  \label{eq:gpkrr}
+\end{equation}
+where $U$ has rows $u_i$.  The same expression is kernel ridge regression with squared loss and Tikhonov regularization.  Universality of the Gaussian RBF kernel is relevant mainly to this RKHS/GP viewpoint: it says the RKHS is a flexible approximation class on compact sets \cite{steinwart2001}.  It does not imply finite-sample superiority, and it is not needed to justify NW as a local smoother.
+
+\paragraph{Kernels and sweeps.}
+The three kernels are
 \begin{align}
-F_\theta(r,\phi) &= \nabla V_\theta(r,\phi) \nonumber \\
-&= \left( \frac{\partial}{\partial r} \left( A g_p(r) - b\phi \right) \right) \mathbf{e}_r + \left( \frac{1}{r} \frac{\partial}{\partial \phi} \left( A g_p(r) - b\phi \right) \right) \mathbf{e}_\phi \nonumber \\
-&= A g_p'(r) \mathbf{e}_r - \frac{b}{r} \mathbf{e}_\phi.
+  K_{\rm RBF}(z,z';h)&=\exp[-d(z,z')^2/(2h^2)],\\
+  K_{\rm unif}(z,z';h)&=\mathbf 1\{d(z,z')\le h\},\\
+  K_{\rm mult}(z,z';h,\kappa)&=
+  \exp[-d(z,z')^2/(2h^2)]\exp[\kappa\cos\{\vartheta(z)-\vartheta(z')\}].
 \end{align}
-Note that for all $p$, $g_p'(r) = r^{p-1}$. The magnitude of the field, denoted $\rho(r)$, is:
-\begin{equation}
-\rho(r) = \| F_\theta(r,\phi) \| = \sqrt{ A^2 \big(r^{p-1}\big)^2 + \frac{b^2}{r^2} }.
-\end{equation}
+For Gabor pitch smoothing, $d(z,z')=|\|z\|-\|z'\||$; for optical SEM smoothing, $d(z,z')=\|z-z'\|_2$.  To keep the Gabor model comparison on one scale, the reported Gabor table uses a single matched 20-fold protocol for the parametric, NW, and GP/KRR rows.  Its bandwidth candidates are
+\[
+  h_j=\exp\!\left\{\log(1)+j\frac{\log(1500)-\log(1)}{13}\right\},
+  \qquad j=0,\ldots,13,
+\]
+i.e. 14 positive values from 1 to 1500 with a constant multiplicative ratio.  The RBF and uniform kernels sweep only these 14 bandwidths.  The multiplicative kernel crosses this bandwidth grid with
+\[
+  \kappa\in\{0,0.5,1,2,4,8,16,32,64\}.
+\]
+Thus the multiplicative kernel uses $14\times9=126$ bandwidth--$\kappa$ pairs per Gabor dataset.  For the matched optical SEM comparison, the bandwidth candidates are the eight values
+\[
+  h_j=\exp\!\left\{\log(1)+j\frac{\log(220)-\log(1)}{7}\right\},
+  \qquad j=0,\ldots,7,
+\]
+and the multiplicative kernel uses $\kappa\in\{0,0.5,1,2,4,8,16,32\}$.  In both matched comparisons, the GP/KRR rows additionally cross every kernel candidate with
+$\sigma_n\in\{0.03,0.06,0.10,0.18,0.32,0.56,1.0\}$.  The uniform-kernel GP/KRR row is reported as regularized kernel regression, not as a fully satisfactory GP covariance model.
 
-\begin{table}[h!]
-    \centering
-    \renewcommand{\arraystretch}{2.0} % Increases row height for better readability of fractions
-    \resizebox{\textwidth}{!}{% Resizes table to fit text width if necessary
-    \begin{tabular}{l c c c c p{6cm}}
-        \toprule
-        \textbf{Spiral Type} & 
-        $\boldsymbol{g_p'(r)}$ & 
-        \textbf{Vector Field} $\boldsymbol{F(r,\phi)}$ & 
-        \textbf{Magnitude} $\boldsymbol{\rho(r)}$ & 
-        \textbf{Weight} $\boldsymbol{w(r)=\rho(r)^2}$ & 
-        \textbf{Weighted LS Objective} $\boldsymbol{L(\theta)}$ \\
-        \midrule
-        
-        \textbf{Log Spiral} & 
-        $\displaystyle \frac{1}{r}$ & 
-        $\displaystyle F_{\text{log}}(r,\phi)=\left(\frac{A}{r}, -\frac{b}{r}\right)$ & 
-        $\displaystyle \rho_{\text{log}}(r)=\frac{\sqrt{A^2+b^2}}{r}$ & 
-        $\displaystyle w_{\text{log}}(r)=\frac{A^2+b^2}{r^2}$ & 
-        $\displaystyle L_{\text{log}}(\theta)=\sum_i \frac{A^2+b^2}{r_i^2} d^2(\hat{\alpha}_i,\alpha_\theta)$ \par
-        $\displaystyle = \frac{1}{b^2}\sum_i \frac{1/k^2 + 1}{r_i^2} d^2(\hat{\alpha}_i,\alpha_\theta) = L_{\log}(k)$ \\
-        
-        \textbf{Archimedean Spiral} & 
-        $1$ & 
-        $\displaystyle F_{\text{arch}}(r,\phi)=\left(A, -\frac{b}{r}\right)$ & 
-        $\displaystyle \rho_{\text{arch}}(r)=\sqrt{A^2+\frac{b^2}{r^2}}$ & 
-        $\displaystyle w_{\text{arch}}(r)=A^2+\frac{b^2}{r^2}$ & 
-        $\displaystyle L_{\text{arch}}(\theta)=\sum_i \left(A^2+\frac{b^2}{r_i^2}\right) d^2(\hat{\alpha}_i,\alpha_\theta)$ \\
-        
-        \textbf{Fermat Spiral} & 
-        $r$ & 
-        $\displaystyle F_{\text{fermat}}(r,\phi)=\left(A r, -\frac{b}{r}\right)$ & 
-        $\displaystyle \rho_{\text{fermat}}(r)=\sqrt{A^2 r^2+\frac{b^2}{r^2}}$ & 
-        $\displaystyle w_{\text{fermat}}(r)=A^2 r^2+\frac{b^2}{r^2}$ & 
-        $\displaystyle L_{\text{fermat}}(\theta)=\sum_i \left(A^2 r_i^2+\frac{b^2}{r_i^2}\right) d^2(\hat{\alpha}_i,\alpha_\theta)$ \\
-        \bottomrule
-    \end{tabular}
-    }
-    \caption{Comparison of Vector Fields and Objective Functions for Different Spiral Types}
+\section{Gabor Results}
+The Gabor analysis uses ten ring-structured pitch datasets.  Table~\ref{tab:gabor} reports one matched comparison: all parametric, NW, and GP/KRR rows are fit on the same 20 shuffled folds and scored by the same held-out axial RSS.  The parametric rows refit fixed $p\in\{0,1,2\}$ or continuous $p\in(-1,3)$ inside each training fold.  The non-parametric rows use the shared kernel grid described above.  With this single protocol, the RBF--von-Mises geometry gives the best scores, while the corrected potential-gradient parametric family is worse than every selected kernel row.
+
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\begin{tabular}{lccc}
+\toprule
+Model & Mean RSS & Median RSS & Mean MAE \\
+\midrule
+GP/KRR RBF--von-Mises pitch & 0.3407 & 0.3222 & $24.88^\circ$ \\
+NW RBF--von-Mises pitch & 0.3527 & 0.3297 & $25.92^\circ$ \\
+GP/KRR RBF pitch & 0.5466 & 0.5829 & $34.46^\circ$ \\
+NW uniform pitch & 0.5513 & 0.5907 & $34.73^\circ$ \\
+NW RBF pitch & 0.5520 & 0.5858 & $34.70^\circ$ \\
+GP/KRR uniform pitch & 0.5626 & 0.6019 & $35.09^\circ$ \\
+Parametric $p\in(-1,3)$ & 0.5851 & 0.5955 & $36.33^\circ$ \\
+Parametric $p=0$ & 0.6425 & 0.6474 & $38.39^\circ$ \\
+Parametric $p=1$ & 0.6795 & 0.6775 & $39.82^\circ$ \\
+Parametric $p=2$ & 0.7433 & 0.7623 & $42.13^\circ$ \\
+\bottomrule
+\end{tabular}
+\caption{Matched Gabor pitch-regression comparison.  Every row uses the same 20 folds; lower held-out axial RSS and MAE are better.}
+\label{tab:gabor}
 \end{table}
 
-\subsection{Observation Model and Noise Structure}
-We observe the vector field at discrete spatial points $Z_i$ for $i=1, \dots, n$. The observed vector $W_i$ is the true field perturbed by isotropic Gaussian noise:
-\begin{align}
-W_i &= F_{\theta_0}(Z_i) + \varepsilon_i, \\
-\varepsilon_i &\sim \mathcal{N}(0, \sigma^2 I_2),
-\end{align}
-where $I_2$ is the $2 \times 2$ identity matrix.
+GP/KRR gives a modest RSS improvement for the RBF--von-Mises kernel and wins on seven of ten Gabor datasets.  However, the streamline overlay for the selected multiplicative model can look abrupt, especially when $\kappa$ is large.  I therefore treat this as a predictive improvement with a visual smoothness caveat, not as a blanket argument for GP/KRR over NW.
 
-Our primary quantity of interest is the direction of the field. The observed angle $\hat{\alpha}_i$ is:
-\begin{equation}
-\hat{\alpha}_i = \operatorname{atan2}(W_{i,2},\; W_{i,1}).
-\end{equation}
-By linearizing the transformation from Cartesian vectors to polar angles, we find that the angular noise is heteroskedastic. Specifically, the relationship between the observed angle and the true angle $\alpha_{\theta_0}(Z_i)$ is:
-\begin{equation}
-\hat{\alpha}_i \approx \alpha_{\theta_0}(Z_i) + \eta_i,
-\end{equation}
-
-where the variance of the angular error $\eta_i$ is inversely proportional to the squared magnitude of the field at that point:
-\begin{equation}
-\operatorname{Var}(\eta_i) \approx \frac{\sigma^2}{\rho(Z_i)^2}.
-\end{equation}
-
-% \begin{theorem}[Delta Method for Angular Noise]
-% Let $W \sim \mathcal{N}(\mu, \sigma^2 I_2)$ be a 2D Gaussian random vector with mean $\mu \in \mathbb{R}^2$ and covariance $\sigma^2 I_2$.
-% Define the angle function $g: \mathbb{R}^2 \to S^1$ by $g(W) = \operatorname{atan2}(W_2, W_1)$. Then, for $\mu \neq 0$, the distribution of $g(W)$ is approximately normal with mean $g(\mu)$ and variance:
-% \begin{equation}
-% \alpha = g(W) \sim \mathcal{N}\left( g(\mu), \frac{\sigma^2}{\|\mu\|^2} \right).
-% \end{equation}
-    
-% \end{theorem}
-
-% \begin{proof}
-%     Define $g(W) = \operatorname{atan2}(W_2, W_1)$. The gradient of $g$ at $\mu$ is:
-%     \begin{equation}
-%     \nabla g(\mu) = \left( \frac{\partial g}{\partial W_1}, \frac{\partial g}{\partial W_2} \right) = \left( -\frac{\mu_2}{\|\mu\|^2}, \frac{\mu_1}{\|\mu\|^2} \right).
-%     \end{equation}
-%     The covariance of $W$ is $\Sigma = \sigma^2 I_2$. By the Delta Method (see \cite{vanDerVaart2000}), the variance of $g(W)$ is:
-%     \begin{equation}
-%     \operatorname{Var}(g(W)) \approx \nabla g(\mu)^\top \Sigma \nabla g(\mu) = \sigma^2 \nabla g(\mu)^\top \nabla g(\mu).
-%     \end{equation}
-%     Calculating $\nabla g(\mu)^\top \nabla g(\mu)$:
-%     \begin{align}
-%     \nabla g(\mu)^\top \nabla g(\mu) &=  \left( -\frac{\mu_2}{\|\mu\|^2}, \frac{\mu_1}{\|\mu\|^2} \right) \cdot \left( -\frac{\mu_2}{\|\mu\|^2}, \frac{\mu_1}{\|\mu\|^2} \right) \\
-%     &= \frac{\mu_2^2 + \mu_1^2}{\|\mu\|^4} = \frac{\|\mu\|^2}{\|\mu\|^4} = \frac{1}{\|\mu\|^2}.
-%     \end{align}
-%     Therefore,
-%     \begin{equation}
-%     \operatorname{Var}(g(W)) \approx \sigma^2 \cdot \frac{1}{\|\mu\|^2} = \frac{\sigma^2}{\|\mu\|^2}.
-%     \end{equation}
-
-% \end{proof}
-
-\begin{theorem}[Density of the angle $\Theta=\operatorname{atan2}(W_2,W_1)$ for an isotropic Gaussian]
-\label{thm:projected-normal-angle}
-Let $W=(W_1,W_2)^\top \sim \mathcal N_2(\mu,\sigma^2 I_2)$ with $\sigma>0$ and $\mu\in\mathbb R^2$.
-Define
-\[
-\Theta := \operatorname{atan2}(W_2,W_1)\in(-\pi,\pi].
-\]
-Write $m:=\|\mu\|$ and $\phi_0:=\operatorname{atan2}(\mu_2,\mu_1)$, so that
-$\mu = m(\cos\phi_0,\sin\phi_0)^\top$.
-Then $\Theta$ has a density on $(-\pi,\pi]$ given by
-\begin{align}
-f_\Theta(\theta)
-&=
-\frac{1}{2\pi}\exp\!\left(-\frac{m^2}{2\sigma^2}\right)
-+
-\frac{m\cos(\theta-\phi_0)}{\sqrt{2\pi}\,\sigma}\,
-\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)\,
-\Phi\!\left(\frac{m\cos(\theta-\phi_0)}{\sigma}\right),
-\\ & \theta\in(-\pi,\pi],  
-\end{align}
-
-where $\Phi$ denotes the standard normal cumulative distribution function.
-\end{theorem}
-
-\begin{proof}
-Let $w=(w_1,w_2)^\top\in\mathbb R^2$. The density of $W$ is
-\[
-f_W(w)=\frac{1}{2\pi\sigma^2}\exp\!\left(-\frac{\|w-\mu\|^2}{2\sigma^2}\right).
-\]
-Introduce polar coordinates $w=(r\cos\theta,r\sin\theta)^\top$ with $r\ge 0$ and
-$\theta\in(-\pi,\pi]$, so that $\Theta=\theta$ and the Jacobian determinant is $r$.
-Hence the joint density of $(R,\Theta)$ is
-\[
-f_{R,\Theta}(r,\theta)
-=
-f_W(r\cos\theta,r\sin\theta)\,r
-=
-\frac{1}{2\pi\sigma^2}\exp\!\left(-\frac{\|(r\cos\theta,r\sin\theta)-\mu\|^2}{2\sigma^2}\right)r.
-\]
-Write $\mu=m(\cos\phi_0,\sin\phi_0)^\top$. Then
-\begin{align*}
-\|(r\cos\theta,r\sin\theta)-\mu\|^2
-&= r^2+m^2-2rm(\cos\theta\cos\phi_0+\sin\theta\sin\phi_0)\\
-&= r^2+m^2-2rm\cos(\theta-\phi_0).
-\end{align*}
-Set $c(\theta):=\cos(\theta-\phi_0)$ and rewrite
-\[
-r^2+m^2-2rm \cos(\theta - \phi_0)
-=
-(r-m \cos(\theta - \phi_0))^2+m^2(1-c(\theta)^2)
-=
-(r-m \cos(\theta - \phi_0))^2+m^2\sin^2(\theta-\phi_0).
-\]
-Therefore,
-\[
-f_\Theta(\theta)
-=
-\int_0^\infty f_{R,\Theta}(r,\theta)\,dr
-=
-\frac{1}{2\pi\sigma^2}\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)
-\int_0^\infty r\exp\!\left(-\frac{(r-m \cos(\theta - \phi_0))^2}{2\sigma^2}\right)\,dr.
-\]
-Let $a:=m \cos(\theta - \phi_0)$ and substitute $u=(r-a)/\sigma$ (so $r=\sigma u+a$, $dr=\sigma du$), giving
-\begin{align*}
-\int_0^\infty r\exp\!\left(-\frac{(r-a)^2}{2\sigma^2}\right)\,dr
-&=
-\int_{-a/\sigma}^{\infty} (\sigma u+a)e^{-u^2/2}\,\sigma du \\
-&=
-\sigma^2\int_{-a/\sigma}^{\infty} u e^{-u^2/2}\,du
-\;+\;
-a\sigma\int_{-a/\sigma}^{\infty} e^{-u^2/2}\,du.
-\end{align*}
-The first integral evaluates to $e^{-a^2/(2\sigma^2)}$ since
-$\int u e^{-u^2/2}du=-e^{-u^2/2}$, hence
-\[
-\int_{-a/\sigma}^{\infty} u e^{-u^2/2}\,du
-=
-\left[-e^{-u^2/2}\right]_{-a/\sigma}^{\infty}
-=
-e^{-a^2/(2\sigma^2)}.
-\]
-For the second integral,
-\[
-\int_{-a/\sigma}^{\infty} e^{-u^2/2}\,du
-=
-\sqrt{2\pi}\,\Phi\!\left(\frac{a}{\sigma}\right),
-\]
-by the definition of $\Phi$ and symmetry of the standard normal density. Combining,
-\[
-\int_0^\infty r\exp\!\left(-\frac{(r-a)^2}{2\sigma^2}\right)\,dr
-=
-\sigma^2 e^{-a^2/(2\sigma^2)}
-+
-a\sigma\sqrt{2\pi}\,\Phi\!\left(\frac{a}{\sigma}\right).
-\]
-Substituting back into $f_\Theta(\theta)$ with $a= m \cos(\theta - \phi_0)$ yields,
-\begin{align*}
-f_\Theta(\theta)
-&=
-\frac{1}{2\pi\sigma^2}\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)
-\left[
-\sigma^2 e^{-\frac{m^2 \cos(\theta - \phi_0)^2}{2\sigma^2}}
-+
-(m \cos(\theta - \phi_0))\sigma\sqrt{2\pi}\,\Phi\!\left(\frac{m \cos(\theta - \phi_0)}{\sigma}\right)
-\right]\\
-&=
-\frac{1}{2\pi}\exp\!\left(-\frac{m^2}{2\sigma^2}\right)
-+
-\frac{m \cos(\theta - \phi_0)}{\sqrt{2\pi}\,\sigma}
-\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)
-\Phi\!\left(\frac{m \cos(\theta - \phi_0)}{\sigma}\right),
-\end{align*}
-and recalling $c(\theta)=\cos(\theta-\phi_0)$ gives the stated formula.
-\end{proof}
-
-Maximizing the likelihood from Theorem~\ref{thm:projected-normal-angle} is complex due to the non-linear form of the density. However, for practical purposes, we focus on the variance structure derived from the linear approximation. Also, changing the distance structure (e.g., using sine-wrapped loss) leads to similar conclusions regarding the weighting of observations.
-
-
-This implies that angular observations are less reliable in regions where the vector field magnitude $\rho(r)$ is small.
-
-Most directional statistics regression assume the angular noise as homoskedastic (e.g., Von Mises distribution with constant concentration parameter). However, in our case, the noise variance depends on the field magnitude, necessitating a heteroskedastic treatment.
-
-\subsection{Traditional Approaches and Limitations}
-Standard regression techniques for directional data, such as those based on the Von Mises distribution, typically assume constant noise variance. Applying such methods directly to our data would ignore the critical dependence of angular uncertainty on the field magnitude, leading to biased parameter estimates.
-
-Consider angular data, $\hat{\alpha}_1, \ldots, \hat{\alpha}_n$ observed at locations $Z_1, \ldots, Z_n$. The regression model is given by:
-\begin{equation}
-\hat{\alpha}_i = \alpha_\theta(Z_i) + \eta_i,
-\end{equation}
-where $\eta_i$ are independent errors. Traditional methods assume $\eta_i \sim \text{VM}(0, \kappa)$ with constant concentration $\kappa$. 
-We can write the joint likelihood as:
-\begin{equation}
-\ell(\theta | \hat{\alpha}_1, \ldots, \hat{\alpha}_n) = \sum_{i=1}^n \left[ \kappa \cos(\hat{\alpha}_i - \alpha_\theta(Z_i)) - \log I_0(\kappa) \right],
-\end{equation}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{tex_images/smoothed_line_field_streamlines_RBF_kernel.svg}
-    \caption{Von Mises as an approximation to the projected normal. The approximation is accurate in the isotropic regime but deteriorates under anisotropy and fails entirely when the projected normal becomes skewed or bimodal.}
-    \label{fig:heteroskedasticity}
+\begin{figure}[!htbp]
+\centering
+\begin{minipage}{0.48\linewidth}
+\centering
+\includegraphics[width=\linewidth]{gabor_nw_gp_mean_rss.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\linewidth}
+\centering
+\includegraphics[width=\linewidth]{gabor_gp_minus_nw_rss.png}
+\end{minipage}
+\caption{Gabor matched NW-versus-GP/KRR summary.  Left: mean held-out RSS.  Right: paired GP/KRR minus NW RSS by kernel; negative values favour GP/KRR.  These score plots should be read together with streamline diagnostics, because the high-$\kappa$ multiplicative model can be visually abrupt despite good held-out RSS.}
+\label{fig:gabor-summary}
 \end{figure}
 
-\begin{theorem}[Angular distribution for a Gaussian-induced line field] \label{thm:line-field-angle}
-Let $W=(W_1,W_2)^\top \sim \mathcal N_2(\mu,\sigma^2 I_2)$ with $\sigma>0$ and
-$\mu\in\mathbb R^2$.
-Define the oriented angle
-\[
-\Theta := \operatorname{atan2}(W_2,W_1)\in(-\pi,\pi],
-\]
-and the corresponding \emph{line-field angle}
-\[
-\Psi := \Theta \bmod \pi \in \left(-\frac{\pi}{2},\frac{\pi}{2}\right].
-\]
-Let $m:=\|\mu\|$ and $\phi_0:=\operatorname{atan2}(\mu_2,\mu_1)$.
-Then $\Psi$ admits a density on $\left(-\frac{\pi}{2},\frac{\pi}{2}\right]$ given by
-\[
-f_\Psi(\psi)
-=
-f_\Theta(\psi)+f_\Theta(\psi+\pi),
-\]
-where $f_\Theta$ is the projected normal density
-\[
-f_\Theta(\theta)
-=
-\frac{1}{2\pi}\exp\!\left(-\frac{m^2}{2\sigma^2}\right)
-+
-\frac{m\cos(\theta-\phi_0)}{\sqrt{2\pi}\,\sigma}\,
-\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)
-\Phi\!\left(\frac{m\cos(\theta-\phi_0)}{\sigma}\right).
-\]
-The resulting distribution is $\pi$-periodic and symmetric, and hence appropriate
-for modeling
-line fields.
-\end{theorem}
-
-\begin{theorem}[Density of the line-field angle $\Psi=\Theta \bmod \pi$]
-\label{prop:linefield-density}
-Let $W=(W_1,W_2)^\top \sim \mathcal N_2(\mu,\sigma^2 I_2)$ with $\sigma>0$ and
-$\mu\in\mathbb R^2$. Define the oriented angle
-\[
-\Theta := \operatorname{atan2}(W_2,W_1)\in(-\pi,\pi],
-\]
-and the line-field (axial) angle
-\[
-\Psi := \Theta \bmod \pi \in \left(-\frac{\pi}{2},\frac{\pi}{2}\right].
-\]
-Let $m:=\|\mu\|$ and $\phi_0:=\operatorname{atan2}(\mu_2,\mu_1)$.
-Then $\Psi$ has density on $\left(-\frac{\pi}{2},\frac{\pi}{2}\right]$ given by
-\[
-f_\Psi(\psi)= f_\Theta(\psi)+f_\Theta(\psi+\pi),
-\qquad
-\psi\in\left(-\frac{\pi}{2},\frac{\pi}{2}\right],
-\]
-where $f_\Theta$ is the projected normal density
-\[
-f_\Theta(\theta)
-=
-\frac{1}{2\pi}\exp\!\left(-\frac{m^2}{2\sigma^2}\right)
-+
-\frac{m\cos(\theta-\phi_0)}{\sqrt{2\pi}\,\sigma}\,
-\exp\!\left(-\frac{m^2\sin^2(\theta-\phi_0)}{2\sigma^2}\right)\,
-\Phi\!\left(\frac{m\cos(\theta-\phi_0)}{\sigma}\right).
-\]
-Moreover, $f_\Psi$ admits the simplified closed form
-\[
-\boxed{
-\begin{aligned}
-f_\Psi(\psi)
-&=
-\frac{1}{\pi}\exp\!\left(-\frac{m^2}{2\sigma^2}\right)
-\\[4pt]
-&\quad
-+
-\frac{m\cos(\psi-\phi_0)}{\sqrt{2\pi}\,\sigma}\,
-\exp\!\left(-\frac{m^2\sin^2(\psi-\phi_0)}{2\sigma^2}\right)\,
-\left[
-2\Phi\!\left(\frac{m\cos(\psi-\phi_0)}{\sigma}\right)-1
-\right],
-\end{aligned}
-}
-\qquad
-\psi\in\left(-\frac{\pi}{2},\frac{\pi}{2}\right].
-\]
-\end{theorem}
-
-\begin{proof}
-\textbf{Step 1 (folding identity).}
-Let $I:=(-\pi,\pi]$ and $J:=\left(-\frac{\pi}{2},\frac{\pi}{2}\right]$.
-Define the map $q:I\to J$ by $q(\theta)=\theta \bmod \pi$, i.e.
-$q(\theta)=\theta$ if $\theta\in J$ and $q(\theta)=\theta-\pi$ if $\theta\in(\frac{\pi}{2},\pi]$
-(and equivalently $q(\theta)=\theta+\pi$ if $\theta\in(-\pi,-\frac{\pi}{2}]$).
-Then $q$ is measurable and each $\psi\in J$ has exactly two preimages in $I$,
-namely $\psi$ and $\psi+\pi$.
-
-For any Borel set $B\subseteq J$,
-\[
-\mathbb P(\Psi\in B)
-=
-\mathbb P(q(\Theta)\in B)
-=
-\mathbb P(\Theta\in q^{-1}(B)).
-\]
-Since $q^{-1}(B)=B\ \dot\cup\ (B+\pi)$ is a disjoint union (modulo boundary points of
-measure zero), we have
-\[
-\mathbb P(\Psi\in B)
-=
-\mathbb P(\Theta\in B)+\mathbb P(\Theta\in B+\pi)
-=
-\int_B f_\Theta(\theta)\,d\theta+\int_{B+\pi} f_\Theta(\theta)\,d\theta.
-\]
-In the second integral, substitute $\theta=\psi+\pi$ to obtain
-\[
-\mathbb P(\Psi\in B)
-=
-\int_B\big(f_\Theta(\psi)+f_\Theta(\psi+\pi)\big)\,d\psi.
-\]
-Thus $\Psi$ has density
-\[
-f_\Psi(\psi)=f_\Theta(\psi)+f_\Theta(\psi+\pi),\qquad \psi\in J.
-\]
-
-\textbf{Step 2 (simplification of the folded form).}
-Let $u:=\psi-\phi_0$ and abbreviate
-\[
-c:=\cos u,\qquad s:=\sin u,\qquad x:=\frac{mc}{\sigma}.
-\]
-Using trigonometric identities,
-\[
-\cos(\psi+\pi-\phi_0)=\cos(u+\pi)=-\cos u=-c,
-\qquad
-\sin^2(\psi+\pi-\phi_0)=\sin^2(u+\pi)=\sin^2 u=s^2.
-\]
-Apply these to $f_\Theta(\psi+\pi)$:
-\[
-f_\Theta(\psi+\pi)
-=
-\frac{1}{2\pi}e^{-m^2/(2\sigma^2)}
-+
-\frac{m(-c)}{\sqrt{2\pi}\sigma}\,e^{-m^2 s^2/(2\sigma^2)}\,
-\Phi\!\left(\frac{m(-c)}{\sigma}\right).
-\]
-Therefore,
-\begin{align*}
-f_\Psi(\psi)
-&=
-\left(\frac{1}{2\pi}e^{-m^2/(2\sigma^2)}+\frac{mc}{\sqrt{2\pi}\sigma}e^{-m^2 s^2/(2\sigma^2)}\Phi(x)\right)
-+
-\left(\frac{1}{2\pi}e^{-m^2/(2\sigma^2)}-\frac{mc}{\sqrt{2\pi}\sigma}e^{-m^2 s^2/(2\sigma^2)}\Phi(-x)\right)\\
-&=
-\frac{1}{\pi}e^{-m^2/(2\sigma^2)}
-+
-\frac{mc}{\sqrt{2\pi}\sigma}e^{-m^2 s^2/(2\sigma^2)}\big(\Phi(x)-\Phi(-x)\big).
-\end{align*}
-Finally, using the standard identity $\Phi(-x)=1-\Phi(x)$,
-\[
-\Phi(x)-\Phi(-x)=\Phi(x)-(1-\Phi(x))=2\Phi(x)-1.
-\]
-Substituting back $c=\cos(\psi-\phi_0)$ and $s=\sin(\psi-\phi_0)$ yields the claimed
-closed form.
-\end{proof}
-
-\section{Kernel Regression - TODO}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{/Users/rishabhkumar/spiral-chirals/images/smoothed_line_field_streamlines_RBF_kernel.png}
-    \caption{Kernel regression for angular data with heteroskedastic noise. The weights adapt to the local field magnitude, improving estimation accuracy in regions of low signal strength.}
-    \label{fig:kernel-regression}
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{gabor_nw_gp_streamline_example.png}
+\caption{Representative Gabor fitted-field diagnostic from the same matched protocol as Table~\ref{tab:gabor}.  The numerical comparison favours the RBF--von-Mises geometry, but the fitted streamlines are also inspected visually because local angular concentration can introduce abrupt spatial changes.}
+\label{fig:gabor-streamline}
 \end{figure}
-\section{Tables and Figures}
-\section{Estimation and Inference}
 
-\subsection{Weighted Least Squares Objective}
-To estimate $\theta$, we minimize the discrepancy between the observed angles and the model-predicted angles. A standard least squares approach is insufficient due to the heteroskedasticity described above. We instead employ a Weighted Least Squares (WLS) approach.
+\FloatBarrier
+\section{Optical SEM Results}
+The optical SEM analysis uses 39 line-field datasets.  These data are not expected to follow one global spiral law, so the parametric family is not the scientific target.  Table~\ref{tab:optical-gp} therefore compares only NW and GP/KRR line-field estimators on the same spatial folds and the same compact kernel grid.  The RBF--von-Mises geometry is again the strongest, and GP/KRR with that kernel has the lowest held-out RSS.
 
-The negative log-likelihood (ignoring constant terms) suggests minimizing the variance-weighted squared error. Since angular data lies on a circle (manifold $S^1$), we use a wrapped loss function based on the sine of the angular difference.
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\begin{tabular}{lccc}
+\toprule
+Model & Mean RSS & Median RSS & Mean MAE \\
+\midrule
+GP/KRR RBF--von-Mises line field & 0.1422 & 0.1427 & $14.33^\circ$ \\
+NW RBF--von-Mises line field & 0.1737 & 0.1519 & $16.55^\circ$ \\
+GP/KRR RBF line field & 0.1760 & 0.1646 & $16.16^\circ$ \\
+NW RBF line field & 0.2134 & 0.2095 & $19.11^\circ$ \\
+NW uniform line field & 0.2273 & 0.2194 & $20.21^\circ$ \\
+GP/KRR uniform line field & 0.5345 & 0.5362 & $34.76^\circ$ \\
+\bottomrule
+\end{tabular}
+\caption{Matched optical SEM line-field comparison on the doubled-angle embedding.  Every row uses the same spatial folds and compact kernel grid.}
+\label{tab:optical-gp}
+\end{table}
 
-The objective function $L(\theta)$ is:
-\begin{equation} \label{radial-objective}
-L(\theta) = \sum_{i=1}^n \rho(Z_i)^2 \sin^2 \big( \hat{\alpha}_i - \alpha_\theta(Z_i) \big).
-\end{equation}
-Here, the weight $\rho(Z_i)^2$ naturally down-weights observations where the field magnitude is small (and thus angular uncertainty is high).
+The uniform GP/KRR row is poor, reinforcing that a kernel useful for local averaging need not be a good global covariance for matrix inversion.  Thus GP/KRR is justified here only when the chosen kernel is smooth/positive and the fitted streamlines remain visually smooth.
 
-\subsection{Optimization}
-The estimator $\hat{\theta}$ is obtained by:
-\begin{equation}
-\hat{\theta} = \arg\min_\theta L(\theta).
-\end{equation}
-Since $L(\theta)$ is non-linear with respect to parameters $p$ and the geometry of the angle $\alpha_\theta$, we utilize numerical optimization (e.g., L-BFGS-B or Newton-Raphson) to solve for $\hat{\theta}$.
+\begin{figure}[!htbp]
+\centering
+\begin{minipage}{0.48\linewidth}
+\centering
+\includegraphics[width=\linewidth]{optical_nw_gp_mean_rss.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\linewidth}
+\centering
+\includegraphics[width=\linewidth]{optical_gp_minus_nw_rss.png}
+\end{minipage}
+\caption{Optical SEM matched NW-versus-GP/KRR summaries.  Left: mean held-out RSS.  Right: paired GP/KRR minus NW RSS by kernel; negative values favour GP/KRR.}
+\label{fig:optical-summary}
+\end{figure}
 
-\subsection{Objective correction}
-As seen in Equation \eqref{radial-objective}, the weights $\rho(Z_i)^2$ provide a natural correction for the heteroskedasticity in angular observations. But this is not enough. To see that, we have to look at the log-likelihood function more closely. 
-Depending on the distance function used to measure the angular error, we can derive different forms of the log-likelihood function. Consider we observe the angles $\alpha_1, \ldots, \alpha_n$ at locations $Z_1, \ldots, Z_n$. Then the log-likelihood function can be derived as follows:
-\begin{align}
-\ell(\theta\,|\, \alpha_1, \ldots, \alpha_n)
-&= -\frac{1}{2}\sum_{i=1}^n
-\left[
-\log\!\left( 2\pi\,\frac{\sigma^2}{\rho_\theta(Z_i)^2}  \right)
-+ \frac{d(\hat{\alpha}_i, \alpha_\theta(Z_i))^2 \rho_\theta(Z_i)^2}{\sigma^2}
-\right]
-\end{align}
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{optical_nw_gp_streamline_example.png}
+\caption{Representative optical SEM fitted-field diagnostic from the matched NW/GP-KRR comparison.  This plot complements the held-out RSS table by showing whether the fitted line field follows the observed segment geometry.}
+\label{fig:optical-streamline}
+\end{figure}
 
+\FloatBarrier
+\section{Model-Selection Conclusion}
+Let $R(\mathcal M)=\mathbb E\{\Delta^{\rm ax}(\mathcal M)^2\}$ denote axial prediction risk.  Cross-validation estimates this risk and is used here as the model-selection criterion \cite{arlot2010}.  Under the noisy observation model, the parametric class in \eqref{eq:parametric} is a finite-dimensional family for the mean function $m$.  Its variance is small and its interpretation is strong, but its approximation error is large when the field contains spatially varying pitch.  The non-parametric classes reduce this bias by replacing the global spiral mean with a kernel estimator.
 
-% \paragraph{Squared-error angular likelihood}
-% The log-likelihood under the linearized Gaussian angle model is
-% \begin{equation}
-% \ell_{\text{SE}}(\theta| \alpha_1, \ldots, \alpha_n)
-% = -\frac{1}{2}\sum_{i=1}^n
-% \left[
-% \log\!\left( 2\pi\,\frac{\sigma^2}{\rho_\theta(Z_i)^2} \right)
-% + \frac{\big(\Delta\alpha_i(\theta)\big)^2}{\sigma^2/\rho_\theta(Z_i)^2}
-% \right],
-% \end{equation}
-% where $\Delta\alpha_i(\theta) = \operatorname{wrap}\big(\hat{\alpha}_i - \alpha_\theta(Z_i)\big)$ and $\rho_\theta(Z_i)$ is the field magnitude at $Z_i$.
-% Dropping the constant $\log(2\pi\sigma^2)$ and multiplying through gives the equivalent minimization:
-% \begin{equation}
-% \hat{\theta}
-% = \arg\min_\theta\;
-% \sum_{i=1}^n
-% \left[
-% \rho_\theta(Z_i)^2\,\big(\Delta\alpha_i(\theta)\big)^2
-% - \log \rho_\theta(Z_i)^2
-% \right].
-% \end{equation}
-% Compared to Equation~\eqref{radial-objective}, this adds a correction term $-\sum_i \log \rho_\theta(Z_i)^2$ arising from the normalization of the heteroskedastic Gaussian.
+The two kernel estimators impose different regularization.  The NW estimator \eqref{eq:nw}, introduced by Nadaraya and Watson \cite{nadaraya1964,watson1964}, is a normalized local average and therefore estimates the conditional mean locally.  Its inductive bias is locality.  The GP/KRR estimator \eqref{eq:gpkrr}, in the standard GP regression framework \cite{rasmussen2006}, solves a global regularized least-squares problem in the RKHS generated by a positive-semidefinite kernel.  Its inductive bias is global covariance smoothness.  Therefore GP/KRR should be preferred only when the kernel is a defensible covariance, the held-out risk decreases on the same folds, and the fitted streamline field remains visually regular.  Otherwise, the lower-variance local NW estimator is the more stable descriptive model.
 
-% \paragraph{Sine-wrapped loss and small-angle approximation}
-% Using the circle-aware loss $\sin^2\Delta\alpha_i(\theta)$, the same normalization leads to
-% \begin{equation}
-% \hat{\theta}
-% = \arg\min_\theta\;
-% \sum_{i=1}^n
-% \left[
-% \rho_\theta(Z_i)^2\,\sin^2\!\big(\Delta\alpha_i(\theta)\big)
-% - \log \rho_\theta(Z_i)^2
-% \right],
-% \end{equation}
-% which coincides with the squared-error form for small angles since $\sin^2 x \approx x^2$.
-
-% \paragraph{Von Mises alternative}
-% A circular likelihood with concentration $\kappa_i \propto \rho_\theta(Z_i)^2/\sigma^2$ gives
-% \begin{equation}
-% \ell_{\text{VM}}(\theta)
-% = \sum_{i=1}^n \left[ \kappa_i(\theta)\,\cos\big(\Delta\alpha_i(\theta)\big) - \log I_0\big(\kappa_i(\theta)\big) \right],
-% \quad
-% \kappa_i(\theta) = c\,\frac{\rho_\theta(Z_i)^2}{\sigma^2},
-% \end{equation}
-% where $I_0$ is the modified Bessel function and $c>0$ is a scale constant.
-% Maximizing $\ell_{\text{VM}}$ yields a similar trade-off: a data-fit term and a normalization term $\log I_0(\kappa_i)$ that depends on $\rho_\theta(Z_i)^2$.
-
-\section{Results}
-[Insert parameter estimates for A, b, p here]
-
-\section{Discussion}
-The weighted loss function effectively handles the noise structure inherent in angular measurements of vector fields. [Discuss fit quality here].
-
-\section{Conclusion}
-We have successfully formulated a statistical model for spiral vector fields that accounts for the geometric properties of angular noise.
+Under this criterion, the Gabor results reject the global parametric spiral family in favour of the RBF--von-Mises kernel.  GP/KRR gives the smallest matched held-out RSS, but the high-$\kappa$ multiplicative streamline can appear abrupt; that visual diagnostic weakens the case for reporting it as the sole final model.  For optical SEM, the parametric spiral family is not the target model class; the matched kernel comparison again favours the RBF--von-Mises geometry, with GP/KRR improving held-out RSS when the covariance interpretation is defensible.  For multiple particles or repeated vector-field samples, the appropriate extension is to fit per-particle NW diagnostics first and move to pooled or hierarchical GP/KRR only when the samples plausibly share a common latent field.
 
 \bibliographystyle{plain}
 \bibliography{references}
-% Create references.bib file with at least one entry if it doesn't exist
-% Example entry for vanDerVaart2000:
-% @book{vanDerVaart2000,
-%   author = {van der Vaart, A. W.},
-%   title = {Asymptotic Statistics},
-%   publisher = {Cambridge University Press},
-%   year = {2000}
-% }
-
 \end{document}

@@ -1,0 +1,11 @@
+dataset,n,model,kernel,bandwidth,kappa,sigma_n,mean_test_rss,mean_test_mae_deg,family,p_median,sd_test_rss,gamma_median
+Front_EE-1_1_3000x_rings_coords.csv,168,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,111.9465567452812,1.0,0.053062911415080655,0.2606773130914347,20.99517199257489,kernel_gp_line_embedding_cv,,,
+Front_EE-1_2_3000x_rings_coords.csv,129,Gaussian RBF RKHS,gaussian_rbf,79.113986790788,,0.27548217595856467,0.21955173491830254,18.26633118988341,kernel_gp_line_embedding_cv,,,
+Front_EE-1_3_3000x_rings_coords.csv,178,Uniform RKHS,uniform,52.487523869585765,,0.6322897350794021,0.47742833043249533,31.299603715479115,kernel_gp_line_embedding_cv,,,
+Front_EE-1_4_3000x_rings_coords.csv,179,Gaussian RBF RKHS,gaussian_rbf,29.607015107573815,,0.18351058892087194,0.3934605812509679,27.828819980710698,kernel_gp_line_embedding_cv,,,
+Front_EE-1_5_3000x_rings_coords.csv,180,Gaussian RBF RKHS,gaussian_rbf,62.63731445632596,,0.6343733754272397,0.3663246035630642,25.052277007855047,kernel_gp_line_embedding_cv,,,
+Front_EE1_1_3000x_rings_coords.csv,136,Gaussian RBF RKHS,gaussian_rbf,27.97152298005916,,0.6297682895503359,0.1527512180392084,16.246342927830177,kernel_gp_line_embedding_cv,,,
+Front_EE1_2_3000x_rings_coords.csv,178,Gaussian RBF RKHS,gaussian_rbf,73.64633724402418,,0.6348270435961727,0.482407553885737,30.584648946203536,kernel_gp_line_embedding_cv,,,
+Front_EE1_3_3000x_rings_coords.csv,180,Uniform RKHS,uniform,55.092313253609014,,0.6335966839715044,0.3310573483816327,25.199133634508577,kernel_gp_line_embedding_cv,,,
+Front_EE1_4_3000x_rings_coords.csv,163,Gaussian RBF RKHS,gaussian_rbf,51.14115511440803,,0.6334417930425164,0.2591810311390663,22.288140110824145,kernel_gp_line_embedding_cv,,,
+Front_EE1_5_3000x_rings_coords.csv,180,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,242.5666723910242,0.5,0.035240646984189564,0.4875688109804731,30.900928416809496,kernel_gp_line_embedding_cv,,,

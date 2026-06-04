@@ -1,0 +1,7 @@
+hyperparameter,count,min,max,grid
+bandwidth_or_radius_ell,72.0,1.0,1500.0,geomspace
+sigma_n,17.0,0.001,10.0,geomspace
+kappa,19.0,0.0,64.0,explicit
+parametric_fixed_p,3.0,0.0,2.0,"{0,1,2}"
+parametric_continuous_p_bounds,,-0.999,2.999,L-BFGS-B bounds
+parametric_gamma_bounds,,-3.141592653589793,3.141592653589793,L-BFGS-B bounds

@@ -1,0 +1,11 @@
+dataset,n_raw,n_used,n_dropped,x_min,x_max,y_min,y_max
+Front_EE-1_1_3000x_rings_coords.csv,169,168,1,-295.0,295.0,-291.0,295.0
+Front_EE-1_2_3000x_rings_coords.csv,130,129,1,-271.0,284.0,-253.0,284.0
+Front_EE-1_3_3000x_rings_coords.csv,179,178,1,-340.0,340.0,-340.0,340.0
+Front_EE-1_4_3000x_rings_coords.csv,180,179,1,-344.0,344.0,-344.0,344.0
+Front_EE-1_5_3000x_rings_coords.csv,181,180,1,-302.0,302.0,-302.0,302.0
+Front_EE1_1_3000x_rings_coords.csv,137,136,1,-237.0,237.0,-226.0,241.0
+Front_EE1_2_3000x_rings_coords.csv,179,178,1,-352.0,352.0,-352.0,352.0
+Front_EE1_3_3000x_rings_coords.csv,181,180,1,-356.0,356.0,-356.0,356.0
+Front_EE1_4_3000x_rings_coords.csv,164,163,1,-330.0,330.0,-310.0,330.0
+Front_EE1_5_3000x_rings_coords.csv,181,180,1,-356.0,356.0,-356.0,356.0

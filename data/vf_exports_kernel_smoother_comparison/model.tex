@@ -1,0 +1,154 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=0.75in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{placeins}
+\graphicspath{{./}}
+\title{Gabor Vector Fields: Kernel Smoother Model Comparison}
+\author{Rishabh Kumar}
+\date{\today}
+\begin{document}
+\maketitle
+
+\section{Model}
+Each Gabor observation is a coordinate $z_i=(x_i,y_i)$ and a local pitch angle $\alpha'_i$. The global line-field angle used for fitting is
+\[
+  \phi_i=\operatorname{atan2}(y_i,x_i)+\alpha'_i.
+\]
+Because the data are axial line fields, the smoother is applied to the doubled-angle embedding
+\[
+  u_i=(\cos 2\phi_i,\sin 2\phi_i).
+\]
+For a target point $z$, the Nadaraya--Watson kernel smoother is
+\[
+  \hat u(z)=\frac{\sum_i K(z,z_i)u_i}{\sum_i K(z,z_i)},
+  \qquad
+  \hat\phi(z)=\frac12\operatorname{atan2}(\hat u_2(z),\hat u_1(z)).
+\]
+The RBF kernel is
+\[
+  K_{\mathrm{RBF}}(z,z';h)=
+  \exp\left[-\frac{\|z-z'\|^2}{2h^2}\right],
+\]
+and the multiplicative RBF--von-Mises kernel is
+\[
+  K_{\mathrm{mult}}(z,z';h,\kappa)=
+  \exp\left[-\frac{\|z-z'\|^2}{2h^2}\right]
+  \exp\left[\kappa\cos\{\vartheta(z)-\vartheta(z')\}\right],
+  \quad
+  \vartheta(z)=\operatorname{atan2}(y,x).
+\]
+
+\section{Hyperparameter Selection}
+The sweep is fixed across all datasets:
+\[
+  h\in \operatorname{geomspace}(1,1500,72),
+\]
+and for the multiplicative kernel
+\[
+  \kappa\in
+  \{0,0.125,0.25,0.5,0.75,1,1.25,1.5,2,3,4,6,8,12,16,24,32,48,64\}.
+\]
+Each candidate is scored by shuffled 10-fold held-out axial reconstruction RSS using random seed 42. This is used only as an anti-overfitting check for selecting the smoothness of the streamline description.
+
+\section{Results}
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+Model & Mean RSS & Median RSS & Mean MAE deg & $h$ med & $\kappa$ med \\
+\midrule
+RBF-von-Mises kernel smoother & 0.3577 & 0.3496 & 25.5983 & 29.9372 & 0.75 \\
+RBF kernel smoother & 0.3608 & 0.354 & 25.6744 & 29.9372 &  \\
+\bottomrule
+\end{tabular}
+\caption{Selected kernel smoother performance across the Gabor vector-field exports.}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Model & Mean RSS & Median RSS & Mean MAE deg \\
+\midrule
+RBF-von-Mises kernel smoother & 0.3577 & 0.3496 & 25.5983 \\
+RBF kernel smoother & 0.3608 & 0.354 & 25.6744 \\
+Parametric continuous p & 0.5588 & 0.5885 & 35.2181 \\
+Parametric p=1 (Archimedean) & 0.5949 & 0.5892 & 36.668 \\
+Parametric p=0 (Logarithmic) & 0.6362 & 0.6331 & 38.2387 \\
+Parametric p=2 (Fermat) & 0.6567 & 0.6875 & 38.8822 \\
+\bottomrule
+\end{tabular}
+\caption{Held-out axial reconstruction comparison including the parametric spiral families.}
+\end{table}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.78\linewidth]{plots/kernel_smoother_mean_rss.png}
+\caption{Mean held-out axial RSS for the two kernel smoothers.}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.86\linewidth]{plots/kernel_smoother_vs_parametric_boxplot.png}
+\caption{Held-out axial RSS distribution comparing selected kernel smoothers with the parametric spiral families.}
+\end{figure}
+
+\FloatBarrier
+\section{Streamline Overlays}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.96\linewidth]{plots/streamline\_overlays/Front\_EE-1\_1\_3000x\_rings\_coords\_kernel\_smoother\_streamlines.png}
+\caption{Kernel-smoother streamline overlays for \texttt{Front\_EE-1\_1\_3000x\_rings\_coords.csv}. Observed Gabor arrows are shown at opacity $\alpha=0.7$.}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.96\linewidth]{plots/streamline\_overlays/Front\_EE-1\_2\_3000x\_rings\_coords\_kernel\_smoother\_streamlines.png}
+\caption{Kernel-smoother streamline overlays for \texttt{Front\_EE-1\_2\_3000x\_rings\_coords.csv}. Observed Gabor arrows are shown at opacity $\alpha=0.7$.}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.96\linewidth]{plots/streamline\_overlays/Front\_EE-1\_3\_3000x\_rings\_coords\_kernel\_smoother\_streamlines.png}
+\caption{Kernel-smoother streamline overlays for \texttt{Front\_EE-1\_3\_3000x\_rings\_coords.csv}. Observed Gabor arrows are shown at opacity $\alpha=0.7$.}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.96\linewidth]{plots/streamline\_overlays/Front\_EE-1\_4\_3000x\_rings\_coords\_kernel\_smoother\_streamlines.png}
+\caption{Kernel-smoother streamline overlays for \texttt{Front\_EE-1\_4\_3000x\_rings\_coords.csv}. Observed Gabor arrows are shown at opacity $\alpha=0.7$.}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.96\linewidth]{plots/streamline\_overlays/Front\_EE-1\_5\_3000x\_rings\_coords\_kernel\_smoother\_streamlines.png}
+\caption{Kernel-smoother streamline overlays for \texttt{Front\_EE-1\_5\_3000x\_rings\_coords.csv}. Observed Gabor arrows are shown at opacity $\alpha=0.7$.}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.96\linewidth]{plots/streamline\_overlays/Front\_EE1\_1\_3000x\_rings\_coords\_kernel\_smoother\_streamlines.png}
+\caption{Kernel-smoother streamline overlays for \texttt{Front\_EE1\_1\_3000x\_rings\_coords.csv}. Observed Gabor arrows are shown at opacity $\alpha=0.7$.}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.96\linewidth]{plots/streamline\_overlays/Front\_EE1\_2\_3000x\_rings\_coords\_kernel\_smoother\_streamlines.png}
+\caption{Kernel-smoother streamline overlays for \texttt{Front\_EE1\_2\_3000x\_rings\_coords.csv}. Observed Gabor arrows are shown at opacity $\alpha=0.7$.}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.96\linewidth]{plots/streamline\_overlays/Front\_EE1\_3\_3000x\_rings\_coords\_kernel\_smoother\_streamlines.png}
+\caption{Kernel-smoother streamline overlays for \texttt{Front\_EE1\_3\_3000x\_rings\_coords.csv}. Observed Gabor arrows are shown at opacity $\alpha=0.7$.}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.96\linewidth]{plots/streamline\_overlays/Front\_EE1\_4\_3000x\_rings\_coords\_kernel\_smoother\_streamlines.png}
+\caption{Kernel-smoother streamline overlays for \texttt{Front\_EE1\_4\_3000x\_rings\_coords.csv}. Observed Gabor arrows are shown at opacity $\alpha=0.7$.}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.96\linewidth]{plots/streamline\_overlays/Front\_EE1\_5\_3000x\_rings\_coords\_kernel\_smoother\_streamlines.png}
+\caption{Kernel-smoother streamline overlays for \texttt{Front\_EE1\_5\_3000x\_rings\_coords.csv}. Observed Gabor arrows are shown at opacity $\alpha=0.7$.}
+\end{figure}
+
+\end{document}

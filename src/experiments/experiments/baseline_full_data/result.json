@@ -1,0 +1,57 @@
+{
+  "config": {
+    "name": "baseline_full_data",
+    "csv_file": "/Users/rishabhkumar/spiral-chirals/vf_exports/Front_EE-1_1_3000x_rings_coords.csv",
+    "angle_col": "Angle (\u03b1\u2032)",
+    "coord_col": "Coordinate",
+    "data_transforms": [],
+    "kernel_config": {
+      "bandwidth": 1.0,
+      "kernel": "gaussian"
+    },
+    "parametric_config": null,
+    "run_bayes": true,
+    "notes": "Baseline: no transforms"
+  },
+  "timestamp": "2026-02-04T14:41:11.491808",
+  "n_samples": 168,
+  "kernel_results": {
+    "bandwidth": 1.0,
+    "mae_deg": 32.49812418738208,
+    "rmse_deg": 39.07040399644128,
+    "mean_residual_deg": 0.2288009197980289,
+    "std_residual_deg": 39.06973404803563
+  },
+  "bayes_results": [
+    {
+      "Model": "Logarithmic",
+      "p": 0,
+      "A": 12.479078596930119,
+      "b": 0.39493301700313704,
+      "RSS": 153.65274214467328,
+      "BIC": -251.25756203002592,
+      "Delta_BIC": 0.0,
+      "BayesFactor": 1.0
+    },
+    {
+      "Model": "Archimedean",
+      "p": 1,
+      "A": 35.77560340816937,
+      "b": 0.39493301700313466,
+      "RSS": 165.84968035963675,
+      "BIC": -225.5916298243214,
+      "Delta_BIC": 25.665932205704536,
+      "BayesFactor": 2.6712444637353614e-06
+    },
+    {
+      "Model": "Fermat",
+      "p": 2,
+      "A": 221.95500341811712,
+      "b": 0.39493301700313843,
+      "RSS": 166.31062750133034,
+      "BIC": -224.65907806925446,
+      "Delta_BIC": 26.59848396077146,
+      "BayesFactor": 1.6757629893292123e-06
+    }
+  ]
+}

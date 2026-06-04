@@ -1,0 +1,118 @@
+dataset,n,model,kernel,bandwidth,kappa,sigma_n,evidence_score
+EE+0p2-data-225x225/EE_0.2data_rot_-22deg/arrow_segments.mat,136,Gaussian RBF RKHS,gaussian_rbf,15.132790203511458,,0.2760844814211254,-156.81491013712235
+EE+0p2-data-225x225/EE_0.2data_rot_-22deg/arrow_segments.mat,136,Uniform RKHS,uniform,117.51961628363846,,0.6305089896303894,-298.98273244568213
+EE+0p2-data-225x225/EE_0.2data_rot_-22deg/arrow_segments.mat,136,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,27.180622440486303,0.5,0.2760844814211254,-148.09728124536466
+EE+0p22-data-225x225/EE_0.22data_rot_35.5deg/arrow_segments.mat,125,Gaussian RBF RKHS,gaussian_rbf,14.322405654896652,,0.25843344067072316,-142.63227421471925
+EE+0p22-data-225x225/EE_0.22data_rot_35.5deg/arrow_segments.mat,125,Uniform RKHS,uniform,102.97767120462187,,0.5901983578550194,-260.35046679488374
+EE+0p22-data-225x225/EE_0.22data_rot_35.5deg/arrow_segments.mat,125,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,14.322405654896652,0.0,0.25843344067072316,-142.63227421471925
+EE+0p23-data-225x225/EE_0.23data_rot_0deg/arrow_segments.mat,85,Gaussian RBF RKHS,gaussian_rbf,17.576023799500128,,0.40406015508081133,-119.23135042917478
+EE+0p23-data-225x225/EE_0.23data_rot_0deg/arrow_segments.mat,85,Uniform RKHS,uniform,88.2618893144557,,0.6106195006888079,-183.4855667774271
+EE+0p23-data-225x225/EE_0.23data_rot_0deg/arrow_segments.mat,85,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,17.576023799500128,0.0,0.40406015508081133,-119.23135042917478
+EE+0p4-data-225x225/EE_0.4data_rot_-67deg/arrow_segments.mat,142,Gaussian RBF RKHS,gaussian_rbf,25.164896030783254,,0.4074716834544199,-175.10725830394236
+EE+0p4-data-225x225/EE_0.4data_rot_-67deg/arrow_segments.mat,142,Uniform RKHS,uniform,102.97767120462187,,0.6157750344029945,-305.4066109399266
+EE+0p4-data-225x225/EE_0.4data_rot_-67deg/arrow_segments.mat,142,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,77.68791770496118,1.0,0.4074716834544199,-168.1608748397457
+EE+0p42-data-225x225/EE_0.42data_rot_-7.5deg/arrow_segments.mat,128,Gaussian RBF RKHS,gaussian_rbf,13.888198952138389,,0.27321533106046564,-159.01346157801157
+EE+0p42-data-225x225/EE_0.42data_rot_-7.5deg/arrow_segments.mat,128,Uniform RKHS,uniform,95.64339158873616,,0.6239565565284437,-279.65880416375194
+EE+0p42-data-225x225/EE_0.42data_rot_-7.5deg/arrow_segments.mat,128,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,126.0,2.0,0.27321533106046564,-125.07286550786685
+EE+0p43-data-225x225/EE_0.43data_rot_14.5deg/arrow_segments.mat,129,Gaussian RBF RKHS,gaussian_rbf,18.29622558235923,,0.4078521700944526,-212.41223840827084
+EE+0p43-data-225x225/EE_0.43data_rot_14.5deg/arrow_segments.mat,129,Uniform RKHS,uniform,95.64339158873616,,0.6163500293863753,-279.9509901850447
+EE+0p43-data-225x225/EE_0.43data_rot_14.5deg/arrow_segments.mat,129,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,126.0,1.0,0.4078521700944526,-187.12089786976534
+EE+0p6-data-225x225/EE_0.6data_rot_39.5deg/arrow_segments.mat,69,Gaussian RBF RKHS,gaussian_rbf,16.021289717542732,,0.4032117368688245,-108.98914385972233
+EE+0p6-data-225x225/EE_0.6data_rot_39.5deg/arrow_segments.mat,69,Uniform RKHS,uniform,73.33763548955437,,0.6093373631197743,-149.1622829373809
+EE+0p6-data-225x225/EE_0.6data_rot_39.5deg/arrow_segments.mat,69,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,94.5,1.0,0.4032117368688245,-92.93029950501455
+EE+0p62-data-225x225/EE_0.62data_rot_37.5deg/arrow_segments.mat,68,Gaussian RBF RKHS,gaussian_rbf,16.021289717542732,,0.4025226412108767,-108.0646288142274
+EE+0p62-data-225x225/EE_0.62data_rot_37.5deg/arrow_segments.mat,68,Uniform RKHS,uniform,73.33763548955437,,0.6082959952905242,-146.60302350366413
+EE+0p62-data-225x225/EE_0.62data_rot_37.5deg/arrow_segments.mat,68,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,94.5,1.0,0.4025226412108767,-93.29572282244905
+EE+0p63-data-225x225/EE_0.63data_rot_-30.5deg/arrow_segments.mat,87,Gaussian RBF RKHS,gaussian_rbf,16.81962526923401,,0.39518678872230634,-131.04877364154822
+EE+0p63-data-225x225/EE_0.63data_rot_-30.5deg/arrow_segments.mat,87,Uniform RKHS,uniform,80.82851262784433,,0.597209986122405,-185.21567239518964
+EE+0p63-data-225x225/EE_0.63data_rot_-30.5deg/arrow_segments.mat,87,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,105.0,1.0,0.39518678872230634,-113.98385205252174
+EE+0p8-data-226x225/EE_0.8data_rot_0deg/arrow_segments.mat,163,Gaussian RBF RKHS,gaussian_rbf,20.280992505120025,,0.411004450253859,-203.17634080776247
+EE+0p8-data-226x225/EE_0.8data_rot_0deg/arrow_segments.mat,163,Uniform RKHS,uniform,117.51961628363846,,0.6211137847647866,-353.3680842431539
+EE+0p8-data-226x225/EE_0.8data_rot_0deg/arrow_segments.mat,163,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,87.68800134256274,1.0,0.411004450253859,-194.87996500887127
+EE+0p82-data-226x225/EE_0.82data_rot_-24.5deg/arrow_segments.mat,123,Gaussian RBF RKHS,gaussian_rbf,18.984779409205064,,0.40787969167627763,-180.53635213282726
+EE+0p82-data-226x225/EE_0.82data_rot_-24.5deg/arrow_segments.mat,123,Uniform RKHS,uniform,102.97767120462187,,0.6163916202592707,-265.45542545880386
+EE+0p82-data-226x225/EE_0.82data_rot_-24.5deg/arrow_segments.mat,123,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,33.35682646557795,0.5,0.40787969167627763,-174.41743161905254
+EE+0p83-data-226x225/EE_0.83data_rot_43deg/arrow_segments.mat,158,Gaussian RBF RKHS,gaussian_rbf,20.894189947394523,,0.2546004188808181,-142.1928367095088
+EE+0p83-data-226x225/EE_0.83data_rot_43deg/arrow_segments.mat,158,Uniform RKHS,uniform,124.7334781593721,,0.5814446796926532,-320.45779114366735
+EE+0p83-data-226x225/EE_0.83data_rot_43deg/arrow_segments.mat,158,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,37.90338847138779,1.0,0.2546004188808181,-125.8705259449986
+EE+1-data-225x225/EE_1data_rot_0deg/arrow_segments.mat,194,Gaussian RBF RKHS,gaussian_rbf,20.894189947394523,,0.27629904218184703,-193.36169796470207
+EE+1-data-225x225/EE_1data_rot_0deg/arrow_segments.mat,194,Uniform RKHS,uniform,124.7334781593721,,0.6309989935877309,-424.1412257156423
+EE+1-data-225x225/EE_1data_rot_0deg/arrow_segments.mat,194,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,68.75915559445191,1.0,0.27629904218184703,-152.83938001739
+EE+12-data-225x225/EE_12data_rot_-41.5deg/arrow_segments.mat,101,Gaussian RBF RKHS,gaussian_rbf,17.576023799500128,,0.41226651627941346,-141.61079961581214
+EE+12-data-225x225/EE_12data_rot_-41.5deg/arrow_segments.mat,101,Uniform RKHS,uniform,88.2618893144557,,0.6230210307940474,-221.1524587868386
+EE+12-data-225x225/EE_12data_rot_-41.5deg/arrow_segments.mat,101,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,115.5,1.0,0.41226651627941346,-128.76595491083813
+EE+13-data-225x225/EE_13data_rot_34.5deg/arrow_segments.mat,80,Gaussian RBF RKHS,gaussian_rbf,13.431108806750808,,0.3761340920381147,-125.41417432653496
+EE+13-data-225x225/EE_13data_rot_34.5deg/arrow_segments.mat,80,Uniform RKHS,uniform,88.2618893144557,,0.5684173719787272,-163.89361289875325
+EE+13-data-225x225/EE_13data_rot_34.5deg/arrow_segments.mat,80,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,115.5,1.0,0.3761340920381147,-115.06872487033729
+EE-0p2-data-225x225/EE-0.2data_rot_62.5deg/arrow_segments.mat,196,Gaussian RBF RKHS,gaussian_rbf,20.280992505120025,,0.277884764914374,-217.8820316537538
+EE-0p2-data-225x225/EE-0.2data_rot_62.5deg/arrow_segments.mat,196,Uniform RKHS,uniform,117.51961628363846,,0.6346203939387143,-430.4584995382302
+EE-0p2-data-225x225/EE-0.2data_rot_62.5deg/arrow_segments.mat,196,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,117.51961628363846,1.0,0.277884764914374,-179.0264163452326
+EE-0p22-data-225x225/EE-0.22data_rot_0deg/arrow_segments.mat,167,Gaussian RBF RKHS,gaussian_rbf,20.280992505120025,,0.2728529511538054,-110.57571514798448
+EE-0p22-data-225x225/EE-0.22data_rot_0deg/arrow_segments.mat,167,Uniform RKHS,uniform,117.51961628363846,,0.6231289700316056,-361.7012774992312
+EE-0p22-data-225x225/EE-0.22data_rot_0deg/arrow_segments.mat,167,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,157.5,1.0,0.2728529511538054,-65.61514237078308
+EE-0p23-data-225x225/EE-0.23data_rot_90deg/arrow_segments.mat,117,Gaussian RBF RKHS,gaussian_rbf,11.054252092940754,,0.27525172039506307,-150.04671399052518
+EE-0p23-data-225x225/EE-0.23data_rot_90deg/arrow_segments.mat,117,Uniform RKHS,uniform,110.268636569268,,0.628607168454337,-256.5634157313994
+EE-0p23-data-225x225/EE-0.23data_rot_90deg/arrow_segments.mat,117,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,26.189388284631097,1.0,0.27525172039506307,-138.52964622953053
+EE-0p4-data-225x225/EE-0.4data_rot_31deg/arrow_segments.mat,92,Gaussian RBF RKHS,gaussian_rbf,13.431108806750808,,0.40088967419547605,-132.3049813166959
+EE-0p4-data-225x225/EE-0.4data_rot_31deg/arrow_segments.mat,92,Uniform RKHS,uniform,88.2618893144557,,0.6058282402024586,-198.8139007247009
+EE-0p4-data-225x225/EE-0.4data_rot_31deg/arrow_segments.mat,92,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,115.5,1.0,0.40088967419547605,-123.00861743123625
+EE-0p42-data-225x225/EE-0.42data_rot_-12deg/arrow_segments.mat,90,Gaussian RBF RKHS,gaussian_rbf,17.576023799500128,,0.39637908928877136,-136.34220989836052
+EE-0p42-data-225x225/EE-0.42data_rot_-12deg/arrow_segments.mat,90,Uniform RKHS,uniform,88.2618893144557,,0.5990118019347566,-190.88917322548053
+EE-0p42-data-225x225/EE-0.42data_rot_-12deg/arrow_segments.mat,90,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,23.000082647333304,0.5,0.39637908928877136,-133.45300973882354
+EE-0p43-data-225x225/EE-0.43data_rot_56.5deg/arrow_segments.mat,89,Gaussian RBF RKHS,gaussian_rbf,12.947669461618,,0.2769383741974842,-114.29228688406505
+EE-0p43-data-225x225/EE-0.43data_rot_56.5deg/arrow_segments.mat,89,Uniform RKHS,uniform,80.82851262784433,,0.6324590705219459,-197.37911131324344
+EE-0p43-data-225x225/EE-0.43data_rot_56.5deg/arrow_segments.mat,89,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,36.87146991197789,1.0,0.2769383741974842,-93.35935735059178
+EE-0p6-data-225x225/EE-0.6data_rot_-67deg/arrow_segments.mat,65,Gaussian RBF RKHS,gaussian_rbf,10.542178181282909,,0.3476936327382466,-113.39100576187678
+EE-0p6-data-225x225/EE-0.6data_rot_-67deg/arrow_segments.mat,65,Uniform RKHS,uniform,95.64339158873616,,0.525437882814366,-127.74320799161
+EE-0p6-data-225x225/EE-0.6data_rot_-67deg/arrow_segments.mat,65,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,10.542178181282909,0.0,0.3476936327382466,-113.39100576187678
+EE-0p62-data-225x225/EE-0.62data_rot_27deg/arrow_segments.mat,172,Gaussian RBF RKHS,gaussian_rbf,20.894189947394523,,0.41771768705370194,-236.3401420765271
+EE-0p62-data-225x225/EE-0.62data_rot_27deg/arrow_segments.mat,172,Uniform RKHS,uniform,124.7334781593721,,0.6312588912574224,-378.67184964357693
+EE-0p62-data-225x225/EE-0.62data_rot_27deg/arrow_segments.mat,172,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,92.60976531984863,1.0,0.41771768705370194,-229.40084599932388
+EE-0p63-data-225x225/EE-0.63data_rot_6deg/arrow_segments.mat,41,Gaussian RBF RKHS,gaussian_rbf,9.30568669182521,,0.3686678135037716,-73.40710599195255
+EE-0p63-data-225x225/EE-0.63data_rot_6deg/arrow_segments.mat,41,Uniform RKHS,uniform,65.78232068203505,,0.557134261745469,-83.70064067598118
+EE-0p63-data-225x225/EE-0.63data_rot_6deg/arrow_segments.mat,41,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,9.30568669182521,0.0,0.3686678135037716,-73.40710599195255
+EE-0p8-data-226x225/EE-0.8data_rot_34deg/arrow_segments.mat,68,Gaussian RBF RKHS,gaussian_rbf,13.431108806750808,,0.37393918094357737,-113.11402015076314
+EE-0p8-data-226x225/EE-0.8data_rot_34deg/arrow_segments.mat,68,Uniform RKHS,uniform,88.2618893144557,,0.5651004017213289,-139.2362170670629
+EE-0p8-data-226x225/EE-0.8data_rot_34deg/arrow_segments.mat,68,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,39.38645791613813,1.0,0.37393918094357737,-111.9325818473303
+EE-0p82-data-225x225/EE-0.82data_rot_37deg/arrow_segments.mat,99,Gaussian RBF RKHS,gaussian_rbf,16.81962526923401,,0.38286964645879007,-143.36220644256525
+EE-0p82-data-225x225/EE-0.82data_rot_37deg/arrow_segments.mat,99,Uniform RKHS,uniform,80.82851262784433,,0.5785962050695388,-206.7925761629731
+EE-0p82-data-225x225/EE-0.82data_rot_37deg/arrow_segments.mat,99,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,105.0,1.0,0.38286964645879007,-132.5609964926347
+EE-0p83-data-226x225/EE-0.83data_rot_-41.5deg/arrow_segments.mat,115,Gaussian RBF RKHS,gaussian_rbf,24.10333202413078,,0.4101398749736944,-154.36897435952557
+EE-0p83-data-226x225/EE-0.83data_rot_-41.5deg/arrow_segments.mat,115,Uniform RKHS,uniform,95.64339158873616,,0.6198072304825997,-249.81901231939008
+EE-0p83-data-226x225/EE-0.83data_rot_-41.5deg/arrow_segments.mat,115,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,41.831962277299844,0.5,0.4101398749736944,-143.81104273871037
+EE-1-data-368x368/EE-1data_rot_58deg/arrow_segments.mat,151,Gaussian RBF RKHS,gaussian_rbf,14.73651174277032,,0.2771344846030162,-179.35428447341397
+EE-1-data-368x368/EE-1data_rot_58deg/arrow_segments.mat,151,Uniform RKHS,uniform,110.268636569268,,0.6329069384101067,-332.22861397520217
+EE-1-data-368x368/EE-1data_rot_58deg/arrow_segments.mat,151,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,147.0,2.0,0.2771344846030162,-122.65767027563768
+EE-1-data-368x368/EE-1data_rot_60.5deg/arrow_segments.mat,154,Gaussian RBF RKHS,gaussian_rbf,26.189388284631097,,0.4192062516798357,-179.64468471676344
+EE-1-data-368x368/EE-1data_rot_60.5deg/arrow_segments.mat,154,Uniform RKHS,uniform,110.268636569268,,0.6335084240988161,-339.3294853493014
+EE-1-data-368x368/EE-1data_rot_60.5deg/arrow_segments.mat,154,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,147.0,2.0,0.2773978604900863,-121.79341691187119
+EE-12-data-368x368/EE-12data_rot_78.5deg/arrow_segments.mat,117,Gaussian RBF RKHS,gaussian_rbf,18.29622558235923,,0.4111821307128966,-153.26640309877203
+EE-12-data-368x368/EE-12data_rot_78.5deg/arrow_segments.mat,117,Uniform RKHS,uniform,95.64339158873616,,0.6213822971429943,-255.09336692904787
+EE-12-data-368x368/EE-12data_rot_78.5deg/arrow_segments.mat,117,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,126.0,1.0,0.4111821307128966,-141.21836343890496
+EE-12-data-368x368/EE-12data_rot_80deg/arrow_segments.mat,120,Gaussian RBF RKHS,gaussian_rbf,18.29622558235923,,0.41205924932869187,-150.29723276567378
+EE-12-data-368x368/EE-12data_rot_80deg/arrow_segments.mat,120,Uniform RKHS,uniform,126.0,,0.6227078070317745,-261.90966604489995
+EE-12-data-368x368/EE-12data_rot_80deg/arrow_segments.mat,120,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,126.0,1.0,0.41205924932869187,-135.9688640255299
+EE-13-data-225x225/EE-13data_rot_59deg/arrow_segments.mat,143,Gaussian RBF RKHS,gaussian_rbf,14.73651174277032,,0.2763709260364653,-149.3452433535466
+EE-13-data-225x225/EE-13data_rot_59deg/arrow_segments.mat,143,Uniform RKHS,uniform,110.268636569268,,0.6311631586154526,-314.28961237285665
+EE-13-data-225x225/EE-13data_rot_59deg/arrow_segments.mat,143,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,46.543175935761376,1.0,0.2763709260364653,-136.89714189569855
+EE-13-data-225x225/EE-13data_rot_64.5deg/arrow_segments.mat,145,Gaussian RBF RKHS,gaussian_rbf,14.73651174277032,,0.2768362503549544,-161.2158355639776
+EE-13-data-225x225/EE-13data_rot_64.5deg/arrow_segments.mat,145,Uniform RKHS,uniform,110.268636569268,,0.6322258448062549,-319.2620679642463
+EE-13-data-225x225/EE-13data_rot_64.5deg/arrow_segments.mat,145,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,62.0470795270879,1.0,0.2768362503549544,-139.02450082034008
+EE0-data-225x225/EE0data_rot_34.5deg/arrow_segments.mat,153,Gaussian RBF RKHS,gaussian_rbf,19.64536148795532,,0.2775033609463915,-143.3095250159722
+EE0-data-225x225/EE0data_rot_34.5deg/arrow_segments.mat,153,Uniform RKHS,uniform,110.268636569268,,0.6337493611691217,-336.7159536095579
+EE0-data-225x225/EE0data_rot_34.5deg/arrow_segments.mat,153,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,34.913282666938585,0.5,0.2775033609463915,-131.3723884213107
+EE0-data-225x225/EE0data_rot_37.5deg/arrow_segments.mat,154,Gaussian RBF RKHS,gaussian_rbf,19.64536148795532,,0.2781200449372879,-137.36233080891242
+EE0-data-225x225/EE0data_rot_37.5deg/arrow_segments.mat,154,Uniform RKHS,uniform,110.268636569268,,0.6351577155902756,-339.31361760707995
+EE0-data-225x225/EE0data_rot_37.5deg/arrow_segments.mat,154,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,147.0,1.0,0.2781200449372879,-120.82778055371176
+EE02-data-225x225/EE02data_rot_57.5deg/arrow_segments.mat,141,Gaussian RBF RKHS,gaussian_rbf,20.280992505120025,,0.4136400852133423,-218.92393013061968
+EE02-data-225x225/EE02data_rot_57.5deg/arrow_segments.mat,141,Uniform RKHS,uniform,117.51961628363846,,0.6250967810655127,-307.1934658312781
+EE02-data-225x225/EE02data_rot_57.5deg/arrow_segments.mat,141,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,20.280992505120025,0.0,0.4136400852133423,-218.92393013061968
+EE02-data-225x225/EE02data_rot_59.5deg/arrow_segments.mat,136,Gaussian RBF RKHS,gaussian_rbf,20.280992505120025,,0.41368288092442507,-208.8546247834896
+EE02-data-225x225/EE02data_rot_59.5deg/arrow_segments.mat,136,Uniform RKHS,uniform,117.51961628363846,,0.6251614543459745,-297.06415479968337
+EE02-data-225x225/EE02data_rot_59.5deg/arrow_segments.mat,136,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,20.280992505120025,0.0,0.41368288092442507,-208.8546247834896
+EE03-data-225x225/EE03data_rot_-20.5deg/arrow_segments.mat,105,Gaussian RBF RKHS,gaussian_rbf,18.29622558235923,,0.40286194772420253,-136.76739201477275
+EE03-data-225x225/EE03data_rot_-20.5deg/arrow_segments.mat,105,Uniform RKHS,uniform,95.64339158873616,,0.6088087584797233,-225.56028033976656
+EE03-data-225x225/EE03data_rot_-20.5deg/arrow_segments.mat,105,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,18.29622558235923,0.0,0.40286194772420253,-136.76739201477275
+EE03-data-225x225/EE03data_rot_-23.5deg/arrow_segments.mat,103,Gaussian RBF RKHS,gaussian_rbf,17.576023799500128,,0.39660575750105964,-143.47583236632636
+EE03-data-225x225/EE03data_rot_-23.5deg/arrow_segments.mat,103,Uniform RKHS,uniform,88.2618893144557,,0.5993543450656965,-218.04759593996187
+EE03-data-225x225/EE03data_rot_-23.5deg/arrow_segments.mat,103,Multiplicative RBF-VM RKHS,multiplicative_rbf_vm,30.098036269113837,0.5,0.39660575750105964,-142.63823866401358

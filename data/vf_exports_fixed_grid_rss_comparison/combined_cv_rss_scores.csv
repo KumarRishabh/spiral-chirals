@@ -1,0 +1,71 @@
+dataset,n,model,family,kernel,bandwidth,kappa,sigma_n,mean_test_rss,mean_test_mae_deg,sd_test_rss,p_median,gamma_median
+Front_EE-1_1_3000x_rings_coords.csv,168,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,92.95695884582472,,0.05623413251903491,0.2612908926451822,20.737364463230527,,,
+Front_EE-1_1_3000x_rings_coords.csv,168,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,68.24657610074021,,3.1622776601683795,0.32681642481650214,24.47224735133241,,,
+Front_EE-1_1_3000x_rings_coords.csv,168,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,92.95695884582472,0.75,0.1,0.25869897980907924,20.76348703495946,,,
+Front_EE-1_2_3000x_rings_coords.csv,129,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,103.04231014174792,,0.1,0.2194246713010676,18.475569089527475,,,
+Front_EE-1_2_3000x_rings_coords.csv,129,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,68.24657610074021,,5.623413251903491,0.24032457202683463,20.25028475457484,,,
+Front_EE-1_2_3000x_rings_coords.csv,129,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,92.95695884582472,0.125,0.05623413251903491,0.21938011460424073,18.480236410197637,,,
+Front_EE-1_3_3000x_rings_coords.csv,178,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,55.54097616955662,,0.31622776601683794,0.49085475536673095,31.812228150286803,,,
+Front_EE-1_3_3000x_rings_coords.csv,178,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,50.10485720815216,,0.05623413251903491,0.49698925701296987,32.36114427307315,,,
+Front_EE-1_3_3000x_rings_coords.csv,178,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,55.54097616955662,0.0,0.31622776601683794,0.49085475536673095,31.812228150286803,,,
+Front_EE-1_4_3000x_rings_coords.csv,179,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,33.18525124066939,,1.0,0.3879659274703254,27.622956216871643,,,
+Front_EE-1_4_3000x_rings_coords.csv,179,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,55.54097616955662,,10.0,0.41728581169134504,29.259503712124438,,,
+Front_EE-1_4_3000x_rings_coords.csv,179,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,33.18525124066939,0.0,1.0,0.3879659274703254,27.622956216871643,,,
+Front_EE-1_5_3000x_rings_coords.csv,180,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,40.77673693210865,,1.7782794100389228,0.3481793296050049,24.660982134394846,,,
+Front_EE-1_5_3000x_rings_coords.csv,180,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,55.54097616955662,,10.0,0.3664439705316325,25.416152776067815,,,
+Front_EE-1_5_3000x_rings_coords.csv,180,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,45.20080288443657,1.25,3.1622776601683795,0.3399632248586526,24.48791222771144,,,
+Front_EE1_1_3000x_rings_coords.csv,136,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,33.18525124066939,,0.5623413251903491,0.1524248361481731,16.26238792375696,,,
+Front_EE1_1_3000x_rings_coords.csv,136,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,45.20080288443657,,3.1622776601683795,0.1699436667085726,17.488718053145508,,,
+Front_EE1_1_3000x_rings_coords.csv,136,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,29.93721733939893,0.75,1.0,0.14996821277044423,16.047134115803228,,,
+Front_EE1_2_3000x_rings_coords.csv,178,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,55.54097616955662,,1.0,0.47899695166671863,30.537392732760207,,,
+Front_EE1_2_3000x_rings_coords.csv,178,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,68.24657610074021,,5.623413251903491,0.4622370983097904,29.93474854215731,,,
+Front_EE1_2_3000x_rings_coords.csv,178,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,50.10485720815216,0.5,1.7782794100389228,0.47700421683213995,30.479953215741563,,,
+Front_EE1_3_3000x_rings_coords.csv,180,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,24.36374642994522,,0.001,0.3351409300561874,24.70265444308267,,,
+Front_EE1_3_3000x_rings_coords.csv,180,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,55.54097616955662,,3.1622776601683795,0.33121238666413394,25.04363535356323,,,
+Front_EE1_3_3000x_rings_coords.csv,180,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,24.36374642994522,3.0,1.0,0.33160381283238416,24.74161788632224,,,
+Front_EE1_4_3000x_rings_coords.csv,163,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,45.20080288443657,,0.5623413251903491,0.2583578963163943,22.27049969939614,,,
+Front_EE1_4_3000x_rings_coords.csv,163,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,61.56688604164617,,5.623413251903491,0.26615250817536057,22.851582059404638,,,
+Front_EE1_4_3000x_rings_coords.csv,163,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,68.24657610074021,0.75,1.7782794100389228,0.25719806223978436,22.398663789015,,,
+Front_EE1_5_3000x_rings_coords.csv,180,Gaussian RBF RKHS,kernel_gp_line_embedding_cv_fixed_grid,gaussian_rbf,55.54097616955662,,10.0,0.48732129179668293,31.670884851340247,,,
+Front_EE1_5_3000x_rings_coords.csv,180,Uniform RKHS,kernel_gp_line_embedding_cv_fixed_grid,uniform,61.56688604164617,,10.0,0.49905782929302445,31.65858497951665,,,
+Front_EE1_5_3000x_rings_coords.csv,180,Multiplicative RBF-VM RKHS,kernel_gp_line_embedding_cv_fixed_grid,multiplicative_rbf_vm,319.9529092712089,0.5,0.01778279410038923,0.4833612300469469,30.88910925815759,,,
+Front_EE-1_1_3000x_rings_coords.csv,168,Parametric p=0 (Logarithmic),parametric_fixed_p,,,,,0.8595277558556113,46.78528268631776,0.14660005267941809,0.0,0.4532927123861069
+Front_EE-1_1_3000x_rings_coords.csv,168,Parametric p=1 (Archimedean),parametric_fixed_p,,,,,0.90456083845992,47.93589222787772,0.16972024495938148,1.0,-1.5716912678885275
+Front_EE-1_1_3000x_rings_coords.csv,168,Parametric p=2 (Fermat),parametric_fixed_p,,,,,0.8403233010524357,45.253646376145824,0.1469368204239364,2.0,-1.403519064190815
+Front_EE-1_1_3000x_rings_coords.csv,168,Parametric continuous p,parametric_continuous_p,,,,,0.9156039028604788,47.989854533386485,0.15803934079699253,1.8926529609140421,-1.5210372542432464
+Front_EE-1_2_3000x_rings_coords.csv,129,Parametric p=0 (Logarithmic),parametric_fixed_p,,,,,0.7100923877224152,41.037048816154226,0.22646051591081848,0.0,-1.063191622058794
+Front_EE-1_2_3000x_rings_coords.csv,129,Parametric p=1 (Archimedean),parametric_fixed_p,,,,,0.7623991034699344,42.24193945129559,0.24604516914810298,1.0,-1.0580659808426136
+Front_EE-1_2_3000x_rings_coords.csv,129,Parametric p=2 (Fermat),parametric_fixed_p,,,,,0.7370324938856826,41.505966347532606,0.2292959396741007,2.0,2.823217569953625
+Front_EE-1_2_3000x_rings_coords.csv,129,Parametric continuous p,parametric_continuous_p,,,,,0.7132388775951432,40.821641693155094,0.18548502116721316,-0.999,-1.5643684276347956
+Front_EE-1_3_3000x_rings_coords.csv,178,Parametric p=0 (Logarithmic),parametric_fixed_p,,,,,0.8629539873746408,46.66986472811196,0.12754186868979003,0.0,0.7390173630207955
+Front_EE-1_3_3000x_rings_coords.csv,178,Parametric p=1 (Archimedean),parametric_fixed_p,,,,,0.8797846483982925,47.06649913177606,0.16311252960305375,1.0,-1.6226198325547194
+Front_EE-1_3_3000x_rings_coords.csv,178,Parametric p=2 (Fermat),parametric_fixed_p,,,,,0.8647439032127892,46.164676598844686,0.13701075555319506,2.0,-0.020913273850088083
+Front_EE-1_3_3000x_rings_coords.csv,178,Parametric continuous p,parametric_continuous_p,,,,,0.7952704189017179,43.99807766457098,0.13992297672875553,-0.999,1.5661449621069197
+Front_EE-1_4_3000x_rings_coords.csv,179,Parametric p=0 (Logarithmic),parametric_fixed_p,,,,,0.7778313349434437,43.197813857927784,0.19429722915724157,0.0,1.9898305466620576
+Front_EE-1_4_3000x_rings_coords.csv,179,Parametric p=1 (Archimedean),parametric_fixed_p,,,,,0.7848918310714361,43.10518895039935,0.21847299409625795,1.0,-0.011885818368475697
+Front_EE-1_4_3000x_rings_coords.csv,179,Parametric p=2 (Fermat),parametric_fixed_p,,,,,0.8411196092947977,44.81644228209103,0.23913018714138165,2.0,3.1158761395126877
+Front_EE-1_4_3000x_rings_coords.csv,179,Parametric continuous p,parametric_continuous_p,,,,,0.832396861706205,45.081992904730335,0.2058244512073712,1.7924307612461723,-3.6237555247433113e-05
+Front_EE-1_5_3000x_rings_coords.csv,180,Parametric p=0 (Logarithmic),parametric_fixed_p,,,,,0.7822286578269029,43.90648622713022,0.13743693076246633,0.0,-0.6882599218590102
+Front_EE-1_5_3000x_rings_coords.csv,180,Parametric p=1 (Archimedean),parametric_fixed_p,,,,,0.7613922806342583,42.35099667205984,0.1717561476117835,1.0,-0.00640119519064424
+Front_EE-1_5_3000x_rings_coords.csv,180,Parametric p=2 (Fermat),parametric_fixed_p,,,,,0.9435906268316796,49.15908206290568,0.18659562497083268,2.0,8.530200660507168e-06
+Front_EE-1_5_3000x_rings_coords.csv,180,Parametric continuous p,parametric_continuous_p,,,,,0.8415490142364218,45.52142946842986,0.1297143939052311,-0.23099210225668526,-4.71165993852743e-05
+Front_EE1_1_3000x_rings_coords.csv,136,Parametric p=0 (Logarithmic),parametric_fixed_p,,,,,0.812217075627941,43.98378630950464,0.2533756496248851,0.0,0.3664701916371319
+Front_EE1_1_3000x_rings_coords.csv,136,Parametric p=1 (Archimedean),parametric_fixed_p,,,,,0.8359133537247094,45.21707028542021,0.26943380813064327,1.0,-0.008620674206992782
+Front_EE1_1_3000x_rings_coords.csv,136,Parametric p=2 (Fermat),parametric_fixed_p,,,,,0.8862198092686109,46.57101073397449,0.2443247170254664,2.0,-0.0004721410567650248
+Front_EE1_1_3000x_rings_coords.csv,136,Parametric continuous p,parametric_continuous_p,,,,,0.8343242368049157,45.0801182503663,0.2679072564809596,-0.9863563437846602,0.006911774100651025
+Front_EE1_2_3000x_rings_coords.csv,178,Parametric p=0 (Logarithmic),parametric_fixed_p,,,,,0.6954199492707677,40.901279047593576,0.17759118942337412,0.0,2.476104649943638
+Front_EE1_2_3000x_rings_coords.csv,178,Parametric p=1 (Archimedean),parametric_fixed_p,,,,,0.7073166271532089,40.983346257625996,0.18985054243990512,1.0,3.1378746429796482
+Front_EE1_2_3000x_rings_coords.csv,178,Parametric p=2 (Fermat),parametric_fixed_p,,,,,0.7015353325024141,40.59799845742169,0.18944027939177813,2.0,1.5707809087811717
+Front_EE1_2_3000x_rings_coords.csv,178,Parametric continuous p,parametric_continuous_p,,,,,0.7175891057558352,41.30437512841889,0.18625573243906945,1.30384241882415,1.5630181029703951
+Front_EE1_3_3000x_rings_coords.csv,180,Parametric p=0 (Logarithmic),parametric_fixed_p,,,,,0.6826946655765511,40.21815534553979,0.15059367451071412,0.0,0.6228650374181961
+Front_EE1_3_3000x_rings_coords.csv,180,Parametric p=1 (Archimedean),parametric_fixed_p,,,,,0.674844779634709,39.56593671204182,0.1448774606323402,1.0,0.003914725735801403
+Front_EE1_3_3000x_rings_coords.csv,180,Parametric p=2 (Fermat),parametric_fixed_p,,,,,0.8122257658450522,44.10855442911756,0.22423093773559166,2.0,-3.14157830816435
+Front_EE1_3_3000x_rings_coords.csv,180,Parametric continuous p,parametric_continuous_p,,,,,0.7188851249278855,41.202531557209646,0.15061660674008923,0.6295125048595305,0.02128928103219499
+Front_EE1_4_3000x_rings_coords.csv,163,Parametric p=0 (Logarithmic),parametric_fixed_p,,,,,0.6763371014153938,40.46669274427127,0.20840125866942094,0.0,1.479475246725836
+Front_EE1_4_3000x_rings_coords.csv,163,Parametric p=1 (Archimedean),parametric_fixed_p,,,,,0.6685425164590189,40.087869202274184,0.20131512180058075,1.0,0.0436455367291545
+Front_EE1_4_3000x_rings_coords.csv,163,Parametric p=2 (Fermat),parametric_fixed_p,,,,,0.6953413110201001,40.826339005853576,0.20601867859748313,2.0,-1.5581520867670517
+Front_EE1_4_3000x_rings_coords.csv,163,Parametric continuous p,parametric_continuous_p,,,,,0.6714720907829894,40.183200239037106,0.20127849803995707,0.8695830208446382,-3.0303945369225507
+Front_EE1_5_3000x_rings_coords.csv,180,Parametric p=0 (Logarithmic),parametric_fixed_p,,,,,0.991286720143448,51.26388529256733,0.19201270526664554,0.0,-1.022679860220908
+Front_EE1_5_3000x_rings_coords.csv,180,Parametric p=1 (Archimedean),parametric_fixed_p,,,,,1.0059618192205388,51.08567572207221,0.2337511790814525,1.0,1.5522573729893405
+Front_EE1_5_3000x_rings_coords.csv,180,Parametric p=2 (Fermat),parametric_fixed_p,,,,,0.9563020311030682,49.51435000412442,0.22122350518247585,2.0,1.947973093469299e-06
+Front_EE1_5_3000x_rings_coords.csv,180,Parametric continuous p,parametric_continuous_p,,,,,1.0045638498332206,52.07175724687571,0.15557801252892434,-0.999,0.7814891120077908
