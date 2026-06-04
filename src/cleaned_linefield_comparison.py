@@ -261,8 +261,8 @@ def parametric_predict(X: NDArray[np.float64], p: float, gamma: float) -> NDArra
     y = X[:, 1]
     r = np.maximum(np.hypot(x, y), 1e-6)
     theta = np.arctan2(y, x)
-    radial = np.cos(gamma)
-    tangential = -np.sin(gamma) * np.power(r, p)
+    radial = np.cos(gamma) * np.power(r, p)
+    tangential = -np.sin(gamma)
     return wrap_angle(theta + np.arctan2(tangential, radial))
 
 

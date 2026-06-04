@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DATA_DIR = ROOT / "data"
 DEFAULT_OUT_DIR = ROOT / "data" / "optical_sem_nw_smoother_comparison"
 
-FIXED_BANDWIDTHS = np.geomspace(1.0, 220.0, 72)
+FIXED_BANDWIDTHS = np.exp(np.linspace(np.log(1.0), np.log(220.0), 72))
 FIXED_KAPPAS = np.array(
     [0.0, 0.125, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 3.0, 4.0, 6.0, 8.0, 12.0, 16.0, 24.0, 32.0, 48.0, 64.0],
     dtype=float,
@@ -215,7 +215,7 @@ def cv_splits(X: NDArray[np.float64], y: NDArray[np.float64]) -> list[tuple[NDAr
     groups = spatial_groups(X)
     unique_groups = np.unique(groups)
     if len(unique_groups) >= 5:
-        splitter = GroupKFold(n_splits=5)
+        splitter = GroupKFold(n_splits=min(10, len(unique_groups)))
         return [(tr, te) for tr, te in splitter.split(X, y, groups)]
     splitter = KFold(n_splits=min(10, len(y)), shuffle=True, random_state=42)
     return [(tr, te) for tr, te in splitter.split(X)]

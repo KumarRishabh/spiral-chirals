@@ -31,7 +31,10 @@ OUT_DIR = ROOT / "data" / "vf_exports_pitch_kernel_smoother_comparison"
 PLOT_DIR = OUT_DIR / "plots"
 OVERLAY_DIR = PLOT_DIR / "streamline_overlays"
 
-FIXED_BANDWIDTHS = np.geomspace(1.0, 1500.0, 72)
+# Table 1 / full NW Gabor sweep:
+# h_j = exp(log(1.0) + j * (log(1500.0) - log(1.0)) / 71), j=0,...,71.
+# RBF sweeps h only; RBF-von-Mises sweeps h crossed with FIXED_KAPPAS.
+FIXED_BANDWIDTHS = np.exp(np.linspace(np.log(1.0), np.log(1500.0), 72))
 FIXED_KAPPAS = np.array(
     [0.0, 0.125, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 3.0, 4.0, 6.0, 8.0, 12.0, 16.0, 24.0, 32.0, 48.0, 64.0],
     dtype=float,
@@ -491,7 +494,7 @@ and the multiplicative pitch kernel is
 \]
 
 \section{{Hyperparameter Selection}}
-The fixed bandwidth grid is $h\in\operatorname{{geomspace}}(1,1500,72)$. The multiplicative kernel additionally sweeps
+The fixed bandwidth grid contains 72 positive values from 1 to 1500, with a constant multiplicative ratio between adjacent values. The multiplicative kernel additionally sweeps
 \[
   \kappa\in
   \{{0,0.125,0.25,0.5,0.75,1,1.25,1.5,2,3,4,6,8,12,16,24,32,48,64\}}.
